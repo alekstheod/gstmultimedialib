@@ -35,6 +35,7 @@ namespace multimedia{
 					virtual ~IGLVideoSinkStrategy() {};
 			};
 
+		private:
 			utils::Strategy<IGLVideoSinkStrategy> _strategy;
 
 		public:
