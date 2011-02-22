@@ -25,7 +25,7 @@ namespace multimedia {
 			std::vector<unsigned char> _frameBuffer;
 
 		public:
-					VideoFrameGLModel(const gl::GLVertex& lowLeft, const gl::GLVertex& topLeft, const gl::GLVertex& topRight,
+			VideoFrameGLModel(const gl::GLVertex& lowLeft, const gl::GLVertex& topLeft, const gl::GLVertex& topRight,
 							const gl::GLVertex& lowRight) throw (gl::GLException);
 			bool DrawModel(void);
 			bool UpdateFrame(GLsizei width, GLsizei height, GLenum format, GLenum type, const GLvoid *pixels);

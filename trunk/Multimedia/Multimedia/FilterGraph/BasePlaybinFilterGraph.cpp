@@ -36,10 +36,10 @@ namespace multimedia {
 
 		switch (GST_MESSAGE_TYPE(msg)) {
 
-			case GST_MESSAGE_EOS:
+			case GST_MESSAGE_EOS:{
 				g_print("End of stream\n");
 				g_main_loop_quit(loop);
-				break;
+			}break;
 
 			case GST_MESSAGE_ERROR: {
 				gchar* debug;
@@ -52,18 +52,21 @@ namespace multimedia {
 				g_error_free(error);
 
 				g_main_loop_quit(loop);
-				break;
-			}
+
+			}break;
+
 			default:
-				break;
+			break;
 		}
 
 		return TRUE;
 	}
 
+
 	bool SetEncoder(BaseEncoderFilter* encoder) {
 		return false;
 	}
+
 
 	bool BasePlaybinFilterGraph::SetAudioSink(BaseOutputFilter* audioSink) {
 		if (audioSink == NULL) {
@@ -74,6 +77,7 @@ namespace multimedia {
 		return true;
 	}
 
+
 	bool BasePlaybinFilterGraph::SetVideoSink(BaseOutputFilter* videoSink) {
 		if (videoSink == NULL) {
 			return false;
@@ -83,23 +87,6 @@ namespace multimedia {
 		return true;
 	}
 
-	bool BasePlaybinFilterGraph::SetAudioSink(BaseCallbackSink* audioSink) {
-		if (audioSink == NULL) {
-			return false;
-		}
-
-		//g_object_set(G_OBJECT(_pipeline.GetPtr()),"audio-sink",audioSink->_cbSink.GetPtr(),NULL);
-		return true;
-	}
-
-	bool BasePlaybinFilterGraph::SetVideoSink(BaseCallbackSink* videoSink) {
-		if (videoSink == NULL) {
-			return false;
-		}
-
-		g_object_set(G_OBJECT(_pipeline.GetPtr()), "video-sink", videoSink->_cbSink.GetPtr(), NULL);
-		return true;
-	}
 
 	bool BasePlaybinFilterGraph::Play(void) {
 		GstStateChangeReturn ret = gst_element_set_state(_pipeline.GetPtr(), GST_STATE_PLAYING);
@@ -111,13 +98,21 @@ namespace multimedia {
 		return true;
 	}
 
+
 	bool BasePlaybinFilterGraph::Stop(void) {
-		return false;
+		GstStateChangeReturn ret = gst_element_set_state(_pipeline.GetPtr(), GST_STATE_READY);
+		if (ret == GST_STATE_CHANGE_FAILURE) {
+			return false;
+		}
+
+
+		return true;
 	}
 
 	bool BasePlaybinFilterGraph::Rewind(void) {
 		return false;
 	}
+
 
 	BasePlaybinFilterGraph::~BasePlaybinFilterGraph() {
 		if (_mainLoop != NULL) {

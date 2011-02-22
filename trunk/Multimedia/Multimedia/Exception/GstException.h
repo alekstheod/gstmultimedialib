@@ -13,7 +13,7 @@ namespace multimedia {
 
 	class GstException: public utils::AException {
 		public:
-			GstException(const std::string& message);
+			GstException(const std::string&);
 			virtual ~GstException() throw ();
 	};
 
