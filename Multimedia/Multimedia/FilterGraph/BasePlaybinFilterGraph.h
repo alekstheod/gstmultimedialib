@@ -34,10 +34,6 @@ namespace multimedia {
 		protected:
 			bool SetAudioSink(BaseOutputFilter* audioSink);
 			bool SetVideoSink(BaseOutputFilter* videoSink);
-
-			bool SetAudioSink(BaseCallbackSink* audioSink);
-			bool SetVideoSink(BaseCallbackSink* videoSink);
-
 			bool SetEncoder(BaseEncoderFilter* encoder);
 
 		public:

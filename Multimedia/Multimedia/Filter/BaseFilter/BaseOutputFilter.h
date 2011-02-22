@@ -16,7 +16,7 @@
 namespace multimedia {
 
 	class BaseOutputFilter: public IFilter {
-		private:
+		protected:
 			GSmartPtr<GstElement> _output;
 
 		private:

@@ -1,13 +1,13 @@
-#include <Multimedia/Filter/Sink/Video/GLVideoSink.h>
+#include <Multimedia/Filter/Sink/Video/CGLVideoSink.h>
 #include <string.h>
 #include "VideoFrameGLModel.h"
 
 namespace multimedia{
 
-	const float GLVideoSink::CONST_GL_FRAME_HEIGHT = 1.16;
-	const float GLVideoSink::CONST_GL_FRAME_WIDTH = 2;
+	const float CGLVideoSink::CONST_GL_FRAME_HEIGHT = 1.16;
+	const float CGLVideoSink::CONST_GL_FRAME_WIDTH = 2;
 
-	GLVideoSink::GLVideoSink(const utils::SmartPtr<gl::GLDevice>& glDevice)throw (GstException) : BaseCallbackSink("GL Video sink") {
+	CGLVideoSink::CGLVideoSink(const utils::SmartPtr<gl::GLDevice>& glDevice)throw (GstException) : BaseCallbackSink("GL Video sink") {
 	    if (glDevice == NULL) {
 	        throw GstException("GLVideoSink::GLVideoSink");
 	    }
@@ -35,11 +35,11 @@ namespace multimedia{
 	    _glDevice->AddGLModel(1, _videoFrameGLModel);
 	}
 
-	GLVideoSink::~GLVideoSink(void) {
+	CGLVideoSink::~CGLVideoSink(void) {
 
 	}
 
-	bool GLVideoSink::OnSetCaps(GstPad * pad, GstCaps * caps) {
+	bool CGLVideoSink::OnSetCaps(GstPad * pad, GstCaps * caps) {
 	    try {
 	        utils::AutoLock lock(_lockObject);
 	        if (_strategy != NULL) {
@@ -93,7 +93,7 @@ namespace multimedia{
 	    return true;
 	}
 
-	bool GLVideoSink::OnRecieveBuffer(GstPad* gstPad, GstBuffer* gstBuffer) {
+	bool CGLVideoSink::OnRecieveBuffer(GstPad* gstPad, GstBuffer* gstBuffer) {
 	    try {
 	        utils::AutoLock lock(_lockObject);
 	        if (_strategy != NULL) {
@@ -112,7 +112,7 @@ namespace multimedia{
 	    return true;
 	}
 
-	bool GLVideoSink::RegisterGLVideoSinkStrategy(const utils::SmartPtr<GLVideoSink::IGLVideoSinkStrategy>& strategy) {
+	bool CGLVideoSink::RegisterGLVideoSinkStrategy(const utils::SmartPtr<CGLVideoSink::IGLVideoSinkStrategy>& strategy) {
 	    try {
 	        utils::AutoLock lock(_lockObject);
 	        _strategy.RegisterEventStrategy(strategy);

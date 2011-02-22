@@ -7,7 +7,7 @@
 
 namespace multimedia{
 
-	class GLVideoSink: public BaseCallbackSink {
+	class CGLVideoSink: public BaseCallbackSink {
 		private:
 			gint _frameRate;
 			gint _frameWidth;
@@ -47,9 +47,9 @@ namespace multimedia{
 			virtual bool OnSetCaps(GstPad * pad, GstCaps * caps);
 
 		public:
-					GLVideoSink(const utils::SmartPtr<gl::GLDevice>& glDevice) throw (GstException);
-			bool RegisterGLVideoSinkStrategy(const utils::SmartPtr<GLVideoSink::IGLVideoSinkStrategy>& strategy);
-			virtual ~GLVideoSink(void);
+					CGLVideoSink(const utils::SmartPtr<gl::GLDevice>& glDevice) throw (GstException);
+			bool RegisterGLVideoSinkStrategy(const utils::SmartPtr<CGLVideoSink::IGLVideoSinkStrategy>& strategy);
+			virtual ~CGLVideoSink(void);
 	};
 
 }
