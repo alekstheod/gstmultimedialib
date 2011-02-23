@@ -9,14 +9,14 @@
 #define XIMAGEVIDEOFILTERGRAPH_H_
 
 #include <Multimedia/FilterGraph/BasePlaybinFilterGraph.h>
-#include <Multimedia/Filter/Sink/Video/ImageVideoSink.h>
+#include <Multimedia/Filter/Sink/Video/XImageVideoSinkFilter.h>
 #include <Multimedia/Filter/Sink/Audio/StandardAudioSinkFilter.h>
 
 namespace multimedia {
 
 	class XImageVideoFilterGraph: public multimedia::BasePlaybinFilterGraph {
 		private:
-			ImageVideoSink _videoSink;
+			XImageVideoSinkFilter _videoSink;
 			StandardAudioSinkFilter _audioSink;
 
 		public:

@@ -10,9 +10,15 @@
 namespace multimedia {
 
 	XImageVideoFilterGraph::XImageVideoFilterGraph(const std::string& fileName) : BasePlaybinFilterGraph(fileName), _videoSink("VideoSink"), _audioSink("AudioSink") {
-		// TODO Auto-generated constructor stub
+		if (!SetAudioSink(&_audioSink)) {
+			throw GstException("XImageVideoFilterGraph::XImageVideoFilterGraph- Set audio sink failed");
+		}
 
+		if (!SetVideoSink(&_videoSink)) {
+			throw GstException("XImageVideoFilterGraph::XImageVideoFilterGraph - Set video sink failed");
+		}
 	}
+
 
 	XImageVideoFilterGraph::~XImageVideoFilterGraph() {
 		// TODO Auto-generated destructor stub

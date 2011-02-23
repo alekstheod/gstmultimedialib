@@ -12,13 +12,13 @@
 
 namespace multimedia {
 
-	class ImageVideoSink: public multimedia::BaseSinkFilter {
+	class XImageVideoSinkFilter: public multimedia::BaseSinkFilter {
 		public:
 			static const std::string CONST_PLUGIN_NAME;
 
 		public:
-			ImageVideoSink(const std::string& description);
-			virtual ~ImageVideoSink();
+			XImageVideoSinkFilter(const std::string& description);
+			virtual ~XImageVideoSinkFilter();
 	};
 
 }
