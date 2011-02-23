@@ -68,7 +68,7 @@ namespace multimedia {
 	}
 
 
-	bool BasePlaybinFilterGraph::SetAudioSink(BaseOutputFilter* audioSink) {
+	bool BasePlaybinFilterGraph::SetAudioSink(BaseSinkFilter* audioSink) {
 		if (audioSink == NULL) {
 			return false;
 		}
@@ -78,7 +78,7 @@ namespace multimedia {
 	}
 
 
-	bool BasePlaybinFilterGraph::SetVideoSink(BaseOutputFilter* videoSink) {
+	bool BasePlaybinFilterGraph::SetVideoSink(BaseSinkFilter* videoSink) {
 		if (videoSink == NULL) {
 			return false;
 		}

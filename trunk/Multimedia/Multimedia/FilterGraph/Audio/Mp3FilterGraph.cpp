@@ -9,7 +9,7 @@
 
 namespace multimedia{
 
-	Mp3FilterGraph::Mp3FilterGraph(const std::string& sourceFileName)throw (GstException) : BaseFilterGraph("Mp3Player"), _src(sourceFileName) {
+	Mp3FilterGraph::Mp3FilterGraph(const std::string& sourceFileName)throw (GstException) : BaseFilterGraph("Mp3Player"), _src(sourceFileName), _audioOutput("Audio_Out") {
 	    if (!AddFilter(&_src)) {
 	        throw GstException("Mp3FilterGraph::Mp3FilterGraph - Create pipeline failed");
 	    }

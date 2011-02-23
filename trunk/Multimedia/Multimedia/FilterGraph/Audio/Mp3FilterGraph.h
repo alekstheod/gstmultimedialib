@@ -12,7 +12,7 @@
 #include <Multimedia/Filter/Intermediate/Audio/FFMp3DecoderFilter.h>
 #include <Multimedia/Filter/Intermediate/Audio/FFMp3DemuxerFilter.h>
 #include <Multimedia/Filter/Intermediate/Audio/AudioConverterFilter.h>
-#include <Multimedia/Filter/Sink/Audio/StandardAudioOutputFilter.h>
+#include <Multimedia/Filter/Sink/Audio/StandardAudioSinkFilter.h>
 #include <Multimedia/FilterGraph/BaseFilterGraph.h>
 
 namespace multimedia {
@@ -23,7 +23,7 @@ namespace multimedia {
 			FFMp3DemuxerFilter _demuxer;
 			FFMp3DecoderFilter _decoder;
 			AudioConverterFilter _converter;
-			StandardAudioOutputFilter _audioOutput;
+			StandardAudioSinkFilter _audioOutput;
 
 		public:
 			Mp3FilterGraph(const std::string& sourceFileName) throw (GstException);

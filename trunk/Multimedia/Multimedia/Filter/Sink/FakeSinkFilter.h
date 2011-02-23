@@ -8,18 +8,18 @@
 #ifndef FAKEOUTPUTFILTER_H_
 #define FAKEOUTPUTFILTER_H_
 
-#include <Multimedia/Filter/BaseFilter/BaseOutputFilter.h>
+#include <Multimedia/Filter/BaseFilter/BaseSinkFilter.h>
 
 namespace multimedia {
 
-	class FakeOutputFIlter: public BaseOutputFilter {
+	class FakeSinkFilter: public BaseSinkFilter {
 		public:
 			static const std::string CONST_PLUGIN_NAME;
 			static const std::string CONST_PLUGIN_DESCRIPTION;
 
 		public:
-			FakeOutputFIlter();
-			virtual ~FakeOutputFIlter();
+			FakeSinkFilter();
+			virtual ~FakeSinkFilter();
 	};
 
 }

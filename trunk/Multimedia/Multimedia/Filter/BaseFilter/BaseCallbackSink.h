@@ -4,11 +4,11 @@
 #include <string>
 #include <gst/gst.h>
 #include <Multimedia/Exception/GstException.h>
-#include <Multimedia/Filter/BaseFilter/BaseOutputFilter.h>
+#include <Multimedia/Filter/BaseFilter/BaseSinkFilter.h>
 
 namespace multimedia {
 
-	class BaseCallbackSink: public BaseOutputFilter {
+	class BaseCallbackSink: public BaseSinkFilter {
 
 		protected:
 			virtual bool OnRecieveBuffer(GstPad* gstPad, GstBuffer* gstBuffer) = 0;

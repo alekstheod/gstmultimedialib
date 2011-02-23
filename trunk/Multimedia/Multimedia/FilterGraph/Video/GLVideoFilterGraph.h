@@ -10,14 +10,14 @@
 
 #include <Multimedia/FilterGraph/BasePlaybinFilterGraph.h>
 #include <Multimedia/Filter/Sink/Video/CGLVideoSink.h>
-#include <Multimedia/Filter/Sink/Audio/StandardAudioOutputFilter.h>
+#include <Multimedia/Filter/Sink/Audio/StandardAudioSinkFilter.h>
 
 namespace multimedia {
 
 	class GLVideoFilterGraph: public BasePlaybinFilterGraph {
 		private:
 			CGLVideoSink _videoSink;
-			StandardAudioOutputFilter _audioSink;
+			StandardAudioSinkFilter _audioSink;
 
 		public:
 			GLVideoFilterGraph(const std::string& filename, const utils::SmartPtr<gl::GLDevice>& glDevice);

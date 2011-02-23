@@ -15,7 +15,7 @@
 
 namespace multimedia{
 
-	class BaseOutputFilter;
+	class BaseSinkFilter;
 
 	class SourceFilter : public IFilter {
 	private:
@@ -27,7 +27,7 @@ namespace multimedia{
 	public:
 	    SourceFilter(const std::string& fileName)throw (GstException);
 	    bool Connect(BaseDemuxerFilter* demuxer);
-	    bool Connect(BaseOutputFilter* output);
+	    bool Connect(BaseSinkFilter* output);
 	    bool AddToPipeline(GstElement* pipeline);
 	    virtual ~SourceFilter(void);
 	};

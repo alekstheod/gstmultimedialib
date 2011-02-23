@@ -47,7 +47,7 @@ namespace multimedia{
 			virtual bool OnSetCaps(GstPad * pad, GstCaps * caps);
 
 		public:
-					CGLVideoSink(const utils::SmartPtr<gl::GLDevice>& glDevice) throw (GstException);
+			CGLVideoSink(const utils::SmartPtr<gl::GLDevice>& glDevice) throw (GstException);
 			bool RegisterGLVideoSinkStrategy(const utils::SmartPtr<CGLVideoSink::IGLVideoSinkStrategy>& strategy);
 			virtual ~CGLVideoSink(void);
 	};

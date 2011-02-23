@@ -24,7 +24,7 @@ namespace multimedia {
 		return gst_element_link(_decoder.GetPtr(), converter->_converter.GetPtr());
 	}
 
-	bool BaseDecoderFilter::Connect(BaseOutputFilter* outputFilter) {
+	bool BaseDecoderFilter::Connect(BaseSinkFilter* outputFilter) {
 		if (outputFilter == NULL) {
 			return false;
 		}

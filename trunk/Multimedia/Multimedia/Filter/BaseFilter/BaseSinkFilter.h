@@ -15,7 +15,7 @@
 
 namespace multimedia {
 
-	class BaseOutputFilter: public IFilter {
+	class BaseSinkFilter: public IFilter {
 		protected:
 			GSmartPtr<GstElement> _output;
 
@@ -26,9 +26,9 @@ namespace multimedia {
 			friend class BasePlaybinFilterGraph;
 
 		public:
-			BaseOutputFilter(const std::string& pluginName, const std::string& description) throw (GstException);
+			BaseSinkFilter(const std::string& pluginName, const std::string& description) throw (GstException);
 			bool AddToPipeline(GstElement* pipeline);
-			virtual ~BaseOutputFilter(void);
+			virtual ~BaseSinkFilter(void);
 	};
 
 }
