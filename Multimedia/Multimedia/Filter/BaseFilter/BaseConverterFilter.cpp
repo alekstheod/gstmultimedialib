@@ -16,7 +16,7 @@ namespace multimedia{
 	    }
 	}
 
-	bool BaseConverterFilter::Connect(BaseOutputFilter* outputFilter) {
+	bool BaseConverterFilter::Connect(BaseSinkFilter* outputFilter) {
 	    if (outputFilter == NULL) {
 	        return false;
 	    }

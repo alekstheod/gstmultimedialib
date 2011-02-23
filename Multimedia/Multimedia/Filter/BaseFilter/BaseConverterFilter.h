@@ -9,7 +9,7 @@
 #define ACONVERTERFILTER_H_
 #include <gst/gst.h>
 #include <string>
-#include <Multimedia/Filter/BaseFilter/BaseOutputFilter.h>
+#include <Multimedia/Filter/BaseFilter/BaseSinkFilter.h>
 #include <Multimedia/Exception/GstException.h>
 #include <Multimedia/Filter/BaseFilter/IFilter.h>
 
@@ -25,7 +25,7 @@ namespace multimedia {
 
 		public:
 			BaseConverterFilter(const std::string& pluginName, const std::string& description) throw (GstException);
-			bool Connect(BaseOutputFilter* outputFilter);
+			bool Connect(BaseSinkFilter* outputFilter);
 			bool AddToPipeline(GstElement* pipeline);
 			virtual ~BaseConverterFilter(void);
 	};

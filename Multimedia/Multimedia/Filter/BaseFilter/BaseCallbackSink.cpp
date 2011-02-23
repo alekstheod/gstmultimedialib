@@ -4,7 +4,7 @@ namespace multimedia {
 
 	const std::string BaseCallbackSink::CONST_PLUGIN_NAME = "cbsink";
 
-	BaseCallbackSink::BaseCallbackSink(const std::string& description) : BaseOutputFilter(CONST_PLUGIN_NAME, description){
+	BaseCallbackSink::BaseCallbackSink(const std::string& description) : BaseSinkFilter(CONST_PLUGIN_NAME, description){
 		g_object_set(G_OBJECT(_output.GetPtr()), "chain_callback", ChainCallback, NULL);
 		g_object_set(G_OBJECT(_output.GetPtr()), "setcaps_callback", SetCapsCallback, NULL);
 		g_object_set(G_OBJECT(_output.GetPtr()), "chain_callback_arg", this, NULL);

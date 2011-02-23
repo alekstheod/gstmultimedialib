@@ -6,7 +6,7 @@
  */
 
 #include <Multimedia/Filter/Source/SourceFilter.h>
-#include <Multimedia/Filter/BaseFilter/BaseOutputFilter.h>
+#include <Multimedia/Filter/BaseFilter/BaseSinkFilter.h>
 
 namespace multimedia {
 
@@ -41,7 +41,7 @@ namespace multimedia {
 		return gst_element_link(_source.GetPtr(), demuxer->_demuxer.GetPtr());
 	}
 
-	bool SourceFilter::Connect(BaseOutputFilter* output) {
+	bool SourceFilter::Connect(BaseSinkFilter* output) {
 		if (output == NULL) {
 			return false;
 		}

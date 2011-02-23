@@ -8,18 +8,17 @@
 #ifndef STANDARDAUDIOOUTPUTFILTER_H_
 #define STANDARDAUDIOOUTPUTFILTER_H_
 
-#include <Multimedia/Filter/BaseFilter/BaseOutputFilter.h>
+#include <Multimedia/Filter/BaseFilter/BaseSinkFilter.h>
 
 namespace multimedia{
 
-	class StandardAudioOutputFilter : public BaseOutputFilter {
+	class StandardAudioSinkFilter : public BaseSinkFilter {
 	public:
 	    static const std::string CONST_PLUGIN_NAME;
-	    static const std::string CONST_PLUGIN_DESCRIPTION;
 
 	public:
-	    StandardAudioOutputFilter(void)throw (GstException);
-	    virtual ~StandardAudioOutputFilter(void);
+	    StandardAudioSinkFilter(const std::string& description)throw (GstException);
+	    virtual ~StandardAudioSinkFilter(void);
 	};
 
 }

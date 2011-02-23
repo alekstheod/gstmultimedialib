@@ -10,7 +10,7 @@
 namespace multimedia {
 
 	GLVideoFilterGraph::GLVideoFilterGraph(const std::string& filename, const utils::SmartPtr<gl::GLDevice>& glDevice) :
-		BasePlaybinFilterGraph(filename), _videoSink(glDevice) {
+		BasePlaybinFilterGraph(filename), _videoSink(glDevice), _audioSink("Audio_Out") {
 		if (!SetAudioSink(&_audioSink)) {
 			throw GstException("VideoFilterGraph::VideoFilterGraph - Set audio sink failed");
 		}

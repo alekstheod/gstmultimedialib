@@ -12,7 +12,7 @@
 #include <Multimedia/Exception/GstException.h>
 #include <Multimedia/Filter/BaseFilter/IFilter.h>
 #include <Multimedia/Utilities/GSmartPtr.h>
-#include <Multimedia/Filter/BaseFilter/BaseOutputFilter.h>
+#include <Multimedia/Filter/BaseFilter/BaseSinkFilter.h>
 #include <Multimedia/Filter/BaseFilter/BaseEncoderFilter.h>
 #include <Multimedia/Filter/BaseFilter/BaseCallbackSink.h>
 
@@ -32,8 +32,8 @@ namespace multimedia {
 			static gboolean MainLoop(GstBus* bus, GstMessage* msg, gpointer data);
 
 		protected:
-			bool SetAudioSink(BaseOutputFilter* audioSink);
-			bool SetVideoSink(BaseOutputFilter* videoSink);
+			bool SetAudioSink(BaseSinkFilter* audioSink);
+			bool SetVideoSink(BaseSinkFilter* videoSink);
 			bool SetEncoder(BaseEncoderFilter* encoder);
 
 		public:
