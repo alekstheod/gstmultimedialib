@@ -20,7 +20,7 @@ namespace multimedia {
 			StandardAudioSinkFilter _audioSink;
 
 		public:
-			XImageVideoFilterGraph(const std::string& fileName);
+			XImageVideoFilterGraph(const std::string& fileName)throw(GstException);
 			virtual ~XImageVideoFilterGraph();
 	};
 
