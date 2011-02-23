@@ -1,15 +1,15 @@
 /*
- * XImageVideoFilterGraph.cpp
+ * XVideoFilterGraph.cpp
  *
  *  Created on: Feb 23, 2011
  *      Author: m1cRo
  */
 
-#include <Multimedia/FilterGraph/Video/XImageVideoFilterGraph.h>
+#include "XVideoFilterGraph.h"
 
 namespace multimedia {
 
-	XImageVideoFilterGraph::XImageVideoFilterGraph(const std::string& fileName) throw (GstException) :
+	XVideoFilterGraph::XVideoFilterGraph(const std::string& fileName)throw(GstException) :
 		BasePlaybinFilterGraph(fileName), _videoSink("VideoSink"), _audioSink("AudioSink") {
 		if (!SetAudioSink(&_audioSink)) {
 			throw GstException("XImageVideoFilterGraph::XImageVideoFilterGraph- Set audio sink failed");
@@ -18,9 +18,10 @@ namespace multimedia {
 		if (!SetVideoSink(&_videoSink)) {
 			throw GstException("XImageVideoFilterGraph::XImageVideoFilterGraph - Set video sink failed");
 		}
+
 	}
 
-	XImageVideoFilterGraph::~XImageVideoFilterGraph() {
+	XVideoFilterGraph::~XVideoFilterGraph() {
 		// TODO Auto-generated destructor stub
 	}
 
