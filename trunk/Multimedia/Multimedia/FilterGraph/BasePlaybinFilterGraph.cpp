@@ -55,8 +55,8 @@ namespace multimedia {
 
 			}break;
 
-			default:
-			break;
+			default:{
+			}break;
 		}
 
 		return TRUE;
@@ -105,7 +105,7 @@ namespace multimedia {
 			return false;
 		}
 
-
+		g_main_loop_quit(_mainLoop);
 		return true;
 	}
 

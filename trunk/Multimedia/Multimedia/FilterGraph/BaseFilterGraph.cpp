@@ -9,7 +9,6 @@
 
 namespace multimedia{
 
-
 	BaseFilterGraph::BaseFilterGraph(const std::string& graphName) throw (GstException) {
 	    if (graphName.empty()) {
 	        throw GstException("BaseFilterGraph::BaseFilterGraph - Wrong argument graphName");
@@ -29,6 +28,7 @@ namespace multimedia{
 	    gst_bus_add_watch(bus, MainLoop, _mainLoop);
 	    gst_object_unref(bus);
 	}
+
 
 	gboolean BaseFilterGraph::MainLoop(GstBus *bus, GstMessage *msg, gpointer data) {
 	    GMainLoop *loop = (GMainLoop *) data;
@@ -61,6 +61,7 @@ namespace multimedia{
 	    return TRUE;
 	}
 
+
 	bool BaseFilterGraph::AddFilter(IFilter* filter) {
 	    if (filter == NULL) {
 	        return false;
@@ -68,6 +69,7 @@ namespace multimedia{
 
 	    return filter->AddToPipeline(_pipeline.GetPtr());
 	}
+
 
 	bool BaseFilterGraph::Play(void) {
 	    GstStateChangeReturn ret = gst_element_set_state(_pipeline.GetPtr(), GST_STATE_PLAYING);
@@ -78,13 +80,22 @@ namespace multimedia{
 	    return true;
 	}
 
+
 	bool BaseFilterGraph::Stop(void) {
-	    return false;
+		GstStateChangeReturn ret = gst_element_set_state(_pipeline.GetPtr(), GST_STATE_READY);
+		if (ret == GST_STATE_CHANGE_FAILURE) {
+			return false;
+		}
+
+		g_main_loop_quit(_mainLoop);
+		return true;
 	}
+
 
 	bool BaseFilterGraph::Rewind(void) {
 	    return false;
 	}
+
 
 	BaseFilterGraph::~BaseFilterGraph(void) {
 	    if (_mainLoop != NULL) {

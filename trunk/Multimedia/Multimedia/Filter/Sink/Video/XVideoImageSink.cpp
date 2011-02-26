@@ -6,6 +6,7 @@
  */
 
 #include "XVideoImageSink.h"
+#include <gst/interfaces/xoverlay.h>
 
 namespace multimedia {
 
@@ -13,8 +14,14 @@ namespace multimedia {
 
 	XVideoImageSink::XVideoImageSink(const std::string& description)throw(GstException) : BaseSinkFilter(CONST_PLUGIN_NAME, description) {
 		// TODO Auto-generated constructor stub
-
 	}
+
+
+	XVideoImageSink::XVideoImageSink(const std::string& description, gulong xWindowId)throw(GstException): BaseSinkFilter(CONST_PLUGIN_NAME, description){
+		GstXOverlay* gstXOverlay=GST_X_OVERLAY( _output.GetPtr());
+		gst_x_overlay_set_xwindow_id(gstXOverlay, xWindowId);
+	}
+
 
 	XVideoImageSink::~XVideoImageSink() {
 		// TODO Auto-generated destructor stub

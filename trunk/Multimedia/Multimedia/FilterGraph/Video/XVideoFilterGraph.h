@@ -21,6 +21,7 @@ namespace multimedia {
 
 		public:
 			XVideoFilterGraph(const std::string& fileName)throw(GstException);
+			XVideoFilterGraph(const std::string& fileName, gulong xWindowId)throw(GstException);
 			virtual ~XVideoFilterGraph();
 	};
 
