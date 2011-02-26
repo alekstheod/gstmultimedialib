@@ -18,6 +18,7 @@ namespace multimedia {
 
 		public:
 			XVideoImageSink(const std::string& description)throw(GstException);
+			XVideoImageSink(const std::string& description, gulong xWindowId)throw(GstException);
 			virtual ~XVideoImageSink();
 	};
 
