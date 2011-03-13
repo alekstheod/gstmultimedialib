@@ -8,7 +8,7 @@
 
 namespace multimedia {
 
-	class BaseCallbackSink: public BaseSinkFilter {
+	class ABaseCallbackSink: public BaseSinkFilter {
 
 		protected:
 			virtual bool OnRecieveBuffer(GstPad* gstPad, GstBuffer* gstBuffer) = 0;
@@ -18,14 +18,14 @@ namespace multimedia {
 			static const std::string CONST_PLUGIN_NAME;
 
 		private:
-			static gboolean ChainCallback(GstPad* gstPad, GstBuffer* gstBuffer, BaseCallbackSink* _this);
-			static gboolean SetCapsCallback(GstPad * pad, GstCaps * caps, BaseCallbackSink* _this);
+			static gboolean ChainCallback(GstPad* gstPad, GstBuffer* gstBuffer, ABaseCallbackSink* _this);
+			static gboolean SetCapsCallback(GstPad * pad, GstCaps * caps, ABaseCallbackSink* _this);
 			friend class BasePlaybinFilterGraph;
 			friend class BaseFilterGraph;
 
 		public:
-			BaseCallbackSink(const std::string& description);
-			virtual ~BaseCallbackSink(void);
+			ABaseCallbackSink(const std::string& description);
+			virtual ~ABaseCallbackSink(void);
 	};
 
 }
