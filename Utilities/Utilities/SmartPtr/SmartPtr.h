@@ -4,27 +4,74 @@
 #include <Utilities/SmartPtr/SharedPtr.h>
 
 namespace utils {
+
 	/// <summary>
 	/// Simple reference counted smart pointer implementation
 	/// </summary>
-
 	template<class T>
 	class SmartPtr {
 		private:
 			SharedPtr<T>* _ptr;
 
 		public:
+			/// <summary>
+			/// Empty constructor will set the _ptr=NULL.
+			/// </summary>
 			SmartPtr(void);
+
+			/// <summary>
+			/// Constructor with arguments will initialize the object.
+			/// </summary>
 			SmartPtr(T* ptr);
+
+			/// <summary>
+			///
+			/// </summary>
 			SmartPtr(const SmartPtr<T>& smartPtr);
+
+			/// <summary>
+			///
+			/// </summary>
 			void Attach(T* ptr);
+
+			/// <summary>
+			///
+			/// </summary>
 			void Release(void);
+
+			/// <summary>
+			///
+			/// </summary>
 			SmartPtr & operator=(const SmartPtr<T>& smartPtr);
+
+			/// <summary>
+			///
+			/// </summary>
 			bool operator ==(const SmartPtr<T>& smartPtr) const;
+
+			/// <summary>
+			///
+			/// </summary>
 			bool operator ==(T* ptr) const;
+
+			/// <summary>
+			///
+			/// </summary>
 			bool operator !=(const SmartPtr<T>& smartPtr) const;
+
+			/// <summary>
+			/// Will return the holding instance pointer.
+			/// </summary>
 			T * operator->() const;
+
+			/// <summary>
+			/// Will return the holding instance pointer.
+			/// </summary>
 			T* GetPtr(void) const;
+
+			/// <summary>
+			/// Destructor.
+			/// </summary>
 			~SmartPtr(void);
 	};
 
@@ -67,6 +114,10 @@ namespace utils {
 
 	template<class T>
 	SmartPtr<T>& SmartPtr<T>::operator=(const SmartPtr<T>& smartPtr) {
+		if(smartPtr._ptr==_ptr){
+			return *this;
+		}
+
 		if (_ptr != 0) {
 			_ptr->Release();
 		}
