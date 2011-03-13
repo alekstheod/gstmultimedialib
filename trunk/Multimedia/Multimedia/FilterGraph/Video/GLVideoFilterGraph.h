@@ -9,19 +9,19 @@
 #define VIDEOFILTERGRAPH_H_
 
 #include <Multimedia/FilterGraph/BasePlaybinFilterGraph.h>
-#include <Multimedia/Filter/Sink/Video/CGLVideoSink.h>
+#include <Multimedia/Filter/Sink/Video/CGLVideoSinkFilter.h>
 #include <Multimedia/Filter/Sink/Audio/StandardAudioSinkFilter.h>
 
 namespace multimedia {
 
 	class GLVideoFilterGraph: public BasePlaybinFilterGraph {
 		private:
-			CGLVideoSink _videoSink;
+			CGLVideoSinkFilter _videoSink;
 			StandardAudioSinkFilter _audioSink;
 
 		public:
 			GLVideoFilterGraph(const std::string& filename, const utils::SmartPtr<gl::GLDevice>& glDevice);
-			bool RegisterGLVideoSinkStrategy(const utils::SmartPtr<CGLVideoSink::IGLVideoSinkStrategy>& strategy);
+			bool RegisterGLVideoSinkStrategy(const utils::SmartPtr<CGLVideoSinkFilter::IGLVideoSinkStrategy>& strategy);
 			virtual ~GLVideoFilterGraph();
 	};
 
