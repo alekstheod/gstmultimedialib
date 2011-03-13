@@ -1,13 +1,13 @@
 #ifndef GLVIDEOSINK_H
 #define GLVIDEOSINK_H
 #include <GLEngine/GLDevice.h>
-#include <Multimedia/Filter/BaseFilter/ABaseCallbackSink.h>
+#include <Multimedia/Filter/BaseFilter/ABaseCallbackSinkFilter.h>
 #include <Utilities/Strategy/Strategy.h>
 #include <Utilities/AutoLock/LockObject.h>
 
 namespace multimedia{
 
-	class CGLVideoSink: public ABaseCallbackSink {
+	class CGLVideoSinkFilter: public ABaseCallbackSinkFilter {
 		private:
 			gint _frameRate;
 			gint _frameWidth;
@@ -47,9 +47,9 @@ namespace multimedia{
 			virtual bool OnSetCaps(GstPad * pad, GstCaps * caps);
 
 		public:
-			CGLVideoSink(const utils::SmartPtr<gl::GLDevice>& glDevice) throw (GstException);
-			bool RegisterGLVideoSinkStrategy(const utils::SmartPtr<CGLVideoSink::IGLVideoSinkStrategy>& strategy);
-			virtual ~CGLVideoSink(void);
+			CGLVideoSinkFilter(const utils::SmartPtr<gl::GLDevice>& glDevice) throw (GstException);
+			bool RegisterGLVideoSinkStrategy(const utils::SmartPtr<CGLVideoSinkFilter::IGLVideoSinkStrategy>& strategy);
+			virtual ~CGLVideoSinkFilter(void);
 	};
 
 }
