@@ -14,7 +14,6 @@
 #include <Multimedia/Utilities/GSmartPtr.h>
 #include <Multimedia/Filter/BaseFilter/BaseSinkFilter.h>
 #include <Multimedia/Filter/BaseFilter/BaseEncoderFilter.h>
-#include <Multimedia/Filter/BaseFilter/BaseCallbackSink.h>
 
 namespace multimedia {
 

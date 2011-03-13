@@ -7,7 +7,7 @@ namespace multimedia{
 	const float CGLVideoSink::CONST_GL_FRAME_HEIGHT = 1.16;
 	const float CGLVideoSink::CONST_GL_FRAME_WIDTH = 2;
 
-	CGLVideoSink::CGLVideoSink(const utils::SmartPtr<gl::GLDevice>& glDevice)throw (GstException) : BaseCallbackSink("GL Video sink") {
+	CGLVideoSink::CGLVideoSink(const utils::SmartPtr<gl::GLDevice>& glDevice)throw (GstException) : ABaseCallbackSink("GL Video sink") {
 	    if (glDevice == NULL) {
 	        throw GstException("GLVideoSink::GLVideoSink");
 	    }

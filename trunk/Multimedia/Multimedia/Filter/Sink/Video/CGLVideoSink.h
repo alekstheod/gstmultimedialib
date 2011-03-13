@@ -1,13 +1,13 @@
 #ifndef GLVIDEOSINK_H
 #define GLVIDEOSINK_H
 #include <GLEngine/GLDevice.h>
-#include <Multimedia/Filter/BaseFilter/BaseCallbackSink.h>
+#include <Multimedia/Filter/BaseFilter/ABaseCallbackSink.h>
 #include <Utilities/Strategy/Strategy.h>
 #include <Utilities/AutoLock/LockObject.h>
 
 namespace multimedia{
 
-	class CGLVideoSink: public BaseCallbackSink {
+	class CGLVideoSink: public ABaseCallbackSink {
 		private:
 			gint _frameRate;
 			gint _frameWidth;
