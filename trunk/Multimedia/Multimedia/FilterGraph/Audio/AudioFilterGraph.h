@@ -17,8 +17,8 @@ namespace multimedia {
 	class AudioFilterGraph: public BasePlaybinFilterGraph {
 		private:
 			FakeSinkFilter _videoOutputFilter;
-			StandardAudioSinkFilter _aoudioSink;
 			SourceFilter _sourceFilter;
+			StandardAudioSinkFilter _audioSink;
 
 		public:
 			AudioFilterGraph(const std::string& fileName) throw (GstException);
