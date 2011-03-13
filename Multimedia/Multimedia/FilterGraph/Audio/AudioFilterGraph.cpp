@@ -9,8 +9,8 @@
 
 namespace multimedia{
 
-	AudioFilterGraph::AudioFilterGraph(const std::string& fileName)throw (GstException) : BasePlaybinFilterGraph(fileName), _sourceFilter(fileName), _aoudioSink("Audio_Out") {
-	    if (!SetAudioSink(&_aoudioSink)) {
+	AudioFilterGraph::AudioFilterGraph(const std::string& fileName)throw (GstException) : BasePlaybinFilterGraph(fileName), _sourceFilter(fileName), _audioSink("Audio_Out") {
+	    if (!SetAudioSink(&_audioSink)) {
 	        throw GstException("AudioFilterGraph::AudioFilterGraph - Set audio sink failed");
 	    }
 
