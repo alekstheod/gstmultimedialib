@@ -15,13 +15,13 @@ namespace utils {
     const std::wstring XmlNode::CONST_XML_DELIMITERS = L"\r\n ";
 
     XmlNode::XmlNode(std::wstring& stream)throw (XmlException) {
-        StrUtil::EatTrim(stream, CONST_XML_DELIMITERS);
+        StrUtil::eatTrim(stream, CONST_XML_DELIMITERS);
         if (!stream.empty() && stream[0] != CONST_TAG_BEGIN_SYMBOL) {
             throw XmlException("Wrong XML string");
         }
         stream = stream.substr(1, stream.npos);
 
-        StrUtil::EatTrim(stream, CONST_XML_DELIMITERS);
+        StrUtil::eatTrim(stream, CONST_XML_DELIMITERS);
         if (stream.empty()) {
             throw XmlException("Wrong XML string");
         }
@@ -33,42 +33,42 @@ namespace utils {
 
         _objectName = stream.substr(0, pos);
         stream = stream.substr(pos, stream.npos);
-        StrUtil::EatTrim(stream, CONST_XML_DELIMITERS);
+        StrUtil::eatTrim(stream, CONST_XML_DELIMITERS);
 
         if (stream.empty()) {
             throw XmlException("Wrong XML string");
         }
 
-        if (IsEndOfTag(stream)) {
+        if (isEndOfTag(stream)) {
             return;
         } else if (stream[0] != CONST_TAG_END_SYMBOL) {
-            ReadAttributes(stream);
+            readAttributes(stream);
         } else {
             stream = stream.substr(1, stream.npos);
         }
 
-        if (IsEndOfTag(stream)) {
+        if (isEndOfTag(stream)) {
             return;
         } else {
-            ReadBody(stream);
+            readBody(stream);
         }
 
-        ReadCloseTag(stream);
+        readCloseTag(stream);
     }
 
     XmlNode::~XmlNode(void) {
     }
 
-    void utils::XmlNode::ReadAttributes(std::wstring& stream) throw (XmlException) {
-        StrUtil::EatTrim(stream, CONST_XML_DELIMITERS);
-        while (!stream.empty() && !IsEndOfTag(stream) && stream[0] != CONST_TAG_END_SYMBOL) {
-            std::wstring attributeName = ReadAttributeName(stream);
-            std::wstring attributeValue = ReadAttributeValue(stream);
+    void utils::XmlNode::readAttributes(std::wstring& stream) throw (XmlException) {
+        StrUtil::eatTrim(stream, CONST_XML_DELIMITERS);
+        while (!stream.empty() && !isEndOfTag(stream) && stream[0] != CONST_TAG_END_SYMBOL) {
+            std::wstring attributeName = readAttributeName(stream);
+            std::wstring attributeValue = readAttributeValue(stream);
             std::pair<std::wstring, std::wstring> newEntry(attributeName, attributeValue);
             if (_attributes.insert(newEntry).second == false) {
                 throw XmlException("Wrong XML string");
             }
-            StrUtil::EatTrim(stream, CONST_XML_DELIMITERS);
+            StrUtil::eatTrim(stream, CONST_XML_DELIMITERS);
             if (stream.empty()) {
                 throw XmlException("Wrong XML string");
             }
@@ -81,15 +81,15 @@ namespace utils {
         }
     }
 
-    void utils::XmlNode::ReadBody(std::wstring& stream) throw (XmlException) {
-        StrUtil::EatTrim(stream, CONST_XML_DELIMITERS);
+    void utils::XmlNode::readBody(std::wstring& stream) throw (XmlException) {
+        StrUtil::eatTrim(stream, CONST_XML_DELIMITERS);
         if (stream.empty()) {
             throw XmlException("Wrong XML string");
         }
         if (stream[0] == CONST_TAG_BEGIN_SYMBOL) {
-            while (!IsACloseTagSymbols(stream)) {
-                if (IsComment(stream)) {
-                    ReadComment(stream);
+            while (!isACloseTagSymbols(stream)) {
+                if (isComment(stream)) {
+                    readComment(stream);
                 } else {
                     XmlNode xmlObject(stream);
                     _childObjects.push_back(xmlObject);
@@ -109,18 +109,18 @@ namespace utils {
         }
     }
 
-    void utils::XmlNode::ReadCloseTag(std::wstring& stream) throw (XmlException) {
-        StrUtil::EatTrim(stream, CONST_XML_DELIMITERS);
+    void utils::XmlNode::readCloseTag(std::wstring& stream) throw (XmlException) {
+        StrUtil::eatTrim(stream, CONST_XML_DELIMITERS);
         if (stream.empty() || stream[0] != CONST_TAG_BEGIN_SYMBOL) {
             throw XmlException("Wrong XML string");
         }
         stream = stream.substr(1, stream.npos);
-        StrUtil::EatTrim(stream, CONST_XML_DELIMITERS);
+        StrUtil::eatTrim(stream, CONST_XML_DELIMITERS);
         if (stream.empty() || stream[0] != CONST_TAG_CLOSE_SYMBOL) {
             throw XmlException("Wrong XML string");
         }
         stream = stream.substr(1, stream.npos);
-        StrUtil::EatTrim(stream, L" \r\n");
+        StrUtil::eatTrim(stream, L" \r\n");
         std::wstring xmlTag;
         unsigned int pos = stream.find_first_of(CONST_TAG_END_SYMBOL);
         if (pos == stream.npos) {
@@ -142,8 +142,8 @@ namespace utils {
         stream = stream.substr(1, stream.npos);
     }
 
-    bool utils::XmlNode::IsEndOfTag(std::wstring& stream) throw (XmlException) {
-        StrUtil::EatTrim(stream, CONST_XML_DELIMITERS);
+    bool utils::XmlNode::isEndOfTag(std::wstring& stream) throw (XmlException) {
+        StrUtil::eatTrim(stream, CONST_XML_DELIMITERS);
         if (stream.length() > 2 && stream[0] == CONST_TAG_CLOSE_SYMBOL && stream[1] == CONST_TAG_END_SYMBOL) {
             stream = stream.substr(2, stream.npos);
         }
@@ -153,8 +153,8 @@ namespace utils {
         return false;
     }
 
-    std::wstring utils::XmlNode::ReadAttributeName(std::wstring& stream) throw (XmlException) {
-        StrUtil::EatTrim(stream, CONST_XML_DELIMITERS);
+    std::wstring utils::XmlNode::readAttributeName(std::wstring& stream) throw (XmlException) {
+        StrUtil::eatTrim(stream, CONST_XML_DELIMITERS);
         std::wstring argName;
         unsigned int pos = stream.find_first_of(L" \r\n><'=");
         if (pos == stream.npos) {
@@ -163,7 +163,7 @@ namespace utils {
 
         argName = stream.substr(0, pos);
         stream = stream.substr(pos, stream.npos);
-        StrUtil::EatTrim(stream, CONST_XML_DELIMITERS);
+        StrUtil::eatTrim(stream, CONST_XML_DELIMITERS);
         if (stream.empty()) {
             throw XmlException("Wrong XML string");
         }
@@ -174,8 +174,8 @@ namespace utils {
         return argName;
     }
 
-    std::wstring utils::XmlNode::ReadAttributeValue(std::wstring& stream) throw (XmlException) {
-        StrUtil::EatTrim(stream, CONST_XML_DELIMITERS);
+    std::wstring utils::XmlNode::readAttributeValue(std::wstring& stream) throw (XmlException) {
+        StrUtil::eatTrim(stream, CONST_XML_DELIMITERS);
         if (stream.empty()) {
             throw XmlException("Wrong XML string");
         }
@@ -210,14 +210,14 @@ namespace utils {
         return argValue;
     }
 
-    bool utils::XmlNode::IsACloseTagSymbols(std::wstring& stream) {
+    bool utils::XmlNode::isACloseTagSymbols(std::wstring& stream) {
         if (stream.length() < 2 || stream[0] != CONST_TAG_BEGIN_SYMBOL || stream[1] != CONST_TAG_CLOSE_SYMBOL) {
             return false;
         }
         return true;
     }
 
-    bool utils::XmlNode::IsComment(const std::wstring& stream) throw (XmlException) {
+    bool utils::XmlNode::isComment(const std::wstring& stream) throw (XmlException) {
         if (stream.empty()) {
             throw XmlException("Wrong XML string");
         }
@@ -228,7 +228,7 @@ namespace utils {
             return false;
         }
         std::wstring temp = stream.substr(1, stream.npos);
-        StrUtil::EatTrim(temp, CONST_XML_DELIMITERS);
+        StrUtil::eatTrim(temp, CONST_XML_DELIMITERS);
         if (temp.length() < 3) {
             throw XmlException("Wrong XML string");
         }
@@ -238,8 +238,8 @@ namespace utils {
         return true;
     }
 
-    void utils::XmlNode::ReadComment(std::wstring& stream) throw (XmlException) {
-        if (stream.empty() || !IsComment(stream)) {
+    void utils::XmlNode::readComment(std::wstring& stream) throw (XmlException) {
+        if (stream.empty() || !isComment(stream)) {
             throw XmlException("Wrong XML string");
         }
         if (stream.length() < 7) {

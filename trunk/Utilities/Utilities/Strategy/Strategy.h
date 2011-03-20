@@ -72,13 +72,13 @@ namespace utils {
     template<class T>
     bool Strategy<T>::operator==(T* ptr) {
         AutoLock lock(_lockObject);
-        return _strategy.GetPtr() == ptr;
+        return _strategy.getPtr() == ptr;
     }
 
     template<class T>
     bool Strategy<T>::operator!=(T* ptr) {
         AutoLock lock(_lockObject);
-        return _strategy.GetPtr() != ptr;
+        return _strategy.getPtr() != ptr;
     }
 }
 

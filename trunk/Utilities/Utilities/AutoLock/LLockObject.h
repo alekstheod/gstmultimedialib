@@ -21,8 +21,8 @@ namespace utils {
 
     public:
         LLockObject();
-        bool Lock(unsigned int waitTime)const;
-        bool Unlock(void)const;
+        bool lock(unsigned int waitTime)const;
+        bool unlock(void)const;
         virtual ~LLockObject()throw ();
     };
 

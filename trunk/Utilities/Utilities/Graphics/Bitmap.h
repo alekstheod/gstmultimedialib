@@ -43,12 +43,12 @@ namespace utils {
 
     public:
         Bitmap(unsigned int width, unsigned int height);
-        unsigned int GetWidth(void)const;
-        unsigned int GetHeight(void)const;
-        bool SetWidth(unsigned int width);
-        bool SetHeight(unsigned int height);
-        std::vector<unsigned char> GetBitmapAsRawData(void)const;
-        std::vector<unsigned char> GetBitmapAsFileRawData(void)const;
+        unsigned int getWidth(void)const;
+        unsigned int getHeight(void)const;
+        bool setWidth(unsigned int width);
+        bool setHeight(unsigned int height);
+        std::vector<unsigned char> getBitmapAsRawData(void)const;
+        std::vector<unsigned char> getBitmapAsFileRawData(void)const;
         T * operator[] (unsigned int row);
         ~Bitmap()throw ();
     };
@@ -78,18 +78,18 @@ namespace utils {
         memset((void*) &_bmpInfo, sizeof (_bmpInfo), 0);
         _bmpInfo.biPlanes = 1;
         _bmpInfo.biCompression = 0;
-        _bmpInfo.biBitCount = pixel->GetBitsPerPixel();
+        _bmpInfo.biBitCount = pixel->getBitsPerPixel();
         _bmpInfo.biWidth = width;
         _bmpInfo.biHeight = height;
     }
 
     template<class T>
-    unsigned int Bitmap<T>::GetWidth(void)const {
+    unsigned int Bitmap<T>::getWidth(void)const {
         return _bmpInfo.biWidth;
     }
 
     template<class T>
-    unsigned int Bitmap<T>::GetHeight(void)const {
+    unsigned int Bitmap<T>::getHeight(void)const {
         return _bmpInfo.biHeight;
     }
 
@@ -102,7 +102,7 @@ namespace utils {
     }
 
     template<class T>
-    bool Bitmap<T>::SetWidth(unsigned int width) {
+    bool Bitmap<T>::setWidth(unsigned int width) {
         if (width == 0) {
             width = 1;
         }
@@ -118,7 +118,7 @@ namespace utils {
     }
 
     template<class T>
-    bool Bitmap<T>::SetHeight(unsigned int height) {
+    bool Bitmap<T>::setHeight(unsigned int height) {
         if (height == 0) {
             height = 1;
         }
@@ -140,11 +140,11 @@ namespace utils {
     }
 
     template<class T>
-    std::vector<unsigned char> Bitmap<T>::GetBitmapAsRawData(void)const {
+    std::vector<unsigned char> Bitmap<T>::getBitmapAsRawData(void)const {
         std::vector<unsigned char> result;
         T p;
         IPixel* tmpPixel = static_cast<IPixel*> (&p);
-        unsigned int pad = (4 - _bmpInfo.biWidth * (tmpPixel->GetPixelDataSize()) % 4);
+        unsigned int pad = (4 - _bmpInfo.biWidth * (tmpPixel->getPixelDataSize()) % 4);
 
         std::vector<unsigned char> padData;
         padData.resize(pad, 0);
@@ -156,8 +156,8 @@ namespace utils {
                     T pxl = currentRow->second.at(j);
                     IPixel* pixel = static_cast<IPixel*> (&pxl);
                     std::vector<unsigned char> pixelData;
-                    pixelData.resize(pixel->GetPixelDataSize(), 0);
-                    pixel->GetPixelData(pixelData);
+                    pixelData.resize(pixel->getPixelDataSize(), 0);
+                    pixel->getPixelData(pixelData);
                     result.insert(result.end(), pixelData.begin(), pixelData.end());
                 }
                 result.insert(result.end(), padData.begin(), padData.end());
@@ -167,13 +167,13 @@ namespace utils {
     }
 
     template<class T>
-    std::vector<unsigned char> Bitmap<T>::GetBitmapAsFileRawData(void)const {
+    std::vector<unsigned char> Bitmap<T>::getBitmapAsFileRawData(void)const {
         std::vector<unsigned char> result;
         result.resize(sizeof (_bmpInfo), 0);
         memcpy(&result.at(0), &_bmpInfo, sizeof (_bmpInfo));
         T p;
         IPixel* tmpPixel = static_cast<IPixel*> (&p);
-        unsigned int pad = (4 - _bmpInfo.biWidth * (tmpPixel->GetPixelDataSize()) % 4);
+        unsigned int pad = (4 - _bmpInfo.biWidth * (tmpPixel->getPixelDataSize()) % 4);
 
         std::vector<unsigned char> padData;
         padData.resize(pad, 0);
@@ -185,8 +185,8 @@ namespace utils {
                     T pxl = currentRow->second.at(j);
                     IPixel* pixel = static_cast<IPixel*> (&pxl);
                     std::vector<unsigned char> pixelData;
-                    pixelData.resize(pixel->GetPixelDataSize(), 0);
-                    pixel->GetPixelData(pixelData);
+                    pixelData.resize(pixel->getPixelDataSize(), 0);
+                    pixel->getPixelData(pixelData);
                     result.insert(result.end(), pixelData.begin(), pixelData.end());
                 }
                 result.insert(result.end(), padData.begin(), padData.end());

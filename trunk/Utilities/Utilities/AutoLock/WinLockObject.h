@@ -25,8 +25,8 @@ namespace utils {
         /// Default constructor.
         /// </summary>
         WinLockObject(void);
-        bool Lock(unsigned int waitTime = INFINITY)const;
-        bool Unlock(void)const;
+        bool lock(unsigned int waitTime = INFINITY)const;
+        bool unlock(void)const;
         virtual ~WinLockObject(void)throw ();
     };
 

@@ -27,15 +27,15 @@ namespace utils {
         static const std::wstring CONST_XML_DELIMITERS;
 
     private:
-        void ReadAttributes(std::wstring& stream)throw (XmlException);
-        std::wstring ReadAttributeName(std::wstring& stream)throw (XmlException);
-        std::wstring ReadAttributeValue(std::wstring& stream)throw (XmlException);
-        void ReadBody(std::wstring& stream)throw (XmlException);
-        void ReadCloseTag(std::wstring& stream)throw (XmlException);
-        bool IsEndOfTag(std::wstring& stream)throw (XmlException);
-        bool IsACloseTagSymbols(std::wstring& stream);
-        bool IsComment(const std::wstring& stream)throw (XmlException);
-        void ReadComment(std::wstring& stream)throw (XmlException);
+        void readAttributes(std::wstring& stream)throw (XmlException);
+        std::wstring readAttributeName(std::wstring& stream)throw (XmlException);
+        std::wstring readAttributeValue(std::wstring& stream)throw (XmlException);
+        void readBody(std::wstring& stream)throw (XmlException);
+        void readCloseTag(std::wstring& stream)throw (XmlException);
+        bool isEndOfTag(std::wstring& stream)throw (XmlException);
+        bool isACloseTagSymbols(std::wstring& stream);
+        bool isComment(const std::wstring& stream)throw (XmlException);
+        void readComment(std::wstring& stream)throw (XmlException);
 
     public:
         XmlNode(std::wstring& stream)throw (XmlException);

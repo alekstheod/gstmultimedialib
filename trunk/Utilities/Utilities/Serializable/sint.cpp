@@ -19,11 +19,11 @@ sint::~sint(void)throw () {
 }
 
 std::wstring sint::ToXml(const std::wstring& propertyName)const {
-    return ToXmlString(propertyName, StrUtil::ToWideString(_value));
+    return ToXmlString(propertyName, StrUtil::toWideString(_value));
 }
 
 std::wstring sint::GetValue(void)const {
-    return StrUtil::ToWideString(_value);
+    return StrUtil::toWideString(_value);
 }
 
 bool sint::SetValue(const std::wstring& inputValue) {

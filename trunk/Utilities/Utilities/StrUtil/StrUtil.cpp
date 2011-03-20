@@ -12,7 +12,7 @@ namespace utils {
     StrUtil::~StrUtil(void) {
     }
 
-    std::wstring StrUtil::Trim(const std::wstring& str) {
+    std::wstring StrUtil::trim(const std::wstring& str) {
         std::wstring result;
         unsigned int pos = str.find_first_not_of(L" \r\n\t");
         if (pos != str.npos) {
@@ -25,7 +25,7 @@ namespace utils {
         return result;
     }
 
-    std::vector<std::wstring> StrUtil::Parse(const std::wstring& source, const std::wstring& delimiter) {
+    std::vector<std::wstring> StrUtil::parse(const std::wstring& source, const std::wstring& delimiter) {
         std::vector<std::wstring> result;
         std::wstring temp = source;
         unsigned int pos = 0;
@@ -43,13 +43,13 @@ namespace utils {
         return result;
     }
 
-    void utils::StrUtil::Trim(std::queue<wchar_t>& stream) {
+    void utils::StrUtil::trim(std::queue<wchar_t>& stream) {
         while (!stream.empty() && (stream.front() == ' ' || stream.front() == '\r' || stream.front() == '\n')) {
             stream.pop();
         }
     }
 
-    void utils::StrUtil::EatTrim(std::wstring& str, const std::wstring& lex) {
+    void utils::StrUtil::eatTrim(std::wstring& str, const std::wstring& lex) {
         if (str.empty()) {
             return;
         }
@@ -61,20 +61,20 @@ namespace utils {
         }
     }
 
-    std::string utils::StrUtil::ToString(int inputValue) {
+    std::string utils::StrUtil::toString(int inputValue) {
         std::stringstream stream;
         stream << dec << inputValue;
         return stream.str();
     }
 
-    std::wstring utils::StrUtil::ToWideString(int inputValue) {
+    std::wstring utils::StrUtil::toWideString(int inputValue) {
         std::stringstream stream;
         stream << dec << inputValue;
         string str = stream.str();
         return wstring(str.begin(), str.end());
     }
 
-    std::wstring utils::StrUtil::ToWideString(float inputValue) {
+    std::wstring utils::StrUtil::toWideString(float inputValue) {
         std::stringstream stream;
         stream << inputValue;
         string str = stream.str();

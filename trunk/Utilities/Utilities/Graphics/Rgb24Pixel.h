@@ -30,9 +30,9 @@ namespace utils {
         const Rgb24Pixel operator +(const Rgb24Pixel& pixel)const;
         const Rgb24Pixel & operator =(const Rgb24Pixel& pixel);
         bool operator ==(const Rgb24Pixel& pixel)const;
-        unsigned int GetBitsPerPixel(void)const;
-        bool GetPixelData(std::vector<unsigned char>& data)const;
-        unsigned int GetPixelDataSize(void)const;
+        unsigned int getBitsPerPixel(void)const;
+        bool getPixelData(std::vector<unsigned char>& data)const;
+        unsigned int getPixelDataSize(void)const;
         virtual ~Rgb24Pixel();
     };
 

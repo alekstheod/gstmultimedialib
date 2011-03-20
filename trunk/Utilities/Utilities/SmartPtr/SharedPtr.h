@@ -57,17 +57,17 @@ namespace utils {
         /// <summary>
         ///
         /// </summary>
-        T* GetPtr(void)const;
+        T* getPtr(void)const;
 
         /// <summary>
         ///
         /// </summary>
-        unsigned int AddRef(void);
+        unsigned int addRef(void);
 
         /// <summary>
         ///
         /// </summary>
-        unsigned int Release(void);
+        unsigned int release(void);
     };
 
     template<class T>
@@ -76,7 +76,7 @@ namespace utils {
     }
 
     template<class T>
-    T* SharedPtr<T>::GetPtr(void)const {
+    T* SharedPtr<T>::getPtr(void)const {
         return _ptr;
     }
 
@@ -87,7 +87,7 @@ namespace utils {
     }
 
     template<class T>
-    unsigned int SharedPtr<T>::Release(void) {
+    unsigned int SharedPtr<T>::release(void) {
         int refCount;
         try {
             AutoLock lock(_lockObject);
@@ -113,7 +113,7 @@ namespace utils {
     }
 
     template<class T>
-    unsigned int SharedPtr<T>::AddRef(void) {
+    unsigned int SharedPtr<T>::addRef(void) {
         int refCount = 0;
         try {
             AutoLock lock(_lockObject);
