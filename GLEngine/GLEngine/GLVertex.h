@@ -10,12 +10,12 @@ namespace gl {
 		public:
 			GLVertex(void);
 			GLVertex(float posX, float posY, float posZ);
-			float GetPosX(void) const;
-			float GetPosY(void) const;
-			float GetPosZ(void) const;
-			void SetPosX(float posX);
-			void SetPosY(float posY);
-			void SetPosZ(float posZ);
+			float getPosX(void) const;
+			float getPosY(void) const;
+			float getPosZ(void) const;
+			void setPosX(float posX);
+			void setPosY(float posY);
+			void setPosZ(float posZ);
 			~GLVertex(void);
 	};
 }
