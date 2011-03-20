@@ -14,7 +14,7 @@ namespace utils {
         _errorCode = pthread_mutex_init(&_mutex, NULL);
     }
 
-    bool LLockObject::Lock(unsigned int waitTime)const {
+    bool LLockObject::lock(unsigned int waitTime)const {
         if (_errorCode != 0) {
             return false;
         }
@@ -27,7 +27,7 @@ namespace utils {
         return true;
     }
 
-    bool LLockObject::Unlock(void)const {
+    bool LLockObject::unlock(void)const {
         pthread_mutex_t mutex = _mutex;
         if (_errorCode != 0) {
             return false;

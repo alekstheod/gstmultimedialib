@@ -16,7 +16,7 @@ namespace utils {
         }
     }
 
-    bool WinLockObject::Unlock(void)const {
+    bool WinLockObject::unlock(void)const {
         if (_mutex != NULL) {
             ReleaseMutex(_mutex);
         }else{
@@ -26,7 +26,7 @@ namespace utils {
         return true;
     }
 
-    bool WinLockObject::Lock(unsigned int waitTime)const {
+    bool WinLockObject::lock(unsigned int waitTime)const {
         if(mutex==NULL){
             return false;
         }

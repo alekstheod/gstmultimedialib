@@ -131,11 +131,11 @@ namespace utils {
         return (pixel._red == _red && pixel._green == _green && pixel._blue == _blue);
     }
 
-    unsigned int Rgb24Pixel::GetBitsPerPixel(void)const {
+    unsigned int Rgb24Pixel::getBitsPerPixel(void)const {
         return CONST_BITS_PER_PIXEL;
     }
 
-    bool Rgb24Pixel::GetPixelData(std::vector<unsigned char>& data)const {
+    bool Rgb24Pixel::getPixelData(std::vector<unsigned char>& data)const {
         if (data.size() != CONST_BITS_PER_PIXEL) {
             return false;
         }
@@ -146,7 +146,7 @@ namespace utils {
         return true;
     }
 
-    unsigned int Rgb24Pixel::GetPixelDataSize(void)const {
+    unsigned int Rgb24Pixel::getPixelDataSize(void)const {
         return CONST_BITS_PER_PIXEL;
     }
 

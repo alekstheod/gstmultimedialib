@@ -67,7 +67,7 @@ namespace utils {
 			/// <summary>
 			/// Will return the holding instance pointer.
 			/// </summary>
-			T* GetPtr(void) const;
+			T* getPtr(void) const;
 
 			/// <summary>
 			/// Destructor.
@@ -93,18 +93,18 @@ namespace utils {
 	SmartPtr<T>::SmartPtr(const SmartPtr<T>& smartPtr) {
 		_ptr = NULL;
 		if (smartPtr._ptr != NULL) {
-			smartPtr._ptr->AddRef();
+			smartPtr._ptr->addRef();
 			_ptr = smartPtr._ptr;
 		}
 	}
 
 	template<class T>
-	T* utils::SmartPtr<T>::GetPtr(void) const {
+	T* utils::SmartPtr<T>::getPtr(void) const {
 		if (_ptr == NULL) {
 			return NULL;
 		}
 
-		return _ptr->GetPtr();
+		return _ptr->getPtr();
 	}
 
 	template<class T>
@@ -119,12 +119,12 @@ namespace utils {
 		}
 
 		if (_ptr != 0) {
-			_ptr->Release();
+			_ptr->release();
 		}
 
 		_ptr = smartPtr._ptr;
 		if (_ptr != 0) {
-			_ptr->AddRef();
+			_ptr->addRef();
 		}
 
 		return *this;
@@ -183,7 +183,7 @@ namespace utils {
 	template<class T>
 	void SmartPtr<T>::Release(void) {
 		if (_ptr != NULL) {
-			_ptr->Release();
+			_ptr->release();
 		}
 
 		_ptr = NULL;

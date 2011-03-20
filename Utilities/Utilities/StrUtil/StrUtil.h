@@ -23,13 +23,13 @@ namespace utils {
         ~StrUtil(void);
 
     public:
-        static std::wstring Trim(const std::wstring& str);
-        static void EatTrim(std::wstring& str, const std::wstring& lex);
-        static std::vector<std::wstring> Parse(const std::wstring& source, const std::wstring& delimiter);
-        static void Trim(std::queue<wchar_t>& stream);
-        static std::string ToString(int inputValue);
-        static std::wstring ToWideString(int inputValue);
-        static std::wstring ToWideString(float inputValue);
+        static std::wstring trim(const std::wstring& str);
+        static void eatTrim(std::wstring& str, const std::wstring& lex);
+        static std::vector<std::wstring> parse(const std::wstring& source, const std::wstring& delimiter);
+        static void trim(std::queue<wchar_t>& stream);
+        static std::string toString(int inputValue);
+        static std::wstring toWideString(int inputValue);
+        static std::wstring toWideString(float inputValue);
 
         template<class T>
         static T lexical_cast(const std::wstring& inputValue)throw (bad_cast) {

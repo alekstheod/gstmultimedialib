@@ -15,11 +15,11 @@ sfloat::~sfloat(void)throw () {
 }
 
 std::wstring sfloat::ToXml(const std::wstring& propertyName)const {
-    return ToXmlString(propertyName, StrUtil::ToWideString(_value));
+    return ToXmlString(propertyName, StrUtil::toWideString(_value));
 }
 
 std::wstring sfloat::GetValue(void)const {
-    return StrUtil::ToWideString(_value);
+    return StrUtil::toWideString(_value);
 }
 
 bool sfloat::SetValue(const std::wstring& inputValue) {
