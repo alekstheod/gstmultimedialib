@@ -21,15 +21,15 @@ namespace multimedia {
 			throw GstException("SourceFilter::SourceFilter - File source create failed");
 		}
 
-		g_object_set(G_OBJECT(_source.GetPtr()), "location", fileName.c_str(), NULL);
+		g_object_set(G_OBJECT(_source.getPtr()), "location", fileName.c_str(), NULL);
 	}
 
-	bool SourceFilter::AddToPipeline(GstElement* pipeline) {
+	bool SourceFilter::addToPipeline(GstElement* pipeline) {
 		if (pipeline == NULL) {
 			return false;
 		}
 
-		return gst_bin_add(GST_BIN(pipeline), _source.GetPtr());
+		return gst_bin_add(GST_BIN(pipeline), _source.getPtr());
 	}
 
 	bool SourceFilter::Connect(BaseDemuxerFilter* demuxer) {
@@ -37,8 +37,8 @@ namespace multimedia {
 			return false;
 		}
 
-		gst_object_ref(static_cast<GstElement*> (_source.GetPtr()));
-		return gst_element_link(_source.GetPtr(), demuxer->_demuxer.GetPtr());
+		gst_object_ref(static_cast<GstElement*> (_source.getPtr()));
+		return gst_element_link(_source.getPtr(), demuxer->_demuxer.getPtr());
 	}
 
 	bool SourceFilter::Connect(BaseSinkFilter* output) {
@@ -46,8 +46,8 @@ namespace multimedia {
 			return false;
 		}
 
-		gst_object_ref(static_cast<GstElement*> (_source.GetPtr()));
-		return gst_element_link(_source.GetPtr(), output->_output.GetPtr());
+		gst_object_ref(static_cast<GstElement*> (_source.getPtr()));
+		return gst_element_link(_source.getPtr(), output->_output.getPtr());
 	}
 
 	SourceFilter::~SourceFilter(void) {

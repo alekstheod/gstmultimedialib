@@ -27,7 +27,7 @@ namespace multimedia {
 
 		public:
 			BaseSinkFilter(const std::string& pluginName, const std::string& description) throw (GstException);
-			bool AddToPipeline(GstElement* pipeline);
+			bool addToPipeline(GstElement* pipeline);
 			virtual ~BaseSinkFilter(void);
 	};
 

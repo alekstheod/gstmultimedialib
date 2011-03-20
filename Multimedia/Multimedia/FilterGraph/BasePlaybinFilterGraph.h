@@ -28,18 +28,18 @@ namespace multimedia {
 			static const std::string CONST_PLAYBIN_PLUGIN_DESCRIPTION;
 
 		private:
-			static gboolean MainLoop(GstBus* bus, GstMessage* msg, gpointer data);
+			static gboolean mainLoop(GstBus* bus, GstMessage* msg, gpointer data);
 
 		protected:
-			bool SetAudioSink(BaseSinkFilter* audioSink);
-			bool SetVideoSink(BaseSinkFilter* videoSink);
-			bool SetEncoder(BaseEncoderFilter* encoder);
+			bool setAudioSink(BaseSinkFilter* audioSink);
+			bool setVideoSink(BaseSinkFilter* videoSink);
+			bool setEncoder(BaseEncoderFilter* encoder);
 
 		public:
 			BasePlaybinFilterGraph(const std::string& fileName) throw (GstException);
-			bool Play(void);
-			bool Stop(void);
-			bool Rewind(void);
+			bool play(void);
+			bool stop(void);
+			bool rewind(void);
 			virtual ~BasePlaybinFilterGraph();
 	};
 

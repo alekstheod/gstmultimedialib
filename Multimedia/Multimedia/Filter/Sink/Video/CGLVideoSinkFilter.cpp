@@ -32,7 +32,7 @@ namespace multimedia{
 	        throw GstException("GLVideoSink::GLVideoSink");
 	    }
 
-	    _glDevice->AddGLModel(1, _videoFrameGLModel);
+	    _glDevice->addGLModel(1, _videoFrameGLModel);
 	}
 
 
@@ -41,7 +41,7 @@ namespace multimedia{
 	}
 
 
-	bool CGLVideoSinkFilter::OnSetCaps(GstPad * pad, GstCaps * caps) {
+	bool CGLVideoSinkFilter::onSetCaps(GstPad * pad, GstCaps * caps) {
 	    try {
 	        utils::AutoLock lock(_lockObject);
 	        if (_strategy != NULL) {
@@ -96,14 +96,14 @@ namespace multimedia{
 	}
 
 
-	bool CGLVideoSinkFilter::OnRecieveBuffer(GstPad* gstPad, GstBuffer* gstBuffer) {
+	bool CGLVideoSinkFilter::onRecieveBuffer(GstPad* gstPad, GstBuffer* gstBuffer) {
 	    try {
 	        utils::AutoLock lock(_lockObject);
 	        if (_strategy != NULL) {
 	            _strategy->OnReceiveBuffer(gstBuffer);
 	        }
 
-	        VideoFrameGLModel* videoFrameGLModel = static_cast<VideoFrameGLModel*> (_videoFrameGLModel.GetPtr());
+	        VideoFrameGLModel* videoFrameGLModel = static_cast<VideoFrameGLModel*> (_videoFrameGLModel.getPtr());
 	        if (videoFrameGLModel != NULL) {
 	            videoFrameGLModel->UpdateFrame(_frameWidth, _frameHeight, _glColor, _pixelType, gstBuffer->data);
 	        }
@@ -116,7 +116,7 @@ namespace multimedia{
 	}
 
 
-	bool CGLVideoSinkFilter::RegisterGLVideoSinkStrategy(const utils::SmartPtr<CGLVideoSinkFilter::IGLVideoSinkStrategy>& strategy) {
+	bool CGLVideoSinkFilter::registerGLVideoSinkStrategy(const utils::SmartPtr<CGLVideoSinkFilter::IGLVideoSinkStrategy>& strategy) {
 	    try {
 	        utils::AutoLock lock(_lockObject);
 	        _strategy.RegisterEventStrategy(strategy);

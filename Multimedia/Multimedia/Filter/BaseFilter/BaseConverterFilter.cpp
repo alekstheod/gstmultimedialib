@@ -16,20 +16,20 @@ namespace multimedia{
 	    }
 	}
 
-	bool BaseConverterFilter::Connect(BaseSinkFilter* outputFilter) {
+	bool BaseConverterFilter::connect(BaseSinkFilter* outputFilter) {
 	    if (outputFilter == NULL) {
 	        return false;
 	    }
 
-	    return gst_element_link(_converter.GetPtr(), outputFilter->_output.GetPtr());
+	    return gst_element_link(_converter.getPtr(), outputFilter->_output.getPtr());
 	}
 
-	bool BaseConverterFilter::AddToPipeline(GstElement* pipeline) {
+	bool BaseConverterFilter::addToPipeline(GstElement* pipeline) {
 	    if (pipeline == NULL) {
 	        return false;
 	    }
 
-	    return gst_bin_add(GST_BIN(pipeline), _converter.GetPtr());
+	    return gst_bin_add(GST_BIN(pipeline), _converter.getPtr());
 	}
 
 	BaseConverterFilter::~BaseConverterFilter(void) {

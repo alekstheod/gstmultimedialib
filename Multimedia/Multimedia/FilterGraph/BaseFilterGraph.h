@@ -24,13 +24,13 @@ namespace multimedia {
 			static gboolean MainLoop(GstBus *bus, GstMessage *msg, gpointer data);
 
 		protected:
-			bool AddFilter(IFilter* filter);
+			bool addFilter(IFilter* filter);
 
 		public:
 			BaseFilterGraph(const std::string& graphName) throw (GstException);
-			bool Play(void);
-			bool Stop(void);
-			bool Rewind(void);
+			bool play(void);
+			bool stop(void);
+			bool rewind(void);
 			virtual ~BaseFilterGraph(void);
 	};
 

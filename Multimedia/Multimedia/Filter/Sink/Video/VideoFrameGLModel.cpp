@@ -19,20 +19,20 @@ namespace multimedia {
 		glDeleteTextures(1, &_texture);
 	}
 
-	bool VideoFrameGLModel::DrawModel(void) {
+	bool VideoFrameGLModel::drawModel(void) {
 		try {
 			AutoLock lock(_lockObject);
 			glBindTexture(GL_TEXTURE_2D, _texture);
 			glBegin(GL_QUADS);
 			glColor3f(1, 1, 1);
 			glTexCoord2f(0.0f, 0.0f);
-			glVertex3f(_lowLeft.GetPosX(), _lowLeft.GetPosY(), _lowLeft.GetPosZ());
+			glVertex3f(_lowLeft.getPosX(), _lowLeft.getPosY(), _lowLeft.getPosZ());
 			glTexCoord2f(1.0f, 0.0f);
-			glVertex3f(_lowRight.GetPosX(), _lowRight.GetPosY(), _lowRight.GetPosZ());
+			glVertex3f(_lowRight.getPosX(), _lowRight.getPosY(), _lowRight.getPosZ());
 			glTexCoord2f(1.0f, 1.0f);
-			glVertex3f(_topRight.GetPosX(), _topRight.GetPosY(), _topRight.GetPosZ());
+			glVertex3f(_topRight.getPosX(), _topRight.getPosY(), _topRight.getPosZ());
 			glTexCoord2f(0.0f, 1.0f);
-			glVertex3f(_topLeft.GetPosX(), _topLeft.GetPosY(), _topLeft.GetPosZ());
+			glVertex3f(_topLeft.getPosX(), _topLeft.getPosY(), _topLeft.getPosZ());
 			glEnd();
 		} catch (const LockException&) {
 			return false;

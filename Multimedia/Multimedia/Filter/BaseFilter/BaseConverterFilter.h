@@ -25,8 +25,8 @@ namespace multimedia {
 
 		public:
 			BaseConverterFilter(const std::string& pluginName, const std::string& description) throw (GstException);
-			bool Connect(BaseSinkFilter* outputFilter);
-			bool AddToPipeline(GstElement* pipeline);
+			bool connect(BaseSinkFilter* outputFilter);
+			bool addToPipeline(GstElement* pipeline);
 			virtual ~BaseConverterFilter(void);
 	};
 

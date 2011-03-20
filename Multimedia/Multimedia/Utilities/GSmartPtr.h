@@ -20,12 +20,12 @@ namespace multimedia {
 			GSmartPtr(void);
 			GSmartPtr(T* ptr);
 			GSmartPtr(const GSmartPtr<T>& gPtr);
-			void Attach(T* ptr);
-			void Release(void);
+			void attach(T* ptr);
+			void release(void);
 			bool operator ==(GSmartPtr<T> gPtr) const;
 			bool operator !=(GSmartPtr<T> gPtr) const;
 			T* operator->(void);
-			T* GetPtr(void);
+			T* getPtr(void);
 			const GSmartPtr<T>& operator =(const GSmartPtr<T>& gPtr);
 			virtual ~GSmartPtr(void);
 	};
@@ -55,7 +55,7 @@ namespace multimedia {
 	}
 
 	template<class T>
-	void GSmartPtr<T>::Attach(T* ptr) {
+	void GSmartPtr<T>::attach(T* ptr) {
 		if (_ptr != NULL) {
 			gst_object_unref(_ptr);
 		}
@@ -67,7 +67,7 @@ namespace multimedia {
 	}
 
 	template<class T>
-	void GSmartPtr<T>::Release(void) {
+	void GSmartPtr<T>::release(void) {
 		if (_ptr != NULL) {
 			gst_object_unref(_ptr);
 		}
@@ -81,7 +81,7 @@ namespace multimedia {
 	}
 
 	template<class T>
-	T* GSmartPtr<T>::GetPtr(void) {
+	T* GSmartPtr<T>::getPtr(void) {
 		return _ptr;
 	}
 
