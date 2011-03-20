@@ -16,36 +16,36 @@ namespace multimedia {
 		}
 	}
 
-	bool BaseDecoderFilter::Connect(BaseConverterFilter* converter) {
+	bool BaseDecoderFilter::connect(BaseConverterFilter* converter) {
 		if (converter == NULL) {
 			return false;
 		}
 
-		return gst_element_link(_decoder.GetPtr(), converter->_converter.GetPtr());
+		return gst_element_link(_decoder.getPtr(), converter->_converter.getPtr());
 	}
 
-	bool BaseDecoderFilter::Connect(BaseSinkFilter* outputFilter) {
+	bool BaseDecoderFilter::connect(BaseSinkFilter* outputFilter) {
 		if (outputFilter == NULL) {
 			return false;
 		}
 
-		return gst_element_link(_decoder.GetPtr(), outputFilter->_output.GetPtr());
+		return gst_element_link(_decoder.getPtr(), outputFilter->_output.getPtr());
 	}
 
-	bool BaseDecoderFilter::Connect(BaseEncoderFilter* encoderFilter) {
+	bool BaseDecoderFilter::connect(BaseEncoderFilter* encoderFilter) {
 		if (encoderFilter == NULL) {
 			return false;
 		}
 
-		return gst_element_link(_decoder.GetPtr(), encoderFilter->_encoder.GetPtr());
+		return gst_element_link(_decoder.getPtr(), encoderFilter->_encoder.getPtr());
 	}
 
-	bool BaseDecoderFilter::AddToPipeline(GstElement* pipeline) {
+	bool BaseDecoderFilter::addToPipeline(GstElement* pipeline) {
 		if (pipeline == NULL) {
 			return false;
 		}
 
-		return gst_bin_add(GST_BIN(pipeline), _decoder.GetPtr());
+		return gst_bin_add(GST_BIN(pipeline), _decoder.getPtr());
 	}
 
 	BaseDecoderFilter::~BaseDecoderFilter(void) {

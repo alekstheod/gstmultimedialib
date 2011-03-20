@@ -43,12 +43,12 @@ namespace multimedia{
 			static const float CONST_GL_FRAME_WIDTH;
 
 		protected:
-			virtual bool OnRecieveBuffer(GstPad* gstPad, GstBuffer* gstBuffer);
-			virtual bool OnSetCaps(GstPad * pad, GstCaps * caps);
+			virtual bool onRecieveBuffer(GstPad* gstPad, GstBuffer* gstBuffer);
+			virtual bool onSetCaps(GstPad * pad, GstCaps * caps);
 
 		public:
 			CGLVideoSinkFilter(const utils::SmartPtr<gl::GLDevice>& glDevice) throw (GstException);
-			bool RegisterGLVideoSinkStrategy(const utils::SmartPtr<CGLVideoSinkFilter::IGLVideoSinkStrategy>& strategy);
+			bool registerGLVideoSinkStrategy(const utils::SmartPtr<CGLVideoSinkFilter::IGLVideoSinkStrategy>& strategy);
 			virtual ~CGLVideoSinkFilter(void);
 	};
 

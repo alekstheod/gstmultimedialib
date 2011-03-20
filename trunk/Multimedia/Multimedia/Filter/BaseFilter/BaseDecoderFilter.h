@@ -26,10 +26,10 @@ namespace multimedia {
 
 		public:
 			BaseDecoderFilter(const std::string& pluginName, const std::string& description) throw (GstException);
-			bool Connect(BaseConverterFilter* converter);
-			bool Connect(BaseSinkFilter* outputFilter);
-			bool Connect(BaseEncoderFilter* encoderFilter);
-			bool AddToPipeline(GstElement* pipeline);
+			bool connect(BaseConverterFilter* converter);
+			bool connect(BaseSinkFilter* outputFilter);
+			bool connect(BaseEncoderFilter* encoderFilter);
+			bool addToPipeline(GstElement* pipeline);
 			virtual ~BaseDecoderFilter(void);
 	};
 

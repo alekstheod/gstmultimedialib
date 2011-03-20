@@ -24,14 +24,14 @@ namespace multimedia {
 			throw GstException("BasePlaybinFilterGraph::BasePlaybinFilterGraph - Create pipeline failed");
 		}
 
-		g_object_set(G_OBJECT(_pipeline.GetPtr()), "uri", CONST_FILE_NAME.c_str(), NULL);
+		g_object_set(G_OBJECT(_pipeline.getPtr()), "uri", CONST_FILE_NAME.c_str(), NULL);
 
-		GstBus* bus = gst_pipeline_get_bus(GST_PIPELINE(_pipeline.GetPtr()));
-		gst_bus_add_watch(bus, MainLoop, _mainLoop);
+		GstBus* bus = gst_pipeline_get_bus(GST_PIPELINE(_pipeline.getPtr()));
+		gst_bus_add_watch(bus, mainLoop, _mainLoop);
 		gst_object_unref(bus);
 	}
 
-	gboolean BasePlaybinFilterGraph::MainLoop(GstBus* bus, GstMessage* msg, gpointer data) {
+	gboolean BasePlaybinFilterGraph::mainLoop(GstBus* bus, GstMessage* msg, gpointer data) {
 		GMainLoop* loop = (GMainLoop*) data;
 
 		switch (GST_MESSAGE_TYPE(msg)) {
@@ -68,28 +68,28 @@ namespace multimedia {
 	}
 
 
-	bool BasePlaybinFilterGraph::SetAudioSink(BaseSinkFilter* audioSink) {
+	bool BasePlaybinFilterGraph::setAudioSink(BaseSinkFilter* audioSink) {
 		if (audioSink == NULL) {
 			return false;
 		}
 
-		g_object_set(G_OBJECT(_pipeline.GetPtr()), "audio-sink", audioSink->_output.GetPtr(), NULL);
+		g_object_set(G_OBJECT(_pipeline.getPtr()), "audio-sink", audioSink->_output.getPtr(), NULL);
 		return true;
 	}
 
 
-	bool BasePlaybinFilterGraph::SetVideoSink(BaseSinkFilter* videoSink) {
+	bool BasePlaybinFilterGraph::setVideoSink(BaseSinkFilter* videoSink) {
 		if (videoSink == NULL) {
 			return false;
 		}
 
-		g_object_set(G_OBJECT(_pipeline.GetPtr()), "video-sink", videoSink->_output.GetPtr(), NULL);
+		g_object_set(G_OBJECT(_pipeline.getPtr()), "video-sink", videoSink->_output.getPtr(), NULL);
 		return true;
 	}
 
 
-	bool BasePlaybinFilterGraph::Play(void) {
-		GstStateChangeReturn ret = gst_element_set_state(_pipeline.GetPtr(), GST_STATE_PLAYING);
+	bool BasePlaybinFilterGraph::play(void) {
+		GstStateChangeReturn ret = gst_element_set_state(_pipeline.getPtr(), GST_STATE_PLAYING);
 		if (ret == GST_STATE_CHANGE_FAILURE) {
 			return false;
 		}
@@ -99,8 +99,8 @@ namespace multimedia {
 	}
 
 
-	bool BasePlaybinFilterGraph::Stop(void) {
-		GstStateChangeReturn ret = gst_element_set_state(_pipeline.GetPtr(), GST_STATE_READY);
+	bool BasePlaybinFilterGraph::stop(void) {
+		GstStateChangeReturn ret = gst_element_set_state(_pipeline.getPtr(), GST_STATE_READY);
 		if (ret == GST_STATE_CHANGE_FAILURE) {
 			return false;
 		}
@@ -109,7 +109,7 @@ namespace multimedia {
 		return true;
 	}
 
-	bool BasePlaybinFilterGraph::Rewind(void) {
+	bool BasePlaybinFilterGraph::rewind(void) {
 		return false;
 	}
 

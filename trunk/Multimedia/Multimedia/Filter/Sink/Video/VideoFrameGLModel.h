@@ -27,7 +27,7 @@ namespace multimedia {
 		public:
 			VideoFrameGLModel(const gl::GLVertex& lowLeft, const gl::GLVertex& topLeft, const gl::GLVertex& topRight,
 							const gl::GLVertex& lowRight) throw (gl::GLException);
-			bool DrawModel(void);
+			bool drawModel(void);
 			bool UpdateFrame(GLsizei width, GLsizei height, GLenum format, GLenum type, const GLvoid *pixels);
 			bool UpdateFramePosition(const gl::GLVertex& lowLeft, const gl::GLVertex& topLeft, const gl::GLVertex& topRight,
 					const gl::GLVertex& lowRight);

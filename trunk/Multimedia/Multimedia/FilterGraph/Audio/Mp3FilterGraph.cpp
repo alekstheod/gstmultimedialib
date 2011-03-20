@@ -10,23 +10,23 @@
 namespace multimedia{
 
 	Mp3FilterGraph::Mp3FilterGraph(const std::string& sourceFileName)throw (GstException) : BaseFilterGraph("Mp3Player"), _src(sourceFileName), _audioOutput("Audio_Out") {
-	    if (!AddFilter(&_src)) {
+	    if (!addFilter(&_src)) {
 	        throw GstException("Mp3FilterGraph::Mp3FilterGraph - Create pipeline failed");
 	    }
 
-	    if (!AddFilter(&_demuxer)) {
+	    if (!addFilter(&_demuxer)) {
 	        throw GstException("Mp3FilterGraph::Mp3FilterGraph - Create pipeline failed");
 	    }
 
-	    if (!AddFilter(&_decoder)) {
+	    if (!addFilter(&_decoder)) {
 	        throw GstException("Mp3FilterGraph::Mp3FilterGraph - Create pipeline failed");
 	    }
 
-	    if (!AddFilter(&_converter)) {
+	    if (!addFilter(&_converter)) {
 	        throw GstException("Mp3FilterGraph::Mp3FilterGraph - Create pipeline failed");
 	    }
 
-	    if (!AddFilter(&_audioOutput)) {
+	    if (!addFilter(&_audioOutput)) {
 	        throw GstException("Mp3FilterGraph::Mp3FilterGraph - Create pipeline failed");
 	    }
 
@@ -34,15 +34,15 @@ namespace multimedia{
 	        throw GstException("Mp3FilterGraph::Mp3FilterGraph - Source->Demuxer failed");
 	    }
 
-	    if (!_decoder.Connect(&_converter)) {
+	    if (!_decoder.connect(&_converter)) {
 	        throw GstException("Mp3FilterGraph::Mp3FilterGraph - Decoder->Converter failed");
 	    }
 
-	    if (!_converter.Connect(&_audioOutput)) {
+	    if (!_converter.connect(&_audioOutput)) {
 	        throw GstException("Mp3FilterGraph::Mp3FilterGraph - Converter->Output failed");
 	    }
 
-	    if (!_demuxer.DynamicConnectAudio(&_decoder)) {
+	    if (!_demuxer.dynamicConnectAudio(&_decoder)) {
 	        throw GstException("Mp3FilterGraph::Mp3FilterGraph - Demuxer->Decoder failed");
 	    }
 	}

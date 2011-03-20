@@ -24,7 +24,7 @@ namespace multimedia{
 	        throw GstException("BaseFilterGraph::BaseFilterGraph - Create pipeline failed");
 	    }
 
-	    GstBus* bus = gst_pipeline_get_bus(GST_PIPELINE(_pipeline.GetPtr()));
+	    GstBus* bus = gst_pipeline_get_bus(GST_PIPELINE(_pipeline.getPtr()));
 	    gst_bus_add_watch(bus, MainLoop, _mainLoop);
 	    gst_object_unref(bus);
 	}
@@ -62,17 +62,17 @@ namespace multimedia{
 	}
 
 
-	bool BaseFilterGraph::AddFilter(IFilter* filter) {
+	bool BaseFilterGraph::addFilter(IFilter* filter) {
 	    if (filter == NULL) {
 	        return false;
 	    }
 
-	    return filter->AddToPipeline(_pipeline.GetPtr());
+	    return filter->addToPipeline(_pipeline.getPtr());
 	}
 
 
-	bool BaseFilterGraph::Play(void) {
-	    GstStateChangeReturn ret = gst_element_set_state(_pipeline.GetPtr(), GST_STATE_PLAYING);
+	bool BaseFilterGraph::play(void) {
+	    GstStateChangeReturn ret = gst_element_set_state(_pipeline.getPtr(), GST_STATE_PLAYING);
 	    if (ret == GST_STATE_CHANGE_FAILURE) {
 	        return false;
 	    }
@@ -81,8 +81,8 @@ namespace multimedia{
 	}
 
 
-	bool BaseFilterGraph::Stop(void) {
-		GstStateChangeReturn ret = gst_element_set_state(_pipeline.GetPtr(), GST_STATE_READY);
+	bool BaseFilterGraph::stop(void) {
+		GstStateChangeReturn ret = gst_element_set_state(_pipeline.getPtr(), GST_STATE_READY);
 		if (ret == GST_STATE_CHANGE_FAILURE) {
 			return false;
 		}
@@ -92,7 +92,7 @@ namespace multimedia{
 	}
 
 
-	bool BaseFilterGraph::Rewind(void) {
+	bool BaseFilterGraph::rewind(void) {
 	    return false;
 	}
 

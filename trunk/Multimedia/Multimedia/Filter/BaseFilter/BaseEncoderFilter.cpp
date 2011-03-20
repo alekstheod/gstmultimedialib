@@ -16,12 +16,12 @@ namespace multimedia {
 		}
 	}
 
-	bool BaseEncoderFilter::AddToPipeline(GstElement* pipeline) {
+	bool BaseEncoderFilter::addToPipeline(GstElement* pipeline) {
 		if (pipeline == NULL) {
 			return false;
 		}
 
-		return gst_bin_add(GST_BIN(pipeline), _encoder.GetPtr());
+		return gst_bin_add(GST_BIN(pipeline), _encoder.getPtr());
 	}
 
 	BaseEncoderFilter::~BaseEncoderFilter() {

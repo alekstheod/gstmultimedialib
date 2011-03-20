@@ -28,7 +28,7 @@ namespace multimedia{
 	    SourceFilter(const std::string& fileName)throw (GstException);
 	    bool Connect(BaseDemuxerFilter* demuxer);
 	    bool Connect(BaseSinkFilter* output);
-	    bool AddToPipeline(GstElement* pipeline);
+	    bool addToPipeline(GstElement* pipeline);
 	    virtual ~SourceFilter(void);
 	};
 

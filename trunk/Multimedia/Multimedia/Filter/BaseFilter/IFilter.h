@@ -14,7 +14,7 @@ namespace multimedia {
 	class IFilter {
 		public:
 			IFilter(void);
-			virtual bool AddToPipeline(GstElement* pipeline) = 0;
+			virtual bool addToPipeline(GstElement* pipeline) = 0;
 			virtual ~IFilter(void);
 	};
 

@@ -11,11 +11,11 @@ namespace multimedia {
 
 	XImageVideoFilterGraph::XImageVideoFilterGraph(const std::string& fileName) throw (GstException) :
 		BasePlaybinFilterGraph(fileName), _videoSink("VideoSink"), _audioSink("AudioSink") {
-		if (!SetAudioSink(&_audioSink)) {
+		if (!setAudioSink(&_audioSink)) {
 			throw GstException("XImageVideoFilterGraph::XImageVideoFilterGraph- Set audio sink failed");
 		}
 
-		if (!SetVideoSink(&_videoSink)) {
+		if (!setVideoSink(&_videoSink)) {
 			throw GstException("XImageVideoFilterGraph::XImageVideoFilterGraph - Set video sink failed");
 		}
 	}

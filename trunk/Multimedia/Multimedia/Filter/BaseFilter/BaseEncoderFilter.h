@@ -9,10 +9,11 @@
 #define BASEENCODERFILTER_H_
 #include <Multimedia/Exception/GstException.h>
 #include <Multimedia/Utilities/GSmartPtr.h>
+#include <Multimedia/Filter/BaseFilter/IFilter.h>
 
 namespace multimedia {
 
-	class BaseEncoderFilter {
+	class BaseEncoderFilter : IFilter{
 		private:
 			GSmartPtr<GstElement> _encoder;
 
@@ -22,7 +23,7 @@ namespace multimedia {
 
 		public:
 			BaseEncoderFilter(const std::string& pluginName, const std::string& description) throw (GstException);
-			bool AddToPipeline(GstElement* pipeline);
+			bool addToPipeline(GstElement* pipeline);
 			virtual ~BaseEncoderFilter(void);
 	};
 
