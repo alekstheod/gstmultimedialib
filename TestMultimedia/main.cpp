@@ -13,7 +13,7 @@ int main(int argc, char** argv){
 	try{
 		gst_init (&argc, &argv);
 		XVideoFilterGraph graph("file:///windows/D/test.avi");
-		graph.Play();
+		graph.play();
 	}catch(const GstException& e){
 		cout<<e.what()<<endl;
 	}
