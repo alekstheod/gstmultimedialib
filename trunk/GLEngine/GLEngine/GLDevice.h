@@ -33,12 +33,10 @@ namespace gl {
 
 		public:
 			GLDevice(const GLDevice::RECT&) throw (GLException);
-			bool DrawModels(void);
-			bool AddGLModel(unsigned int,
-					const utils::SmartPtr<IGLModel>& glModel);
-			bool RemoveGLModel(unsigned int glModelId);
-			bool
-			SetPerspective(unsigned int windowWidth, unsigned int windowHeight);
+			bool drawModels(void);
+			bool addGLModel(unsigned int,const utils::SmartPtr<IGLModel>& glModel);
+			bool removeGLModel(unsigned int glModelId);
+			bool setPerspective(unsigned int windowWidth, unsigned int windowHeight);
 			virtual ~GLDevice(void) throw ();
 	};
 

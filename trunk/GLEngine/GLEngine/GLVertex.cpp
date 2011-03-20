@@ -13,27 +13,27 @@ namespace gl{
 	GLVertex::~GLVertex(void) {
 	}
 
-	float GLVertex::GetPosX(void) const {
+	float GLVertex::getPosX(void) const {
 	    return _posX;
 	}
 
-	float GLVertex::GetPosY(void) const {
+	float GLVertex::getPosY(void) const {
 	    return _posY;
 	}
 
-	float GLVertex::GetPosZ(void) const {
+	float GLVertex::getPosZ(void) const {
 	    return _posZ;
 	}
 
-	void GLVertex::SetPosX(float posX) {
+	void GLVertex::setPosX(float posX) {
 	    _posX = posX;
 	}
 
-	void GLVertex::SetPosY(float posY) {
+	void GLVertex::setPosY(float posY) {
 	    _posY = posY;
 	}
 
-	void GLVertex::SetPosZ(float posZ) {
+	void GLVertex::setPosZ(float posZ) {
 	    _posZ = posZ;
 	}
 }

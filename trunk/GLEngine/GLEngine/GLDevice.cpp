@@ -27,14 +27,14 @@ namespace gl{
 	GLDevice::~GLDevice(void)throw () {
 	}
 
-	bool GLDevice::DrawModels(void) {
+	bool GLDevice::drawModels(void) {
 	    try {
 	        AutoLock lock(_lockObject);
 	        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	        glLoadIdentity();
 	        std::map<unsigned int, utils::SmartPtr<IGLModel> >::iterator glModel;
 	        for (glModel = _glModels.begin(); glModel != _glModels.end(); glModel++) {
-	            if (glModel->second->DrawModel() == false) {
+	            if (glModel->second->drawModel() == false) {
 	                return false;
 	            }
 	        }
@@ -45,7 +45,7 @@ namespace gl{
 	    return true;
 	}
 
-	bool GLDevice::AddGLModel(unsigned int glModelId, const SmartPtr<IGLModel>& glModel) {
+	bool GLDevice::addGLModel(unsigned int glModelId, const SmartPtr<IGLModel>& glModel) {
 	    try {
 	        AutoLock lock(_lockObject);
 	        pair<unsigned int, SmartPtr<IGLModel> > newEntry(glModelId, glModel);
@@ -58,7 +58,7 @@ namespace gl{
 	    return true;
 	}
 
-	bool GLDevice::RemoveGLModel(unsigned int glModelId) {
+	bool GLDevice::removeGLModel(unsigned int glModelId) {
 	    try {
 	        utils::AutoLock lock(_lockObject);
 	        if (_glModels.find(glModelId) == _glModels.end()) {
@@ -73,7 +73,7 @@ namespace gl{
 	    return true;
 	}
 
-	bool GLDevice::SetPerspective(unsigned int windowWidth, unsigned int windowHeight) {
+	bool GLDevice::setPerspective(unsigned int windowWidth, unsigned int windowHeight) {
 	    try {
 	        AutoLock lock(_lockObject);
 	        glLoadIdentity();

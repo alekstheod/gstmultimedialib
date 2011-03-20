@@ -5,8 +5,7 @@ namespace gl {
 		public:
 
 			IGLModel(void) {};
-			virtual bool DrawModel(void) = 0;
-
+			virtual bool drawModel(void) = 0;
 			virtual ~IGLModel(void) {};
 	};
 }
