@@ -7,7 +7,7 @@
 
 #ifndef BASEENCODERFILTER_H_
 #define BASEENCODERFILTER_H_
-#include <Multimedia/Exception/GstException.h>
+#include <Multimedia/GstException.h>
 #include <Multimedia/Utilities/GSmartPtr.h>
 #include <Multimedia/Filter/BaseFilter/IFilter.h>
 

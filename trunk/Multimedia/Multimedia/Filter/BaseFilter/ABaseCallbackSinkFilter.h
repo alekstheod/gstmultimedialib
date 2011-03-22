@@ -3,7 +3,7 @@
 #include <Multimedia/Utilities/GSmartPtr.h>
 #include <string>
 #include <gst/gst.h>
-#include <Multimedia/Exception/GstException.h>
+#include <Multimedia/GstException.h>
 #include <Multimedia/Filter/BaseFilter/BaseSinkFilter.h>
 
 namespace multimedia {

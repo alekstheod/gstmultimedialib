@@ -10,7 +10,7 @@
 #include <gst/gst.h>
 #include <string>
 #include <Multimedia/Filter/BaseFilter/BaseSinkFilter.h>
-#include <Multimedia/Exception/GstException.h>
+#include <Multimedia/GstException.h>
 #include <Multimedia/Filter/BaseFilter/IFilter.h>
 
 namespace multimedia {
