@@ -7,7 +7,7 @@
 
 #ifndef FFMP3DEMUXER_H_
 #define FFMP3DEMUXER_H_
-#include <Multimedia/Exception/GstException.h>
+#include <Multimedia/GstException.h>
 #include <Multimedia/Filter/BaseFilter/BaseDemuxerFilter.h>
 
 namespace multimedia {

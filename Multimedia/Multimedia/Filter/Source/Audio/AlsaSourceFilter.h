@@ -7,7 +7,7 @@
 
 #ifndef ALSASOURCEFILTER_H_
 #define ALSASOURCEFILTER_H_
-#include <Multimedia/Exception/GstException.h>
+#include <Multimedia/GstException.h>
 #include <Multimedia/Utilities/GSmartPtr.h>
 
 namespace multimedia{

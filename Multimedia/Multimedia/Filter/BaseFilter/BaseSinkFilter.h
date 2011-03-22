@@ -9,7 +9,7 @@
 #define AOUTPUTFILTER_H_
 #include <gst/gst.h>
 #include <string>
-#include <Multimedia/Exception/GstException.h>
+#include <Multimedia/GstException.h>
 #include <Multimedia/Filter/BaseFilter/IFilter.h>
 #include <Multimedia/Utilities/GSmartPtr.h>
 

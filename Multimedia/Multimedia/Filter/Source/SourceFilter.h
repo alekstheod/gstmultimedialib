@@ -8,7 +8,7 @@
 #ifndef SOURCEFILTER_H_
 #define SOURCEFILTER_H_
 #include <gst/gst.h>
-#include <Multimedia/Exception/GstException.h>
+#include <Multimedia/GstException.h>
 #include <Multimedia/Filter/BaseFilter/BaseDemuxerFilter.h>
 #include <Multimedia/Filter/BaseFilter/IFilter.h>
 #include <Multimedia/Filter/BaseFilter/IFilter.h>

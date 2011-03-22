@@ -11,6 +11,10 @@
 
 namespace multimedia {
 
+	/**
+	 * Basic filter interface.
+	 *
+	 */
 	class IFilter {
 		public:
 			IFilter(void);
