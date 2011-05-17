@@ -5,9 +5,6 @@ using namespace utils;
 
 namespace gl{
 
-	const GLVertex GLDevice::CONST_DEFAULT_CAMERA_POSITION = GLVertex(0.0f, 0.0f, 1.41f);
-	const GLVertex GLDevice::CONST_DEFAULT_LOOKAT_POSITION = GLVertex(0.0f, 0.0f, 0.0f);
-
 	GLDevice::GLDevice(const GLDevice::RECT& windowRect)throw (GLException) {
 	    if (windowRect.left >= windowRect.right) {
 	        throw GLException("GLDevice::GLDevice - Wrong window rect");
@@ -30,18 +27,23 @@ namespace gl{
 	bool GLDevice::drawModels(void) {
 	    try {
 	        AutoLock lock(_lockObject);
+	        if(_camera!=NULL){
+	        	_camera->applyCamera();
+	        }
+
 	        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	        glLoadIdentity();
 	        std::map<unsigned int, utils::SmartPtr<IGLModel> >::iterator glModel;
 	        for (glModel = _glModels.begin(); glModel != _glModels.end(); glModel++) {
 	            if (glModel->second->drawModel() == false) {
 	                return false;
 	            }
 	        }
+
 	        glFlush();
 	    } catch (const LockException&) {
 	        return false;
 	    }
+
 	    return true;
 	}
 
@@ -55,6 +57,7 @@ namespace gl{
 	    } catch (const LockException&) {
 	        return false;
 	    }
+
 	    return true;
 	}
 
@@ -66,25 +69,38 @@ namespace gl{
 	        }
 
 	        _glModels.erase(glModelId);
-	        return true;
 	    } catch (const utils::LockException&) {
 	        return false;
 	    }
+
 	    return true;
 	}
 
 	bool GLDevice::setPerspective(unsigned int windowWidth, unsigned int windowHeight) {
 	    try {
 	        AutoLock lock(_lockObject);
-	        glLoadIdentity();
 	        glViewport(0, 0, windowWidth, windowHeight);
 	        glMatrixMode(GL_MODELVIEW);
-
 	    } catch (const LockException&) {
 	        return false;
 	    }
+
 	    return true;
 	}
 
+	bool GLDevice::setCamera(const utils::SmartPtr<IGLCamera>& camera){
+		if(camera==NULL){
+			return false;
+		}
+
+	    try {
+	    	AutoLock lock(_lockObject);
+			_camera=camera;
+	    } catch (const utils::LockException&) {
+	        return false;
+	    }
+
+	    return true;
+	}
 }
 

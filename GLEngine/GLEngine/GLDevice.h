@@ -4,9 +4,10 @@
 #include <map>
 #include <Utilities/SmartPtr/SmartPtr.h>
 #include <Utilities/AutoLock/LockObject.h>
-#include "GLException.h"
-#include "GLVertex.h"
-#include "IGLModel.h"
+#include <GLEngine/GLException.h>
+#include <GLEngine/GLVertex.h>
+#include <GLEngine/IGLModel.h>
+#include <GLEngine/IGLCamera.h>
 
 namespace gl {
 
@@ -26,14 +27,12 @@ namespace gl {
 			unsigned int _windowWidth;
 			unsigned int _windowHeight;
 			std::map<unsigned int, utils::SmartPtr<IGLModel> > _glModels;
-
-		public:
-			static const GLVertex CONST_DEFAULT_CAMERA_POSITION;
-			static const GLVertex CONST_DEFAULT_LOOKAT_POSITION;
+			utils::SmartPtr<IGLCamera> _camera;
 
 		public:
 			GLDevice(const GLDevice::RECT&) throw (GLException);
 			bool drawModels(void);
+			bool setCamera(const utils::SmartPtr<IGLCamera>& camera);
 			bool addGLModel(unsigned int,const utils::SmartPtr<IGLModel>& glModel);
 			bool removeGLModel(unsigned int glModelId);
 			bool setPerspective(unsigned int windowWidth, unsigned int windowHeight);
