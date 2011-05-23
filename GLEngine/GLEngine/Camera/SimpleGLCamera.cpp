@@ -10,7 +10,7 @@
 
 namespace gl {
 
-	const GLVertex SimpleGLCamera::CONST_DEFAULT_CAMERA_POSITION=GLVertex(0.0f, 0.0f, 1.41f);
+	const GLVertex SimpleGLCamera::CONST_DEFAULT_CAMERA_POSITION=GLVertex(0.0f, 0.0f, 5.41f);
 	const GLVertex SimpleGLCamera::CONST_DEFAULT_LOOKAT_POSITION=GLVertex(0.0f, 0.0f, 0.0f);
 
 	SimpleGLCamera::SimpleGLCamera():_cameraPosition(CONST_DEFAULT_CAMERA_POSITION), _lookAtPosition(CONST_DEFAULT_LOOKAT_POSITION) {
@@ -30,6 +30,6 @@ namespace gl {
 	void SimpleGLCamera::applyCamera(){
 		gluLookAt(_cameraPosition.getPosX(), _cameraPosition.getPosY(), _cameraPosition.getPosZ(),
 				_lookAtPosition.getPosX(), _lookAtPosition.getPosY(), _lookAtPosition.getPosZ(),
-				0.0f, 1.0f, 0.0f);
+				0.0, 1.0, 0.0);
 	}
 }

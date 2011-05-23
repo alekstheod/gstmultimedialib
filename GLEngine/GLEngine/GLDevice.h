@@ -5,9 +5,10 @@
 #include <Utilities/SmartPtr/SmartPtr.h>
 #include <Utilities/AutoLock/LockObject.h>
 #include <GLEngine/GLException.h>
-#include <GLEngine/GLVertex.h>
-#include <GLEngine/IGLModel.h>
-#include <GLEngine/IGLCamera.h>
+#include <GLEngine/Model/GLVertex.h>
+#include <GLEngine/Model/IGLModel.h>
+#include <GLEngine/Camera/IGLCamera.h>
+#include <GLEngine/Light/IGLLight.h>
 
 namespace gl {
 
@@ -28,6 +29,7 @@ namespace gl {
 			unsigned int _windowHeight;
 			std::map<unsigned int, utils::SmartPtr<IGLModel> > _glModels;
 			utils::SmartPtr<IGLCamera> _camera;
+			std::map<unsigned int, utils::SmartPtr<IGLLight> > _lights;
 
 		public:
 			GLDevice(const GLDevice::RECT&) throw (GLException);
@@ -36,6 +38,8 @@ namespace gl {
 			bool addGLModel(unsigned int,const utils::SmartPtr<IGLModel>& glModel);
 			bool removeGLModel(unsigned int glModelId);
 			bool setPerspective(unsigned int windowWidth, unsigned int windowHeight);
+			bool removeLight(unsigned int lightId);
+			bool setLight(unsigned int lightId, const utils::SmartPtr<IGLLight>& light);
 			virtual ~GLDevice(void) throw ();
 	};
 

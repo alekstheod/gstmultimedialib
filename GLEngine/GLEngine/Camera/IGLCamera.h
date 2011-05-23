@@ -7,7 +7,7 @@
 
 #ifndef IGLCAMERA_H_
 #define IGLCAMERA_H_
-#include <GLEngine/GLVertex.h>
+#include <GLEngine/Model/GLVertex.h>
 
 namespace gl {
 

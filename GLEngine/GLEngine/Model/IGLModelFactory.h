@@ -9,7 +9,7 @@
 #define IGLMODELFACTORY_H_
 #include <Utilities/SmartPtr/SmartPtr.h>
 #include <vector>
-#include <GLEngine/IGLModel.h>
+#include <GLEngine/Model/IGLModel.h>
 
 namespace gl {
 
