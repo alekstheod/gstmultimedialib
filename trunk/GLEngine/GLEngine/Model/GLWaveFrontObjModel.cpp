@@ -12,6 +12,7 @@
 #include <sstream>
 #include <stdio.h>
 #include <Utilities/AutoLock/AutoLock.h>
+#include <Utilities/StrUtil/StrUtil.h>
 
 using namespace std;
 
@@ -33,11 +34,13 @@ GLWaveFrontObjModel::GLWaveFrontObjModel(std::istream& modelStream)throw(gl::GLE
 			float posY=0;
 			float posZ=0;
 
+			std::vector<std::string> tokens = utils::StrUtil::parse(line," ");
 			sscanf(line.c_str(),"%f %f %f ",&posX,&posY,&posZ);
 			_vertexBuffer.push_back(posX);
 			_vertexBuffer.push_back(posY);
 			_vertexBuffer.push_back(posZ);
 		}
+
 
 		if (line.c_str()[0] == 'f'){									// The first character is an 'f': on this line is a point stored
 		   	line[0] = ' ';												// Set first character to 0. This will allow us to use sscanf
