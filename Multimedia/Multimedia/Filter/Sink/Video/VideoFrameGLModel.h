@@ -1,9 +1,9 @@
 #pragma once
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include <GLEngine/IGLModel.h>
+#include <GLEngine/Model/IGLModel.h>
 #include <GLEngine/GLException.h>
-#include <GLEngine/GLVertex.h>
+#include <GLEngine/Model/GLVertex.h>
 #include <Utilities/AutoLock/LLockObject.h>
 #include <vector>
 
@@ -31,6 +31,10 @@ namespace multimedia {
 			bool UpdateFrame(GLsizei width, GLsizei height, GLenum format, GLenum type, const GLvoid *pixels);
 			bool UpdateFramePosition(const gl::GLVertex& lowLeft, const gl::GLVertex& topLeft, const gl::GLVertex& topRight,
 					const gl::GLVertex& lowRight);
+			virtual bool addRotationX(unsigned int rotationId, float angle);
+			virtual bool addRotationY(unsigned int rotationId, float angle);
+			virtual bool addRotationZ(unsigned int rotationId, float angle);
+			virtual bool removeAllRotations();
 			virtual ~VideoFrameGLModel(void);
 	};
 
