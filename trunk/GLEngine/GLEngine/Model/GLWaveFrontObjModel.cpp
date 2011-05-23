@@ -29,27 +29,46 @@ GLWaveFrontObjModel::GLWaveFrontObjModel(std::istream& modelStream)throw(gl::GLE
 	while (! modelStream.eof() ){											// Start reading file data
 		getline (modelStream,line);											// Get line from file
 		if (line.c_str()[0] == 'v'){									// The first character is a v: on this line is a vertex stored.
-			line[0] = ' ';												// Set first character to 0. This will allow us to use sscanf
-			float posX=0;
-			float posY=0;
-			float posZ=0;
+			std::vector< std::string > tokens=utils::StrUtil::parse(line," ");
+			if(tokens.size()!=5){
+				throw gl::GLException("ObjModel::ObjModel - Wrong stream format");
+			}
 
-			std::vector<std::string> tokens = utils::StrUtil::parse(line," ");
-			sscanf(line.c_str(),"%f %f %f ",&posX,&posY,&posZ);
-			_vertexBuffer.push_back(posX);
-			_vertexBuffer.push_back(posY);
-			_vertexBuffer.push_back(posZ);
+			if(tokens[0]!="v"){
+				throw gl::GLException("ObjModel::ObjModel - Wrong stream format");
+			}
+
+			try{
+				_vertexBuffer.push_back( utils::StrUtil::lexical_cast<float>(tokens[1]) );
+				_vertexBuffer.push_back( utils::StrUtil::lexical_cast<float>(tokens[2]) );
+				_vertexBuffer.push_back( utils::StrUtil::lexical_cast<float>(tokens[3]) );
+			}catch(const utils::bad_cast&){
+				throw gl::GLException("ObjModel::ObjModel - Wrong stream format");
+			}
 		}
 
 
 		if (line.c_str()[0] == 'f'){									// The first character is an 'f': on this line is a point stored
-		   	line[0] = ' ';												// Set first character to 0. This will allow us to use sscanf
-
 			int vertexNumber[4] = { 0, 0, 0 };
-            sscanf(line.c_str(),"%i%i%i",&vertexNumber[0],&vertexNumber[1],	&vertexNumber[2] );
-			vertexNumber[0] -= 1;										// OBJ file starts counting from 1
-			vertexNumber[1] -= 1;										// OBJ file starts counting from 1
-			vertexNumber[2] -= 1;										// OBJ file starts counting from 1
+			std::vector< std::string > tokens=utils::StrUtil::parse(line," ");
+			if(tokens.size()!=5){
+				throw gl::GLException("ObjModel::ObjModel - Wrong stream format");
+			}
+
+			if(tokens[0]!="f"){
+				throw gl::GLException("ObjModel::ObjModel - Wrong stream format");
+			}
+
+			try{
+				vertexNumber[0]=utils::StrUtil::lexical_cast<int>(tokens[1]);
+				vertexNumber[1]=utils::StrUtil::lexical_cast<int>(tokens[2]);
+				vertexNumber[2]=utils::StrUtil::lexical_cast<int>(tokens[3]);
+				vertexNumber[0] -= 1;										// OBJ file starts counting from 1
+				vertexNumber[1] -= 1;										// OBJ file starts counting from 1
+				vertexNumber[2] -= 1;
+			}catch(const utils::bad_cast&){
+				throw gl::GLException("ObjModel::ObjModel - Wrong stream format");
+			}
 
 			/********************************************************************
 			 * Create triangles (f 1 2 3) from points: (v X Y Z) (v X Y Z) (v X Y Z).
