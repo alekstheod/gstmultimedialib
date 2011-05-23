@@ -71,5 +71,21 @@ namespace multimedia {
 		return true;
 	}
 
+	bool VideoFrameGLModel::addRotationX(unsigned int rotationId, float angle){
+		return true;
+	}
+
+	bool VideoFrameGLModel::addRotationY(unsigned int rotationId, float angle){
+		return true;
+	};
+
+	bool VideoFrameGLModel::addRotationZ(unsigned int rotationId, float angle){
+		return true;
+	}
+
+	bool VideoFrameGLModel::removeAllRotations(){
+		return true;
+	}
+
 }
 
