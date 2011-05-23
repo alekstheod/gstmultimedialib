@@ -26,6 +26,7 @@ namespace utils {
         static std::wstring trim(const std::wstring& str);
         static void eatTrim(std::wstring& str, const std::wstring& lex);
         static std::vector<std::wstring> parse(const std::wstring& source, const std::wstring& delimiter);
+        static std::vector<std::string> parse(const std::string& source, const std::string& delimiter);
         static void trim(std::queue<wchar_t>& stream);
         static std::string toString(int inputValue);
         static std::wstring toWideString(int inputValue);
@@ -55,4 +56,3 @@ namespace utils {
         }
     };
 }
-

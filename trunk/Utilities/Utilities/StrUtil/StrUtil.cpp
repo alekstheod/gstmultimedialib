@@ -35,21 +35,53 @@ namespace utils {
                 if (pos != 0) {
                     result.push_back(temp.substr(0, pos));
                 }
-                temp = temp.substr(pos + delimiter.length());
+
+                if(pos+delimiter.length()<=temp.length()){
+                	temp = temp.substr(pos + delimiter.length());
+                }else{
+                	result.push_back(temp.substr(0, pos));
+                	break;
+                }
             } else if (!temp.empty()) {
                 result.push_back(temp);
             }
         } while (pos != temp.npos);
+
         return result;
     }
 
-    void utils::StrUtil::trim(std::queue<wchar_t>& stream) {
+    std::vector<std::string> StrUtil::parse(const std::string& source, const std::string& delimiter){
+        std::vector<std::string> result;
+        std::string temp = source;
+        unsigned int pos = 0;
+        do {
+            pos = temp.find(delimiter);
+            if (pos != temp.npos) {
+                if (pos != 0) {
+                    result.push_back(temp.substr(0, pos));
+                }
+
+                if(pos+delimiter.length()<=temp.length()){
+                	temp = temp.substr(pos + delimiter.length());
+                }else{
+                	result.push_back(temp.substr(0, pos));
+                	break;
+                }
+            } else if (!temp.empty()) {
+                result.push_back(temp);
+            }
+        } while (pos != temp.npos);
+
+        return result;
+    }
+
+    void StrUtil::trim(std::queue<wchar_t>& stream) {
         while (!stream.empty() && (stream.front() == ' ' || stream.front() == '\r' || stream.front() == '\n')) {
             stream.pop();
         }
     }
 
-    void utils::StrUtil::eatTrim(std::wstring& str, const std::wstring& lex) {
+    void StrUtil::eatTrim(std::wstring& str, const std::wstring& lex) {
         if (str.empty()) {
             return;
         }
@@ -61,20 +93,20 @@ namespace utils {
         }
     }
 
-    std::string utils::StrUtil::toString(int inputValue) {
+    std::string StrUtil::toString(int inputValue) {
         std::stringstream stream;
         stream << dec << inputValue;
         return stream.str();
     }
 
-    std::wstring utils::StrUtil::toWideString(int inputValue) {
+    std::wstring StrUtil::toWideString(int inputValue) {
         std::stringstream stream;
         stream << dec << inputValue;
         string str = stream.str();
         return wstring(str.begin(), str.end());
     }
 
-    std::wstring utils::StrUtil::toWideString(float inputValue) {
+    std::wstring StrUtil::toWideString(float inputValue) {
         std::stringstream stream;
         stream << inputValue;
         string str = stream.str();
