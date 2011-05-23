@@ -8,7 +8,7 @@
 #ifndef SIMPLEGLCAMERA_H_
 #define SIMPLEGLCAMERA_H_
 
-#include <GLEngine/IGLCamera.h>
+#include <GLEngine/Camera/IGLCamera.h>
 
 namespace gl {
 

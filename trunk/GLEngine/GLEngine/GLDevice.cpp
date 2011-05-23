@@ -21,17 +21,24 @@ namespace gl{
 	    glMatrixMode(GL_MODELVIEW);
 	}
 
-	GLDevice::~GLDevice(void)throw () {
+	GLDevice::~GLDevice(void)throw (){
 	}
 
 	bool GLDevice::drawModels(void) {
 	    try {
 	        AutoLock lock(_lockObject);
+	        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	        glMatrixMode(GL_MODELVIEW);
+	        glLoadIdentity();
 	        if(_camera!=NULL){
 	        	_camera->applyCamera();
 	        }
 
-	        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	        std::map<unsigned int, utils::SmartPtr<IGLLight> >::iterator curLight;
+	        for(curLight=_lights.begin(); curLight!=_lights.end();curLight++){
+	        	curLight->second->applyLight();
+	        }
+
 	        std::map<unsigned int, utils::SmartPtr<IGLModel> >::iterator glModel;
 	        for (glModel = _glModels.begin(); glModel != _glModels.end(); glModel++) {
 	            if (glModel->second->drawModel() == false) {
@@ -79,6 +86,9 @@ namespace gl{
 	bool GLDevice::setPerspective(unsigned int windowWidth, unsigned int windowHeight) {
 	    try {
 	        AutoLock lock(_lockObject);
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			gluPerspective(50.0, 1.0, 1.0, 10000.0);
 	        glViewport(0, 0, windowWidth, windowHeight);
 	        glMatrixMode(GL_MODELVIEW);
 	    } catch (const LockException&) {
@@ -89,10 +99,6 @@ namespace gl{
 	}
 
 	bool GLDevice::setCamera(const utils::SmartPtr<IGLCamera>& camera){
-		if(camera==NULL){
-			return false;
-		}
-
 	    try {
 	    	AutoLock lock(_lockObject);
 			_camera=camera;
@@ -101,6 +107,32 @@ namespace gl{
 	    }
 
 	    return true;
+	}
+
+	bool GLDevice::removeLight(unsigned int lightId){
+		try{
+			utils::AutoLock lock(_lockObject);
+			if(_lights.find(lightId)==_lights.end()){
+				return false;
+			}
+
+			_lights.erase(lightId);
+		}catch(const utils::LockException&){
+			return false;
+		}
+
+		return true;
+	}
+
+	bool GLDevice::setLight(unsigned int lightId, const utils::SmartPtr<IGLLight>& light){
+		try{
+			utils::AutoLock lock(_lockObject);
+			_lights[lightId]=light;
+		}catch(utils::LockException&){
+			return false;
+		}
+
+		return true;
 	}
 }
 
