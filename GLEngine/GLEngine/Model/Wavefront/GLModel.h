@@ -22,6 +22,7 @@ namespace gl{
 		class GLModel : public gl::IGLModel {
 			private:
 				std::map< std::string, GLObject> _glObjects;
+				std::map< unsigned int, Rotation> _rotations;
 				utils::LockObject _lockObject;
 
 			public:
