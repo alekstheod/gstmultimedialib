@@ -13,50 +13,15 @@
 #include <GLEngine/Model/IGLModel.h>
 #include <GLEngine/GLException.h>
 #include <Utilities/AutoLock/LockObject.h>
+#include <GLEngine/Model/Wavefront/GLObject.h>
 
 namespace gl{
 
 	namespace wavefront{
 
 		class GLModel : public gl::IGLModel {
-			class Rotation{
-				private:
-					float _angle;
-					float _xAxis;
-					float _yAxis;
-					float _zAxis;
-
-				public:
-					Rotation(){
-						_angle=0;
-						_xAxis=0;
-						_yAxis=0;
-						_zAxis=0;
-					}
-
-					Rotation(float angle, float xAxis, float yAxis, float zAxis){
-						_angle=angle;
-						_xAxis=xAxis;
-						_yAxis=yAxis;
-						_zAxis=zAxis;
-					}
-
-					float getAngle(){return _angle;}
-					float getAxisX(){return _xAxis;}
-					float getAxisY(){return _yAxis;}
-					float getAxisZ(){return _zAxis;}
-					~Rotation(){};
-			};
-
-			public:
-				static const unsigned int CONST_POINTS_PER_VERTEX;
-				static const unsigned int CONST_TOTAL_FLOATS_IN_TRIANGLE;
-
 			private:
-				std::map<unsigned int, Rotation> _rotations;
-				std::vector<float> _normals; // Stores the normals
-				std::vector<float> _triangleFaces; // Stores the triangles
-				std::vector<float> _vertexBuffer; // Stores the points which make the object
+				std::map< std::string, GLObject> _glObjects;
 				utils::LockObject _lockObject;
 
 			public:
@@ -66,6 +31,12 @@ namespace gl{
 				bool addRotationY(unsigned int rotationId, float angle);
 				bool addRotationZ(unsigned int rotationId, float angle);
 				bool removeAllRotations();
+
+				bool addRotationX(const std::string& objectName, unsigned int rotationId, float angle);
+				bool addRotationY(const std::string& objectName, unsigned int rotationId, float angle);
+				bool addRotationZ(const std::string& objectName, unsigned int rotationId, float angle);
+				bool removeAllRotations(const std::string& objectName);
+
 				virtual ~GLModel();
 		};
 
