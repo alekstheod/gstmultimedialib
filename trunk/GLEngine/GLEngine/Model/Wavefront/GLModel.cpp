@@ -48,6 +48,12 @@ namespace gl{
 			glPushMatrix();
 		 	glEnableClientState(GL_VERTEX_ARRAY);						// Enable vertex arrays
 		 	glEnableClientState(GL_NORMAL_ARRAY);						// Enable normal arrays
+
+		 	std::map< unsigned int, Rotation>::iterator curRotation;
+		 	for(curRotation=_rotations.begin(); curRotation!=_rotations.end();curRotation++){
+		 		glRotatef(curRotation->second.getAngle(), curRotation->second.getAxisX(), curRotation->second.getAxisY(), curRotation->second.getAxisZ());
+		 	}
+
 		 	std::map< std::string, GLObject>::iterator curObject;
 		 	for(curObject=_glObjects.begin();curObject!=_glObjects.end();curObject++){
 		 		curObject->second.drawObject();
@@ -61,50 +67,38 @@ namespace gl{
 
 
 		bool GLModel::addRotationX(unsigned int rotationId, float angle){
-			bool result=true;
 			try{
 				utils::AutoLock lock(_lockObject);
-				std::map< std::string, GLObject>::iterator curObject;
-				for(curObject=_glObjects.begin();curObject!=_glObjects.end();curObject++){
-					result=curObject->second.addRotationX(rotationId, angle);
-				}
+				_rotations[rotationId]=Rotation(angle,1.0,0.0,0.0);
 			}catch(utils::LockException&){
 				return false;
 			}
 
-			return result;
+			return true;
 		}
 
 
 		bool GLModel::addRotationY(unsigned int rotationId, float angle){
-			bool result=true;
 			try{
 				utils::AutoLock lock(_lockObject);
-				std::map< std::string, GLObject>::iterator curObject;
-				for(curObject=_glObjects.begin();curObject!=_glObjects.end();curObject++){
-					result=curObject->second.addRotationY(rotationId, angle);
-				}
+				_rotations[rotationId]=Rotation(angle,0.0,1.0,0.0);
 			}catch(utils::LockException&){
 				return false;
 			}
 
-			return result;
+			return true;
 		}
 
 
 		bool GLModel::addRotationZ(unsigned int rotationId, float angle){
-			bool result=true;
 			try{
 				utils::AutoLock lock(_lockObject);
-				std::map< std::string, GLObject>::iterator curObject;
-				for(curObject=_glObjects.begin();curObject!=_glObjects.end();curObject++){
-					result=curObject->second.addRotationZ(rotationId, angle);
-				}
+				_rotations[rotationId]=Rotation(angle,0.0,0.0,1.0);
 			}catch(utils::LockException&){
 				return false;
 			}
 
-			return result;
+			return true;
 		}
 
 
@@ -112,10 +106,7 @@ namespace gl{
 			bool result=true;
 			try{
 				utils::AutoLock lock(_lockObject);
-				std::map< std::string, GLObject>::iterator curObject;
-				for(curObject=_glObjects.begin();curObject!=_glObjects.end();curObject++){
-					result=curObject->second.removeAllRotations();
-				}
+				_rotations.clear();
 			}catch(utils::LockException&){
 				return false;
 			}

@@ -184,17 +184,24 @@ namespace gl {
 		}
 
 		bool GLObject::drawObject(){
+			bool result=true;
 			glPushMatrix();
-			std::map<unsigned int, Rotation>::iterator currentRotation;
-			for(currentRotation=_rotations.begin(); currentRotation!=_rotations.end(); currentRotation++){
-				glRotatef(currentRotation->second.getAngle(), currentRotation->second.getAxisX(), currentRotation->second.getAxisY(), currentRotation->second.getAxisZ());
+			try{
+				utils::AutoLock lock(_lockObject);
+				std::map<unsigned int, Rotation>::iterator currentRotation;
+				for(currentRotation=_rotations.begin(); currentRotation!=_rotations.end(); currentRotation++){
+					glRotatef(currentRotation->second.getAngle(), currentRotation->second.getAxisX(), currentRotation->second.getAxisY(), currentRotation->second.getAxisZ());
+				}
+
+			}catch(const utils::LockException&){
+				result=false;
 			}
 
 			glVertexPointer(3,GL_FLOAT,	0,&_triangleFaces.at(0));		// Vertex Pointer to triangle array
 			glNormalPointer(GL_FLOAT, 0, &_normals.at(0));				// Normal pointer to normal array
 			glDrawArrays(GL_TRIANGLES, 0, _triangleFaces.size()/CONST_POINTS_PER_VERTEX);	// Draw the triangles
 			glPopMatrix();
-			return true;
+			return result;
 		}
 
 	}
