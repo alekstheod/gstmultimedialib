@@ -31,10 +31,16 @@ namespace multimedia {
 			bool UpdateFrame(GLsizei width, GLsizei height, GLenum format, GLenum type, const GLvoid *pixels);
 			bool UpdateFramePosition(const gl::GLVertex& lowLeft, const gl::GLVertex& topLeft, const gl::GLVertex& topRight,
 					const gl::GLVertex& lowRight);
-			virtual bool addRotationX(unsigned int rotationId, float angle);
-			virtual bool addRotationY(unsigned int rotationId, float angle);
-			virtual bool addRotationZ(unsigned int rotationId, float angle);
-			virtual bool removeAllRotations();
+			bool addRotationX(unsigned int rotationId, float angle);
+			bool addRotationY(unsigned int rotationId, float angle);
+			bool addRotationZ(unsigned int rotationId, float angle);
+
+			bool addRotationX(const std::string& objectName, unsigned int rotationId, float angle);
+			bool addRotationY(const std::string& objectName, unsigned int rotationId, float angle);
+			bool addRotationZ(const std::string& objectName, unsigned int rotationId, float angle);
+			bool removeAllRotations(const std::string& objectName);
+
+			bool removeAllRotations();
 			virtual ~VideoFrameGLModel(void);
 	};
 

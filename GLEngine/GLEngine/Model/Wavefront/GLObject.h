@@ -32,6 +32,7 @@ namespace gl {
 			private:
 				std::vector<float> _normals; // Stores the normals
 				std::vector<float> _triangleFaces; // Stores the triangles
+				std::vector<unsigned int> _vertexNumbers;
 				std::vector<float> _vertexBuffer; // Stores the points which make the object
 				std::map<unsigned int, Rotation> _rotations;
 				std::string _material;
@@ -39,12 +40,13 @@ namespace gl {
 				utils::LockObject _lockObject;
 
 			public:
-				GLObject(std::istream& modelStream)throw(gl::GLException);
+				GLObject(std::istream& modelStream, unsigned int previewMaxFacesIndex)throw(gl::GLException);
 				bool drawObject();
 				bool addRotationX(unsigned int rotationId, float angle);
 				bool addRotationY(unsigned int rotationId, float angle);
 				bool addRotationZ(unsigned int rotationId, float angle);
 				bool removeAllRotations();
+				unsigned int getLastVertexNumber();
 				virtual ~GLObject();
 		};
 

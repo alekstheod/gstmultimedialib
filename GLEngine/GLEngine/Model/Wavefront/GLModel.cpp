@@ -18,11 +18,13 @@ namespace gl{
 
 	namespace wavefront{
 
+
 		GLModel::GLModel(std::istream& modelStream)throw(gl::GLException){
 			if(!modelStream.good() || modelStream.eof()){
 				throw gl::GLException("ObjModel::ObjModel - Wrong argument data is empty");
 			}
 
+			unsigned int previewMaxFacesIndex=0;
 			std::string line;
 			while(!modelStream.eof()){
 				getline(modelStream, line);
@@ -32,8 +34,9 @@ namespace gl{
 						throw GLException("GLModel::GLModel - Illegal modelStream");
 					}
 
-					GLObject obj(modelStream);
-					std::pair< std::string, GLObject > newEntry(tokens[0], obj);
+					GLObject obj(modelStream,previewMaxFacesIndex);
+					previewMaxFacesIndex=obj.getLastVertexNumber();
+					std::pair< std::string, GLObject > newEntry(tokens[1], obj);
 					if(!_glObjects.insert(newEntry).second){
 						throw GLException("GLModel::GLModel - Illegal modelStream");
 					}
@@ -41,14 +44,13 @@ namespace gl{
 			}
 		}
 
+
 		GLModel::~GLModel(){
 		}
 
+
 		bool GLModel::drawModel(){
 			glPushMatrix();
-		 	glEnableClientState(GL_VERTEX_ARRAY);						// Enable vertex arrays
-		 	glEnableClientState(GL_NORMAL_ARRAY);						// Enable normal arrays
-
 		 	std::map< unsigned int, Rotation>::iterator curRotation;
 		 	for(curRotation=_rotations.begin(); curRotation!=_rotations.end();curRotation++){
 		 		glRotatef(curRotation->second.getAngle(), curRotation->second.getAxisX(), curRotation->second.getAxisY(), curRotation->second.getAxisZ());
@@ -59,8 +61,6 @@ namespace gl{
 		 		curObject->second.drawObject();
 		 	}
 
-			glDisableClientState(GL_VERTEX_ARRAY);						// Disable vertex arrays
-			glDisableClientState(GL_NORMAL_ARRAY);						// Disable normal arrays
 			glPopMatrix();
 			return true;
 		}
@@ -129,6 +129,7 @@ namespace gl{
 			return result;
 		}
 
+
 		bool GLModel::addRotationY(const std::string& objectName, unsigned int rotationId, float angle){
 			bool result=true;
 			try{
@@ -144,6 +145,7 @@ namespace gl{
 			return result;
 		}
 
+
 		bool GLModel::addRotationZ(const std::string& objectName, unsigned int rotationId, float angle){
 			bool result=true;
 			try{
@@ -158,6 +160,7 @@ namespace gl{
 
 			return result;
 		}
+
 
 		bool GLModel::removeAllRotations(const std::string& objectName){
 			bool result=true;
