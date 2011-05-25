@@ -87,5 +87,21 @@ namespace multimedia {
 		return true;
 	}
 
+	bool VideoFrameGLModel::addRotationX(const std::string& objectName, unsigned int rotationId, float angle){
+		return false;
+	}
+
+	bool VideoFrameGLModel::addRotationY(const std::string& objectName, unsigned int rotationId, float angle){
+		return false;
+	}
+
+	bool VideoFrameGLModel::addRotationZ(const std::string& objectName, unsigned int rotationId, float angle){
+		return false;
+	}
+
+	bool VideoFrameGLModel::removeAllRotations(const std::string& objectName){
+		return false;
+	}
+
 }
 

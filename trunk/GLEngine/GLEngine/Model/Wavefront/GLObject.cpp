@@ -10,6 +10,7 @@
 #include <GL/glu.h>
 #include <Utilities/StrUtil/StrUtil.h>
 #include <Utilities/AutoLock/AutoLock.h>
+#include <algorithm>
 #include <math.h>
 
 namespace gl {
@@ -24,7 +25,7 @@ namespace gl {
 		const std::string GLObject::CONST_OBJECT_TOKEN="o";
 		const std::string GLObject::CONST_GROUP_TOKEN="g";
 
-		GLObject::GLObject(std::istream& modelStream)throw(gl::GLException){
+		GLObject::GLObject(std::istream& modelStream, unsigned int previewMaxFacesIndex)throw(gl::GLException){
 			if(!modelStream.good() || modelStream.eof()){
 				throw gl::GLException("ObjModel::ObjModel - Wrong argument data is empty");
 			}
@@ -48,18 +49,22 @@ namespace gl {
 						throw gl::GLException("ObjModel::ObjModel - Wrong stream format");
 					}
 				}else if (tokens[0] == CONST_FACES_TOKEN) { // The first character is an 'f': on this line is a point stored
-					int vertexNumber[4] = { 0, 0, 0 };
+					unsigned int vertexNumber[4] = { 0, 0, 0 };
 					if (tokens.size() != 5) {
 						throw gl::GLException("ObjModel::ObjModel - Wrong stream format");
 					}
 
 					try {
-						vertexNumber[0] = utils::StrUtil::lexical_cast<int>(tokens[1]);
-						vertexNumber[1] = utils::StrUtil::lexical_cast<int>(tokens[2]);
-						vertexNumber[2] = utils::StrUtil::lexical_cast<int>(tokens[3]);
-						vertexNumber[0] -= 1; // OBJ file starts counting from 1
-						vertexNumber[1] -= 1; // OBJ file starts counting from 1
-						vertexNumber[2] -= 1;
+						vertexNumber[0] = utils::StrUtil::lexical_cast<unsigned int>(tokens[1]);
+						vertexNumber[1] = utils::StrUtil::lexical_cast<unsigned int>(tokens[2]);
+						vertexNumber[2] = utils::StrUtil::lexical_cast<unsigned int>(tokens[3]);
+						_vertexNumbers.push_back(vertexNumber[0]);
+						_vertexNumbers.push_back(vertexNumber[1]);
+						_vertexNumbers.push_back(vertexNumber[2]);
+
+						vertexNumber[0] -= (1+previewMaxFacesIndex); // OBJ file starts counting from 1
+						vertexNumber[1] -= (1+previewMaxFacesIndex); // OBJ file starts counting from 1
+						vertexNumber[2] -= (1+previewMaxFacesIndex);
 					} catch (const utils::bad_cast&) {
 						throw gl::GLException("ObjModel::ObjModel - Wrong stream format");
 					}
@@ -131,7 +136,7 @@ namespace gl {
 				}
 			}while(!modelStream.eof() && tokens[0]!=CONST_OBJECT_TOKEN && tokens[0]!=CONST_GROUP_TOKEN);
 			if(tokens[0]==CONST_OBJECT_TOKEN || tokens[0]==CONST_GROUP_TOKEN){
-				modelStream.seekg(-line.length(), std::ios::cur);
+				modelStream.seekg(-line.length()-1, std::ios::cur);
 			}
 		}
 
@@ -185,6 +190,8 @@ namespace gl {
 
 		bool GLObject::drawObject(){
 			bool result=true;
+		 	glEnableClientState(GL_VERTEX_ARRAY);						// Enable vertex arrays
+		 	glEnableClientState(GL_NORMAL_ARRAY);						// Enable normal arrays
 			glPushMatrix();
 			try{
 				utils::AutoLock lock(_lockObject);
@@ -197,10 +204,28 @@ namespace gl {
 				result=false;
 			}
 
-			glVertexPointer(3,GL_FLOAT,	0,&_triangleFaces.at(0));		// Vertex Pointer to triangle array
-			glNormalPointer(GL_FLOAT, 0, &_normals.at(0));				// Normal pointer to normal array
-			glDrawArrays(GL_TRIANGLES, 0, _triangleFaces.size()/CONST_POINTS_PER_VERTEX);	// Draw the triangles
+			glVertexPointer( 3, GL_FLOAT, 0, &_triangleFaces.at(0) );		// Vertex Pointer to triangle array
+			glNormalPointer( GL_FLOAT, 0, &_normals.at(0) );				// Normal pointer to normal array
+			glDrawArrays( GL_TRIANGLES, 0, _triangleFaces.size()/CONST_POINTS_PER_VERTEX );	// Draw the triangles
+
+			glDisableClientState(GL_VERTEX_ARRAY);						// Disable vertex arrays
+			glDisableClientState(GL_NORMAL_ARRAY);						// Disable normal arrays
 			glPopMatrix();
+			return result;
+		}
+
+		unsigned int GLObject::getLastVertexNumber(){
+			unsigned int result=0;
+			try{
+				utils::AutoLock lock(_lockObject);
+				std::vector<unsigned int>::iterator res=std::max_element(_vertexNumbers.begin(), _vertexNumbers.end());
+				if(res!=_vertexNumbers.end()){
+					result=*res;
+				}
+			}catch(const utils::LockException&){
+				result=0;
+			}
+
 			return result;
 		}
 
