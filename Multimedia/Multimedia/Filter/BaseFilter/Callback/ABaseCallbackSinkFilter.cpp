@@ -1,18 +1,20 @@
-#include <Multimedia/Filter/BaseFilter/ABaseCallbackSinkFilter.h>
+#include <Multimedia/Filter/BaseFilter/Callback/ABaseCallbackSinkFilter.h>
+#include <Multimedia/Filter/BaseFilter/Callback/gstcallbackplugin.h>
 
 namespace multimedia {
 
-	gboolean ABaseCallbackSinkFilter::gstPluginInitMethod(GstPlugin *plugin){
+	const std::string ABaseCallbackSinkFilter::CONST_PLUGIN_NAME = "callbackplugin";
+	const gboolean ABaseCallbackSinkFilter::CONST_FILTER_INITIALIZATION_STATE=ABaseCallbackSinkFilter::registerCallbackPlugin();
+
+
+	gboolean ABaseCallbackSinkFilter::gstPluginInitMethod(GstPlugin* plugin){
 		if(plugin==NULL){
 			return FALSE;
 		}
 
-		gboolean result = gst_element_register(plugin, CONST_PLUGIN_NAME.c_str(), GST_RANK_NONE, GST_TYPE_ELEMENT);
+		gboolean result = gst_element_register(plugin, CONST_PLUGIN_NAME.c_str(), GST_RANK_NONE, GST_TYPE_CALLBACKPLUGIN);
 		return result;
 	}
-
-
-	const std::string ABaseCallbackSinkFilter::CONST_PLUGIN_NAME = "cbsink";
 
 
 	ABaseCallbackSinkFilter::ABaseCallbackSinkFilter(const std::string& description) : BaseSinkFilter(CONST_PLUGIN_NAME, description){
@@ -51,6 +53,7 @@ namespace multimedia {
 
 
 	gboolean ABaseCallbackSinkFilter::registerCallbackPlugin(){
+		gst_init(NULL, NULL);
 		return gst_plugin_register_static(	GST_VERSION_MAJOR,
 											GST_VERSION_MINOR,
 											CONST_PLUGIN_NAME.c_str(),

@@ -1,7 +1,7 @@
 #ifndef GLVIDEOSINK_H
 #define GLVIDEOSINK_H
 #include <GLEngine/GLDevice.h>
-#include <Multimedia/Filter/BaseFilter/ABaseCallbackSinkFilter.h>
+#include <Multimedia/Filter/BaseFilter/Callback/ABaseCallbackSinkFilter.h>
 #include <Utilities/Strategy/Strategy.h>
 #include <Utilities/AutoLock/LockObject.h>
 
