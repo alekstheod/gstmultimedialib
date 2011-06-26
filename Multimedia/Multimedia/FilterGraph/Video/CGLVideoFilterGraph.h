@@ -9,7 +9,7 @@
 #define CGLVIDEOFILTERGRAPH_H_
 
 #include <Multimedia/FilterGraph/BasePlaybinFilterGraph.h>
-#include <Multimedia/Filter/Sink/Video/CGLVideoSinkFilter.h>
+#include <Multimedia/Filter/Sink/Video/OpenGL/CGLVideoSinkFilter.h>
 #include <GLEngine/GLDevice.h>
 
 namespace multimedia {
