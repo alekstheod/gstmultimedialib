@@ -87,6 +87,14 @@ namespace multimedia {
 		return true;
 	}
 
+	bool BasePlaybinFilterGraph::setVideoSink(ABaseCallbackSinkFilter* videoSink){
+		if (videoSink == NULL) {
+			return false;
+		}
+
+		g_object_set(G_OBJECT(_pipeline.getPtr()), "video-sink", videoSink->_output.getPtr(), NULL);
+		return true;
+	}
 
 	bool BasePlaybinFilterGraph::play(void) {
 		GstStateChangeReturn ret = gst_element_set_state(_pipeline.getPtr(), GST_STATE_PLAYING);
