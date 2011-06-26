@@ -5,7 +5,7 @@
  *      Author: m1cRo
  */
 
-#include <Multimedia/Filter/Sink/Video/GLVideoSinkFilter.h>
+#include <Multimedia/Filter/Sink/Video/OpenGL/GLVideoSinkFilter.h>
 
 namespace multimedia {
 

@@ -9,7 +9,7 @@
 #define VIDEOFILTERGRAPH_H_
 
 #include <Multimedia/FilterGraph/BasePlaybinFilterGraph.h>
-#include <Multimedia/Filter/Sink/Video/CGLVideoSinkFilter.h>
+#include <Multimedia/Filter/Sink/Video/OpenGL/CGLVideoSinkFilter.h>
 #include <Multimedia/Filter/Sink/Audio/StandardAudioSinkFilter.h>
 
 namespace multimedia {

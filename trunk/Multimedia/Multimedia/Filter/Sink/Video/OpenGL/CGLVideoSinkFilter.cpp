@@ -1,4 +1,4 @@
-#include <Multimedia/Filter/Sink/Video/CGLVideoSinkFilter.h>
+#include <Multimedia/Filter/Sink/Video/OpenGL/CGLVideoSinkFilter.h>
 #include <string.h>
 #include "VideoFrameGLModel.h"
 
