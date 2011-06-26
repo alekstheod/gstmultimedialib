@@ -42,41 +42,26 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
-
 /**
  * SECTION:element-callbackplugin
  *
  * FIXME:Describe callbackplugin here.
- *
- * <refsect2>
- * <title>Example launch line</title>
- * |[
- * gst-launch -v -m fakesrc ! callbackplugin ! fakesink silent=TRUE
- * ]|
- * </refsect2>
  */
-
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
-
 #include <Multimedia/Filter/BaseFilter/Callback/gstcallbackplugin.h>
-
 GST_DEBUG_CATEGORY_STATIC (gst_callback_callbackplugin_debug);
 #define GST_CAT_DEFAULT gst_callback_callbackplugin_debug
 
 /* Filter signals and args */
-enum{
-  /* FILL ME */
-  LAST_SIGNAL
+enum {
+	/* FILL ME */
+	LAST_SIGNAL
 };
 
-enum{
-  PROP_0,
-  PROP_SILENT,
-  PROP_CALLBACK,
-  PROP_SETCAPS,
-  PROP_ARG
+enum {
+	PROP_0, PROP_CALLBACK, PROP_SETCAPS, PROP_ARG
 };
 
 /* the capabilities of the inputs and outputs.
@@ -84,46 +69,62 @@ enum{
  * describe the real formats here.
  */
 static GstStaticPadTemplate sink_factory = GST_STATIC_PAD_TEMPLATE ("sink",
-    GST_PAD_SINK,
-    GST_PAD_ALWAYS,
-    GST_STATIC_CAPS ("ANY")
+		GST_PAD_SINK,
+		GST_PAD_ALWAYS,
+		GST_STATIC_CAPS ("ANY")
 );
 
-GST_BOILERPLATE (GstCallbackCallbackPlugin, gst_callback_callbackplugin, GstElement,GST_TYPE_ELEMENT);
+GST_BOILERPLATE (GstCallbackCallbackPlugin, gst_callback_callbackplugin, GstElement,GST_TYPE_ELEMENT)
+;
 
-static void gst_callback_callbackplugin_set_property (GObject * object, guint prop_id,const GValue * value, GParamSpec * pspec);
-static void gst_callback_callbackplugin_get_property (GObject * object, guint prop_id, GValue * value, GParamSpec * pspec);
-static gboolean gst_callback_callbackplugin_set_caps (GstPad * pad, GstCaps * caps);
-static GstFlowReturn gst_callback_callbackplugin_chain (GstPad * pad, GstBuffer * buf);
+static void gst_callback_callbackplugin_set_property(GObject * object,
+		guint prop_id, const GValue * value, GParamSpec * pspec);
+static void gst_callback_callbackplugin_get_property(GObject * object,
+		guint prop_id, GValue * value, GParamSpec * pspec);
+static gboolean gst_callback_callbackplugin_set_caps(GstPad * pad,
+		GstCaps * caps);
+static GstFlowReturn gst_callback_callbackplugin_chain(GstPad * pad,
+		GstBuffer * buf);
 
 /* GObject vmethod implementations */
+static void gst_callback_callbackplugin_base_init(gpointer gclass) {
+	GstElementClass *element_class = GST_ELEMENT_CLASS (gclass);
+	gst_element_class_set_details_simple(element_class, "CallbackPlugin",
+			"CallbackSinkPlugin", "CallbackSinkPlugin",
+			"Alex Theodoridis <alekstheod@gmail.com>");
 
-static void gst_callback_callbackplugin_base_init (gpointer gclass){
-  GstElementClass *element_class = GST_ELEMENT_CLASS (gclass);
-  gst_element_class_set_details_simple(element_class,
-    "CallbackPlugin",
-    "FIXME:Generic",
-    "FIXME:Generic Template Element",
-    "Alex Theodoridis <alekstheod@gmail.com>");
-
-  gst_element_class_add_pad_template (element_class,gst_static_pad_template_get (&sink_factory));
+	gst_element_class_add_pad_template(element_class,
+			gst_static_pad_template_get(&sink_factory));
 }
 
 /* initialize the callbackplugin's class */
-static void gst_callback_callbackplugin_class_init (GstCallbackCallbackPluginClass * klass){
-  GObjectClass *gobject_class;
-  GstElementClass *gstelement_class;
+static void gst_callback_callbackplugin_class_init(GstCallbackCallbackPluginClass * klass) {
+	GObjectClass *gobject_class;
+	GstElementClass *gstelement_class;
 
-  gobject_class = (GObjectClass *) klass;
-  gstelement_class = (GstElementClass *) klass;
+	gobject_class = (GObjectClass *) klass;
+	gstelement_class = (GstElementClass *) klass;
 
-  gobject_class->set_property = gst_callback_callbackplugin_set_property;
-  gobject_class->get_property = gst_callback_callbackplugin_get_property;
+	gobject_class->set_property = gst_callback_callbackplugin_set_property;
+	gobject_class->get_property = gst_callback_callbackplugin_get_property;
 
-  g_object_class_install_property (gobject_class, PROP_SILENT,g_param_spec_boolean ("silent", "Silent", "Produce verbose output ?", FALSE, G_PARAM_READWRITE));
-  g_object_class_install_property (gobject_class, PROP_CALLBACK,g_param_spec_pointer(chain_callback_property, "CallbackFunction", "Callback function pointer", G_PARAM_READWRITE));
-  g_object_class_install_property (gobject_class, PROP_SETCAPS,g_param_spec_pointer (setcaps_callback_property, "SetCapsCallbackFunction", "Callback function pointer for setcaps", G_PARAM_READWRITE));
-  g_object_class_install_property (gobject_class, PROP_ARG,g_param_spec_pointer (chain_callback_arg_property, "CallbackArgument", "Callback argument pointer", G_PARAM_READWRITE));
+	g_object_class_install_property(
+			gobject_class,
+			PROP_CALLBACK,
+			g_param_spec_pointer(chain_callback_property, "CallbackFunction",
+					"Callback function pointer", G_PARAM_READWRITE));
+	g_object_class_install_property(
+			gobject_class,
+			PROP_SETCAPS,
+			g_param_spec_pointer(setcaps_callback_property,
+					"SetCapsCallbackFunction",
+					"Callback function pointer for setcaps", G_PARAM_READWRITE));
+	g_object_class_install_property(
+			gobject_class,
+			PROP_ARG,
+			g_param_spec_pointer(chain_callback_arg_property,
+					"CallbackArgument", "Callback argument pointer",
+					G_PARAM_READWRITE));
 }
 
 /* initialize the new element
@@ -131,140 +132,124 @@ static void gst_callback_callbackplugin_class_init (GstCallbackCallbackPluginCla
  * set pad calback functions
  * initialize instance structure
  */
-static void gst_callback_callbackplugin_init (GstCallbackCallbackPlugin * filter,GstCallbackCallbackPluginClass * gclass){
-  filter->sinkpad = gst_pad_new_from_static_template (&sink_factory, "sink");
-  gst_pad_set_setcaps_function (filter->sinkpad,GST_DEBUG_FUNCPTR(gst_callback_callbackplugin_set_caps));
-  gst_pad_set_getcaps_function (filter->sinkpad,GST_DEBUG_FUNCPTR(gst_pad_proxy_getcaps));
-  gst_pad_set_chain_function (filter->sinkpad, GST_DEBUG_FUNCPTR(gst_callback_callbackplugin_chain));
-  gst_element_add_pad (GST_ELEMENT (filter), filter->sinkpad);
-  filter->silent = FALSE;
-  filter->chain_callback=NULL;
-  filter->setcaps_callback=NULL;
-  filter->arg=NULL;
+static void gst_callback_callbackplugin_init(GstCallbackCallbackPlugin * filter,  GstCallbackCallbackPluginClass * gclass) {
+	filter->sinkpad = gst_pad_new_from_static_template(&sink_factory, "sink");
+	gst_pad_set_setcaps_function(filter->sinkpad,
+			GST_DEBUG_FUNCPTR(gst_callback_callbackplugin_set_caps));
+	gst_pad_set_getcaps_function(filter->sinkpad,
+			GST_DEBUG_FUNCPTR(gst_pad_proxy_getcaps));
+	gst_pad_set_chain_function(filter->sinkpad,
+			GST_DEBUG_FUNCPTR(gst_callback_callbackplugin_chain));
+	gst_element_add_pad(GST_ELEMENT (filter), filter->sinkpad);
+	filter->chain_callback = NULL;
+	filter->setcaps_callback = NULL;
+	filter->arg = NULL;
 }
 
-static void gst_callback_callbackplugin_set_property (GObject * object, guint prop_id,const GValue * value, GParamSpec * pspec){
-  GstCallbackCallbackPlugin *filter = GST_CALLBACKPLUGIN (object);
+static void gst_callback_callbackplugin_set_property(GObject * object,guint prop_id, const GValue * value, GParamSpec * pspec) {
+	GstCallbackCallbackPlugin *filter = GST_CALLBACKPLUGIN (object);
 
-  switch (prop_id) {
-    case PROP_SILENT:{
-      filter->silent = g_value_get_boolean (value);
-  	}break;
+	switch (prop_id) {
+		case PROP_CALLBACK: {
+			filter->chain_callback = g_value_get_pointer(value);
+		}
+			break;
 
-    case PROP_CALLBACK:{
-    	filter->chain_callback=g_value_get_pointer(value);
-    }break;
+		case PROP_SETCAPS: {
+			filter->setcaps_callback = g_value_get_pointer(value);
+		}
+			break;
 
-    case PROP_SETCAPS:{
-    	filter->setcaps_callback=g_value_get_pointer(value);
-    }break;
+		case PROP_ARG: {
+			filter->arg = g_value_get_pointer(value);
+		}
+			break;
 
-    case PROP_ARG:{
-    	filter->arg=g_value_get_pointer(value);
-    }break;
-
-    default:{
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-    }break;
-  }
+		default: {
+			G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+		}break;
+	}
 }
 
-static void gst_callback_callbackplugin_get_property (GObject * object, guint prop_id,GValue * value, GParamSpec * pspec){
-  GstCallbackCallbackPlugin *filter = GST_CALLBACKPLUGIN (object);
+static void gst_callback_callbackplugin_get_property(GObject * object,guint prop_id, GValue * value, GParamSpec * pspec) {
+	GstCallbackCallbackPlugin *filter = GST_CALLBACKPLUGIN (object);
 
-  switch (prop_id) {
-    case PROP_SILENT:{
-      g_value_set_boolean (value, filter->silent);
-    }break;
+	switch (prop_id) {
+		case PROP_CALLBACK: {
+			g_value_set_pointer(value, filter->chain_callback);
+		}
+			break;
 
-    case PROP_CALLBACK:{
-    	g_value_set_pointer(value,filter->chain_callback);
-    }break;
+		case PROP_SETCAPS: {
+			g_value_set_pointer(value, filter->setcaps_callback);
+		}
+			break;
 
-    case PROP_SETCAPS:{
-    	g_value_set_pointer(value,filter->setcaps_callback);
-    }break;
+		case PROP_ARG: {
+			g_value_set_pointer(value, filter->arg);
+		}
+			break;
 
-    case PROP_ARG:{
-    	g_value_set_pointer(value,filter->arg);
-    }break;
-
-    default:{
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-    }break;
-  }
+		default: {
+			G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+		}break;
+	}
 }
 
 /* GstElement vmethod implementations */
 
 /* this function handles the link with other elements */
-static gboolean gst_callback_callbackplugin_set_caps (GstPad * pad, GstCaps * caps){
-  GstCallbackCallbackPlugin *filter;
-  filter = GST_CALLBACKPLUGIN (gst_pad_get_parent (pad));
-  gst_object_unref (filter);
+static gboolean gst_callback_callbackplugin_set_caps(GstPad * pad, GstCaps * caps) {
+	GstCallbackCallbackPlugin *filter;
+	filter = GST_CALLBACKPLUGIN (gst_pad_get_parent (pad));
+	gboolean result = TRUE;
+	if (filter->setcaps_callback != NULL) {
+		result = filter->setcaps_callback(pad, caps, filter->arg);
+	}
 
-  gboolean result=TRUE;
-  if(filter->setcaps_callback!=NULL){
-	  result=filter->setcaps_callback(pad, caps, filter->arg);
-  }
-
-  return result;
+	return result;
 }
 
 /* chain function
  * this function does the actual processing
  */
-static GstFlowReturn gst_callback_callbackplugin_chain (GstPad * pad, GstBuffer * buf){
-  GstCallbackCallbackPlugin *filter;
-  filter = GST_CALLBACKPLUGIN (GST_OBJECT_PARENT (pad));
-  if (filter->silent == FALSE){
-    g_print ("I'm plugged, therefore I'm in.\n");
-  }
+static GstFlowReturn gst_callback_callbackplugin_chain(GstPad * pad, GstBuffer * buf) {
+	GstCallbackCallbackPlugin *filter;
+	filter = GST_CALLBACKPLUGIN (GST_OBJECT_PARENT (pad));
+	GstFlowReturn result = GST_FLOW_OK;
+	if (filter->chain_callback != NULL) {
+		filter->chain_callback(pad, buf, filter->arg);
+	}
 
-  GstFlowReturn result=GST_FLOW_OK;
-  /* just push out the incoming buffer without touching it */
-  if(filter->chain_callback!=NULL){
-	  result=filter->chain_callback(pad, buf, filter->arg);
-  }
-
-  return result;
+	return result;
 }
-
 
 /* entry point to initialize the plug-in
  * initialize the plug-in itself
  * register the element factories and other features
  */
-static gboolean callbackplugin_init (GstPlugin * callbackplugin){
-  /* debug category for fltering log messages
-   *
-   * exchange the string 'Template callbackplugin' with your description
-   */
-  GST_DEBUG_CATEGORY_INIT (gst_callback_callbackplugin_debug, "callbackplugin",0, "Template callbackplugin");
-  return gst_element_register (callbackplugin, "callbackplugin", GST_RANK_NONE,GST_TYPE_CALLBACKPLUGIN);
+static gboolean callbackplugin_init(GstPlugin * callbackplugin) {
+	GST_DEBUG_CATEGORY_INIT (gst_callback_callbackplugin_debug, "callbackplugin",0, "Template callbackplugin");
+	return gst_element_register(callbackplugin, "callbackplugin", GST_RANK_NONE, GST_TYPE_CALLBACKPLUGIN);
 }
-
 /* PACKAGE: this is usually set by autotools depending on some _INIT macro
  * in configure.ac and then written into and defined in config.h, but we can
  * just set it ourselves here in case someone doesn't use autotools to
  * compile this code. GST_PLUGIN_DEFINE needs PACKAGE to be defined.
  */
 #ifndef PACKAGE
-#define PACKAGE "myfirstcallbackplugin"
+#define PACKAGE "callbackplugin"
 #endif
-
-/* gstreamer looks for this structure to register callbackplugins
- *
- * exchange the string 'Template callbackplugin' with your callbackplugin description
- */
-GST_PLUGIN_DEFINE (
-    GST_VERSION_MAJOR,
-    GST_VERSION_MINOR,
-    "callbackplugin",
-    "Template callbackplugin",
-    callbackplugin_init,
-    "0.10.0",
-    "BSD",
-    "GStreamer",
-    "http://gstreamer.net/"
+/*
+ * gstreamer looks for this structure to register callbackplugins
+ */GST_PLUGIN_DEFINE (
+		GST_VERSION_MAJOR,
+		GST_VERSION_MINOR,
+		"callbackplugin",
+		"Template callbackplugin",
+		callbackplugin_init,
+		"0.10.0",
+		"BSD",
+		"GStreamer",
+		"http://gstreamer.net/"
 )

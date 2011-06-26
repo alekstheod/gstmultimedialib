@@ -6,6 +6,7 @@ namespace multimedia{
 
 	const float CGLVideoSinkFilter::CONST_GL_FRAME_HEIGHT = 1.16;
 	const float CGLVideoSinkFilter::CONST_GL_FRAME_WIDTH = 2;
+	const unsigned int CGLVideoSinkFilter::CONST_VIDEOFRAME_GLMODEL_ID=1;
 
 	CGLVideoSinkFilter::CGLVideoSinkFilter(const utils::SmartPtr<gl::GLDevice>& glDevice)throw (GstException) : ABaseCallbackSinkFilter("GL Video sink") {
 	    if (glDevice == NULL) {
@@ -32,12 +33,14 @@ namespace multimedia{
 	        throw GstException("GLVideoSink::GLVideoSink");
 	    }
 
-	    _glDevice->addGLModel(1, _videoFrameGLModel);
+	    if(!_glDevice->addGLModel(1, _videoFrameGLModel)){
+	    	throw GstException("GLVideoSink::GLVideoSink");
+	    }
 	}
 
 
 	CGLVideoSinkFilter::~CGLVideoSinkFilter(void) {
-
+		_glDevice->removeGLModel(1);
 	}
 
 

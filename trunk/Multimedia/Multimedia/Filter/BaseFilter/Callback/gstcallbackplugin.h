@@ -75,7 +75,6 @@ typedef gboolean (*SetCapsCallback)(GstPad * pad, GstCaps * caps, void* arg);
 struct _GstCallbackCallbackPlugin{
   GstElement element;
   GstPad* sinkpad;
-  gboolean silent;
   ChainCallback chain_callback;
   SetCapsCallback setcaps_callback;
   void* arg;

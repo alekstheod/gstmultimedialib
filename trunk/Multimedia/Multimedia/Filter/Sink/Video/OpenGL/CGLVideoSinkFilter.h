@@ -41,6 +41,7 @@ namespace multimedia{
 		public:
 			static const float CONST_GL_FRAME_HEIGHT;
 			static const float CONST_GL_FRAME_WIDTH;
+			static const unsigned int CONST_VIDEOFRAME_GLMODEL_ID;
 
 		protected:
 			virtual bool onRecieveBuffer(GstPad* gstPad, GstBuffer* gstBuffer);
