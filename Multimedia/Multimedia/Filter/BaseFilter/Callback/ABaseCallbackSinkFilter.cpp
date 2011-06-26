@@ -25,8 +25,8 @@ namespace multimedia {
 
 
 	ABaseCallbackSinkFilter::~ABaseCallbackSinkFilter(void) {
-		g_object_set(G_OBJECT(_output.getPtr()), "chain_callback", NULL);
-		g_object_set(G_OBJECT(_output.getPtr()), "setcaps_callback", NULL);
+		g_object_set(G_OBJECT(_output.getPtr()), chain_callback_property, NULL);
+		g_object_set(G_OBJECT(_output.getPtr()), setcaps_callback_property, NULL);
 	}
 
 
