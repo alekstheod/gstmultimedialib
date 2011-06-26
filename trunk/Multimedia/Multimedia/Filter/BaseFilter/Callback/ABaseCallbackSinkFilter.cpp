@@ -18,9 +18,9 @@ namespace multimedia {
 
 
 	ABaseCallbackSinkFilter::ABaseCallbackSinkFilter(const std::string& description) : BaseSinkFilter(CONST_PLUGIN_NAME, description){
-		/*g_object_set(G_OBJECT(_output.GetPtr()), "chain_callback", ChainCallback, NULL);
-		g_object_set(G_OBJECT(_output.GetPtr()), "setcaps_callback", SetCapsCallback, NULL);
-		g_object_set(G_OBJECT(_output.GetPtr()), "chain_callback_arg", this, NULL);*/
+		g_object_set(G_OBJECT(_output.getPtr()), chain_callback_property, chainCallback, NULL);
+		g_object_set(G_OBJECT(_output.getPtr()), setcaps_callback_property, setCapsCallback, NULL);
+		g_object_set(G_OBJECT(_output.getPtr()), chain_callback_arg_property, this, NULL);
 	}
 
 

@@ -65,17 +65,23 @@ G_BEGIN_DECLS
 typedef struct _GstCallbackCallbackPlugin      GstCallbackCallbackPlugin;
 typedef struct _GstCallbackCallbackPluginClass GstCallbackCallbackPluginClass;
 
-struct _GstCallbackCallbackPlugin
-{
+static const char* chain_callback_property="chain_callback";
+static const char* setcaps_callback_property="setcaps_callback";
+static const char* chain_callback_arg_property="chain_callback_arg";
+
+typedef gboolean (*ChainCallback)(GstPad* gstPad, GstBuffer* gstBuffer, void* arg);
+typedef gboolean (*SetCapsCallback)(GstPad * pad, GstCaps * caps, void* arg);
+
+struct _GstCallbackCallbackPlugin{
   GstElement element;
-
   GstPad* sinkpad;
-
   gboolean silent;
+  ChainCallback chain_callback;
+  SetCapsCallback setcaps_callback;
+  void* arg;
 };
 
-struct _GstCallbackCallbackPluginClass 
-{
+struct _GstCallbackCallbackPluginClass {
   GstElementClass parent_class;
 };
 
