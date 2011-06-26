@@ -17,6 +17,8 @@ namespace multimedia {
 			static const std::string CONST_PLUGIN_NAME;
 
 		private:
+			static const gboolean CONST_FILTER_INITIALIZATION_STATE;
+			static gboolean registerCallbackPlugin();
 			static gboolean chainCallback(GstPad* gstPad, GstBuffer* gstBuffer, ABaseCallbackSinkFilter* _this);
 			static gboolean setCapsCallback(GstPad * pad, GstCaps * caps, ABaseCallbackSinkFilter* _this);
 			static gboolean gstPluginInitMethod(GstPlugin *plugin);
@@ -26,7 +28,6 @@ namespace multimedia {
 
 		public:
 			ABaseCallbackSinkFilter(const std::string& description);
-			static gboolean registerCallbackPlugin();
 			virtual ~ABaseCallbackSinkFilter(void);
 	};
 

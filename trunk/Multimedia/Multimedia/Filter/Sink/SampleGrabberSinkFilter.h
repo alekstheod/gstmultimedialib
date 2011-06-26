@@ -7,7 +7,7 @@
 
 #ifndef SAMPLEGRABBERSINKFILTER_H_
 #define SAMPLEGRABBERSINKFILTER_H_
-#include <Multimedia/Filter/BaseFilter/ABaseCallbackSinkFilter.h>
+#include <Multimedia/Filter/BaseFilter/Callback/ABaseCallbackSinkFilter.h>
 
 namespace multimedia {
 
