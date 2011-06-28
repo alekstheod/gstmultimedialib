@@ -12,6 +12,7 @@ namespace multimedia {
 		_topLeft = topLeft;
 		_lowRight = lowRight;
 		_topRight = topRight;
+		_texture = 0;
 		glGenTextures(1, &_texture);
 	}
 
