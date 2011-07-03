@@ -2,7 +2,6 @@
 #define GLVIDEOSINK_H
 #include <GLEngine/GLDevice.h>
 #include <Multimedia/Filter/BaseFilter/Callback/ABaseCallbackSinkFilter.h>
-#include <Utilities/Strategy/Strategy.h>
 #include <Utilities/AutoLock/LockObject.h>
 
 namespace multimedia{
@@ -26,19 +25,6 @@ namespace multimedia{
 			utils::SmartPtr<gl::IGLModel> _videoFrameGLModel;
 
 		public:
-			class IGLVideoSinkStrategy {
-				public:
-					IGLVideoSinkStrategy() {};
-					virtual void OnSetCaps(GstCaps* caps) = 0;
-					virtual void OnReceiveBuffer(GstBuffer* buffer) = 0;
-
-					virtual ~IGLVideoSinkStrategy() {};
-			};
-
-		private:
-			utils::Strategy<IGLVideoSinkStrategy> _strategy;
-
-		public:
 			static const float CONST_GL_FRAME_HEIGHT;
 			static const float CONST_GL_FRAME_WIDTH;
 			static const unsigned int CONST_VIDEOFRAME_GLMODEL_ID;
@@ -49,7 +35,6 @@ namespace multimedia{
 
 		public:
 			CGLVideoSinkFilter(const utils::SmartPtr<gl::GLDevice>& glDevice) throw (GstException);
-			bool registerGLVideoSinkStrategy(const utils::SmartPtr<CGLVideoSinkFilter::IGLVideoSinkStrategy>& strategy);
 			virtual ~CGLVideoSinkFilter(void);
 	};
 

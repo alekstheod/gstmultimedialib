@@ -21,7 +21,6 @@ namespace multimedia {
 
 		public:
 			GLVideoFilterGraph(const std::string& filename, const utils::SmartPtr<gl::GLDevice>& glDevice);
-			bool registerGLVideoSinkStrategy(const utils::SmartPtr<CGLVideoSinkFilter::IGLVideoSinkStrategy>& strategy);
 			virtual ~GLVideoFilterGraph();
 	};
 
