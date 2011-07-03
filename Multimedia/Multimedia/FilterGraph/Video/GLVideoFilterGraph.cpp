@@ -24,10 +24,5 @@ namespace multimedia {
 	GLVideoFilterGraph::~GLVideoFilterGraph() {
 		// TODO Auto-generated destructor stub
 	}
-
-	bool GLVideoFilterGraph::registerGLVideoSinkStrategy(const utils::SmartPtr<CGLVideoSinkFilter::IGLVideoSinkStrategy>& strategy) {
-		return _videoSink.registerGLVideoSinkStrategy(strategy);
-	}
-
 }
 

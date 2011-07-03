@@ -2,7 +2,7 @@
  * GStreamer
  * Copyright (C) 2005 Thomas Vander Stichele <thomas@apestaart.org>
  * Copyright (C) 2005 Ronald S. Bultje <rbultje@ronald.bitfreak.net>
- * Copyright (C) 2011 Alex Theodoridis <<user@hostname.org>>
+ * Copyright (C) 2011 Alex Theodoridis <alekstheod@gmail.com>
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -66,8 +66,8 @@ enum {
 	PROP_0, PROP_CALLBACK, PROP_SETCAPS, PROP_ARG
 };
 
-/* the capabilities of the inputs and outputs.
- *
+/*
+ * the capabilities of the inputs and outputs.
  * describe the real formats here.
  */
 static GstStaticPadTemplate sink_factory = GST_STATIC_PAD_TEMPLATE ("sink",
@@ -107,9 +107,10 @@ static void gst_callback_callbackplugin_class_init(GstCallbackCallbackPluginClas
 }
 
 
-/* initialize the new element
+/*
+ * initialize the new element
  * instantiate pads and add them to element
- * set pad calback functions
+ * set pad callback functions
  * initialize instance structure
  */
 static void gst_callback_callbackplugin_init(GstCallbackCallbackPlugin * filter,  GstCallbackCallbackPluginClass * gclass) {
@@ -193,6 +194,10 @@ static GstFlowReturn gst_callback_callbackplugin_chain(GstPad* pad, GstBuffer* b
 		filter->chain_callback(pad, buf, filter->arg);
 	}
 
+	if(buf!=NULL){
+		gst_buffer_unref(buf);
+	}
+
 	return result;
 }
 
@@ -221,7 +226,7 @@ static gboolean callbackplugin_init(GstPlugin * callbackplugin) {
 		GST_VERSION_MAJOR,
 		GST_VERSION_MINOR,
 		"callbackplugin",
-		"Template callbackplugin",
+		"CallBack plugin",
 		callbackplugin_init,
 		"0.10.0",
 		"BSD",

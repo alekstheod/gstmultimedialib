@@ -40,17 +40,12 @@ namespace multimedia{
 
 
 	CGLVideoSinkFilter::~CGLVideoSinkFilter(void) {
-		_glDevice->removeGLModel(1);
 	}
 
 
 	bool CGLVideoSinkFilter::onSetCaps(GstPad * pad, GstCaps * caps) {
 	    try {
 	        utils::AutoLock lock(_lockObject);
-	        if (_strategy != NULL) {
-	            _strategy->OnSetCaps(caps);
-	        }
-
 	        GstStructure* gstStructure = gst_caps_get_structure(caps, 0);
 	        if (gstStructure == NULL) {
 	            return false;
@@ -102,27 +97,10 @@ namespace multimedia{
 	bool CGLVideoSinkFilter::onRecieveBuffer(GstPad* gstPad, GstBuffer* gstBuffer) {
 	    try {
 	        utils::AutoLock lock(_lockObject);
-	        if (_strategy != NULL) {
-	            _strategy->OnReceiveBuffer(gstBuffer);
-	        }
-
 	        VideoFrameGLModel* videoFrameGLModel = static_cast<VideoFrameGLModel*> (_videoFrameGLModel.getPtr());
 	        if (videoFrameGLModel != NULL) {
-	            videoFrameGLModel->UpdateFrame(_frameWidth, _frameHeight, _glColor, _pixelType, gstBuffer->data);
+	            videoFrameGLModel->UpdateFrame(_frameWidth, _frameHeight, _glColor, _pixelType, gstBuffer);
 	        }
-
-	    } catch (const utils::LockException&) {
-	        return false;
-	    }
-
-	    return true;
-	}
-
-
-	bool CGLVideoSinkFilter::registerGLVideoSinkStrategy(const utils::SmartPtr<CGLVideoSinkFilter::IGLVideoSinkStrategy>& strategy) {
-	    try {
-	        utils::AutoLock lock(_lockObject);
-	        _strategy.RegisterEventStrategy(strategy);
 
 	    } catch (const utils::LockException&) {
 	        return false;
