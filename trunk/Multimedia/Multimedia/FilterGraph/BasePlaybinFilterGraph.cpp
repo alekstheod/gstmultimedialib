@@ -31,6 +31,7 @@ namespace multimedia {
 		gst_object_unref(bus);
 	}
 
+
 	gboolean BasePlaybinFilterGraph::mainLoop(GstBus* bus, GstMessage* msg, gpointer data) {
 		GMainLoop* loop = (GMainLoop*) data;
 
@@ -87,7 +88,8 @@ namespace multimedia {
 		return true;
 	}
 
-	bool BasePlaybinFilterGraph::setVideoSink(ABaseCallbackSinkFilter* videoSink){
+
+	bool BasePlaybinFilterGraph::setVideoSink(ABaseVideoCallbackSinkFilter* videoSink){
 		if (videoSink == NULL) {
 			return false;
 		}
@@ -95,6 +97,7 @@ namespace multimedia {
 		g_object_set(G_OBJECT(_pipeline.getPtr()), "video-sink", videoSink->_output.getPtr(), NULL);
 		return true;
 	}
+
 
 	bool BasePlaybinFilterGraph::play(void) {
 		GstStateChangeReturn ret = gst_element_set_state(_pipeline.getPtr(), GST_STATE_PLAYING);
@@ -116,6 +119,7 @@ namespace multimedia {
 		g_main_loop_quit(_mainLoop);
 		return true;
 	}
+
 
 	bool BasePlaybinFilterGraph::rewind(void) {
 		return false;

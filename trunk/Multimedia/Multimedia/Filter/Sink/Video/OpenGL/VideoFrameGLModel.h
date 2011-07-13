@@ -17,19 +17,19 @@ namespace multimedia {
 			gl::GLVertex _topRight;
 			gl::GLVertex _lowRight;
 			utils::LLockObject _lockObject;
-			GLuint _texture;
+
 			GLsizei _width;
 			GLsizei _height;
-			GLenum _format;
-			GLenum _type;
+			GLenum _glColor;
+			GLenum _pixelType;
 			std::vector<unsigned char> _frameBuffer;
-			GstBuffer* _gstBuffer;
+			GLuint _texture;
 
 		public:
 			VideoFrameGLModel(const gl::GLVertex& lowLeft, const gl::GLVertex& topLeft, const gl::GLVertex& topRight,
 							const gl::GLVertex& lowRight) throw (gl::GLException);
 			bool drawModel(void);
-			bool UpdateFrame(GLsizei width, GLsizei height, GLenum format, GLenum type, GstBuffer* gstBuffer);
+			bool UpdateFrame(GLuint texture, GLsizei width, GLsizei height, GLenum glColor, GLenum pixelType, GstBuffer* gstBuffer);
 			bool UpdateFramePosition(const gl::GLVertex& lowLeft, const gl::GLVertex& topLeft, const gl::GLVertex& topRight,
 					const gl::GLVertex& lowRight);
 			bool addRotationX(unsigned int rotationId, float angle);
