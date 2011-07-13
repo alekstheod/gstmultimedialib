@@ -51,8 +51,7 @@
 	#include <config.h>
 #endif
 
-#include <Multimedia/Filter/BaseFilter/Callback/gstcallbackplugin.h>
-#include <gst/video/gstvideosink.h>
+#include <Multimedia/Filter/BaseFilter/Callback/gstvideocallbackplugin.h>
 #include <gst/video/video.h>
 
 GST_DEBUG_CATEGORY_STATIC (gst_callback_callbackplugin_debug);
@@ -72,7 +71,6 @@ enum {
  * the capabilities of the inputs and outputs.
  * describe the real formats here.
  */
-
 #ifdef GL_YCBCR_MESA
 #define YUV_CAPS ";" GST_VIDEO_CAPS_YUV ("{ UYVY, YUY2 }")
 #else
@@ -81,37 +79,52 @@ enum {
 static GstStaticPadTemplate sink_factory = GST_STATIC_PAD_TEMPLATE ("sink",
 		GST_PAD_SINK,
 		GST_PAD_ALWAYS,
-		GST_STATIC_CAPS ("ANY")
+		GST_STATIC_CAPS (GST_VIDEO_CAPS_RGBx ";" GST_VIDEO_CAPS_BGRx YUV_CAPS)
 );
 
-GST_BOILERPLATE (GstCallbackCallbackPlugin, gst_callback_callbackplugin, GstElement,GST_TYPE_ELEMENT);
+GST_BOILERPLATE (GstCallbackVideoCallbackPlugin, gst_callback_videocallbackplugin, GstVideoSink,GST_TYPE_VIDEO_SINK);
 
 
 static void gst_callback_callbackplugin_set_property(GObject * object,guint prop_id, const GValue * value, GParamSpec * pspec);
 static void gst_callback_callbackplugin_get_property(GObject * object,guint prop_id, GValue * value, GParamSpec * pspec);
 static gboolean gst_callback_callbackplugin_set_caps(GstPad * pad,GstCaps * caps);
-static GstFlowReturn gst_callback_callbackplugin_chain(GstPad * pad,GstBuffer * buf);
+static GstFlowReturn gst_callback_callbackplugin_render(GstBaseSink* sink, GstBuffer* buf);
 
 
 /* GObject vmethod implementations */
-static void gst_callback_callbackplugin_base_init(gpointer gclass) {
+static void gst_callback_videocallbackplugin_base_init(gpointer gclass) {
 	GstElementClass *element_class = GST_ELEMENT_CLASS (gclass);
 	gst_element_class_set_details_simple( element_class, "CallbackPlugin","CallbackSinkPlugin", "CallbackSinkPlugin","Alex Theodoridis <alekstheod@gmail.com>");
 	gst_element_class_add_pad_template( element_class, gst_static_pad_template_get(&sink_factory) );
 }
 
 
+/* chain function
+ * this function does the actual processing
+ */
+static GstFlowReturn gst_callback_callbackplugin_render(GstBaseSink* sink, GstBuffer* buf) {
+	GstCallbackVideoCallbackPlugin *filter=(GstCallbackVideoCallbackPlugin*)sink;
+	GstFlowReturn result = GST_FLOW_OK;
+	if (filter->render_callback != NULL) {
+		filter->render_callback(sink, buf, filter->arg);
+	}
+
+	return result;
+}
+
+
 /* initialize the callbackplugin's class */
-static void gst_callback_callbackplugin_class_init(GstCallbackCallbackPluginClass * klass) {
+static void gst_callback_videocallbackplugin_class_init(GstCallbackVideoCallbackPluginClass * klass) {
 	GObjectClass *gobject_class;
 	GstElementClass *gstelement_class;
 	gobject_class = (GObjectClass *) klass;
 	gstelement_class = (GstElementClass *) klass;
 	gobject_class->set_property = gst_callback_callbackplugin_set_property;
 	gobject_class->get_property = gst_callback_callbackplugin_get_property;
-	g_object_class_install_property( gobject_class, PROP_CALLBACK, g_param_spec_pointer(chain_callback_property, "CallbackFunction", "Callback function pointer", G_PARAM_READWRITE));
-	g_object_class_install_property( gobject_class, PROP_SETCAPS, g_param_spec_pointer(setcaps_callback_property, "SetCapsCallbackFunction", "Callback function pointer for setcaps", G_PARAM_READWRITE));
-	g_object_class_install_property( gobject_class, PROP_ARG, g_param_spec_pointer(chain_callback_arg_property, "CallbackArgument", "Callback argument pointer", G_PARAM_READWRITE));
+	g_object_class_install_property( gobject_class, PROP_CALLBACK, g_param_spec_pointer(render_video_callback_property, "CallbackFunction", "Callback function pointer", G_PARAM_READWRITE));
+	g_object_class_install_property( gobject_class, PROP_SETCAPS, g_param_spec_pointer(setcaps_video_callback_property, "SetCapsCallbackFunction", "Callback function pointer for setcaps", G_PARAM_READWRITE));
+	g_object_class_install_property( gobject_class, PROP_ARG, g_param_spec_pointer(chain_video_callback_arg_property, "CallbackArgument", "Callback argument pointer", G_PARAM_READWRITE));
+	klass->parent_class.parent_class.render=gst_callback_callbackplugin_render;
 }
 
 
@@ -121,23 +134,21 @@ static void gst_callback_callbackplugin_class_init(GstCallbackCallbackPluginClas
  * set pad callback functions
  * initialize instance structure
  */
-static void gst_callback_callbackplugin_init(GstCallbackCallbackPlugin * filter,  GstCallbackCallbackPluginClass * gclass) {
-	filter->sinkpad = gst_pad_new_from_static_template(&sink_factory, "sink");
-	gst_pad_set_setcaps_function(filter->sinkpad, GST_DEBUG_FUNCPTR(gst_callback_callbackplugin_set_caps));
-	gst_pad_set_getcaps_function(filter->sinkpad, GST_DEBUG_FUNCPTR(gst_pad_proxy_getcaps));
-	gst_pad_set_chain_function(filter->sinkpad, GST_DEBUG_FUNCPTR(gst_callback_callbackplugin_chain));
-	gst_element_add_pad(GST_ELEMENT (filter), filter->sinkpad);
-	filter->chain_callback = NULL;
+static void gst_callback_videocallbackplugin_init(GstCallbackVideoCallbackPlugin * filter,  GstCallbackVideoCallbackPluginClass * gclass) {
+	//filter->element.element.sinkpad = gst_pad_new_from_static_template(&sink_factory, "videosink");
+	gst_pad_set_setcaps_function(filter->element.element.sinkpad, GST_DEBUG_FUNCPTR(gst_callback_callbackplugin_set_caps));
+	gst_pad_set_getcaps_function(filter->element.element.sinkpad, GST_DEBUG_FUNCPTR(gst_pad_proxy_getcaps));
+	filter->render_callback = NULL;
 	filter->setcaps_callback = NULL;
 	filter->arg = NULL;
 }
 
 
 static void gst_callback_callbackplugin_set_property(GObject * object,guint prop_id, const GValue * value, GParamSpec * pspec) {
-	GstCallbackCallbackPlugin *filter = GST_CALLBACKPLUGIN (object);
+	GstCallbackVideoCallbackPlugin *filter = GST_VIDEO_CALLBACKPLUGIN (object);
 	switch (prop_id) {
 		case PROP_CALLBACK:{
-			filter->chain_callback = g_value_get_pointer(value);
+			filter->render_callback = g_value_get_pointer(value);
 		}break;
 
 		case PROP_SETCAPS:{
@@ -156,10 +167,10 @@ static void gst_callback_callbackplugin_set_property(GObject * object,guint prop
 
 
 static void gst_callback_callbackplugin_get_property(GObject * object,guint prop_id, GValue * value, GParamSpec * pspec) {
-	GstCallbackCallbackPlugin *filter = GST_CALLBACKPLUGIN (object);
+	GstCallbackVideoCallbackPlugin *filter = GST_VIDEO_CALLBACKPLUGIN (object);
 	switch (prop_id){
 		case PROP_CALLBACK:{
-			g_value_set_pointer(value, filter->chain_callback);
+			g_value_set_pointer(value, filter->render_callback);
 		}break;
 
 		case PROP_SETCAPS:{
@@ -180,8 +191,8 @@ static void gst_callback_callbackplugin_get_property(GObject * object,guint prop
 /* GstElement vmethod implementations */
 /* this function handles the link with other elements */
 static gboolean gst_callback_callbackplugin_set_caps(GstPad * pad, GstCaps * caps) {
-	GstCallbackCallbackPlugin *filter;
-	filter = GST_CALLBACKPLUGIN (gst_pad_get_parent (pad));
+	GstCallbackVideoCallbackPlugin *filter;
+	filter = GST_VIDEO_CALLBACKPLUGIN (gst_pad_get_parent (pad));
 	gboolean result = TRUE;
 	if (filter->setcaps_callback != NULL) {
 		result = filter->setcaps_callback(pad, caps, filter->arg);
@@ -190,33 +201,13 @@ static gboolean gst_callback_callbackplugin_set_caps(GstPad * pad, GstCaps * cap
 	return result;
 }
 
-
-/* chain function
- * this function does the actual processing
- */
-static GstFlowReturn gst_callback_callbackplugin_chain(GstPad* pad, GstBuffer* buf) {
-	GstCallbackCallbackPlugin *filter;
-	filter = GST_CALLBACKPLUGIN (GST_OBJECT_PARENT (pad));
-	GstFlowReturn result = GST_FLOW_OK;
-	if (filter->chain_callback != NULL) {
-		filter->chain_callback(pad, buf, filter->arg);
-	}
-
-	if(buf!=NULL){
-		gst_buffer_unref(buf);
-	}
-
-	return result;
-}
-
-
 /* entry point to initialize the plug-in
  * initialize the plug-in itself
  * register the element factories and other features
  */
 static gboolean callbackplugin_init(GstPlugin * callbackplugin) {
-	GST_DEBUG_CATEGORY_INIT (gst_callback_callbackplugin_debug, "callbackplugin",0, "Template callbackplugin");
-	return gst_element_register(callbackplugin, "callbackplugin", GST_RANK_NONE, GST_TYPE_CALLBACKPLUGIN);
+	GST_DEBUG_CATEGORY_INIT (gst_callback_callbackplugin_debug, "videocallbackplugin",0, "Template callbackplugin");
+	return gst_element_register(callbackplugin, "videocallbackplugin", GST_RANK_NONE, GST_TYPE_VIDEO_CALLBACKPLUGIN);
 }
 
 
@@ -233,7 +224,7 @@ static gboolean callbackplugin_init(GstPlugin * callbackplugin) {
  */GST_PLUGIN_DEFINE (
 		GST_VERSION_MAJOR,
 		GST_VERSION_MINOR,
-		"callbackplugin",
+		"videocallbackplugin",
 		"CallBack plugin",
 		callbackplugin_init,
 		"0.10.0",

@@ -14,7 +14,7 @@
 #include <Multimedia/Utilities/GSmartPtr.h>
 #include <Multimedia/Filter/BaseFilter/BaseSinkFilter.h>
 #include <Multimedia/Filter/BaseFilter/BaseEncoderFilter.h>
-#include <Multimedia/Filter/BaseFilter/Callback/ABaseCallbackSinkFilter.h>
+#include <Multimedia/Filter/BaseFilter/Callback/ABaseVideoCallbackSinkFilter.h>
 
 namespace multimedia {
 
@@ -34,7 +34,7 @@ namespace multimedia {
 		protected:
 			bool setAudioSink(BaseSinkFilter* audioSink);
 			bool setVideoSink(BaseSinkFilter* videoSink);
-			bool setVideoSink(ABaseCallbackSinkFilter* videoSink);
+			bool setVideoSink(ABaseVideoCallbackSinkFilter* videoSink);
 			bool setEncoder(BaseEncoderFilter* encoder);
 
 		public:

@@ -6,9 +6,10 @@ namespace multimedia{
 
 	const float CGLVideoSinkFilter::CONST_GL_FRAME_HEIGHT = 1.16;
 	const float CGLVideoSinkFilter::CONST_GL_FRAME_WIDTH = 2;
+	const GLuint CGLVideoSinkFilter::CONST_INVALID_TEXTURE_ID=0;
 	const unsigned int CGLVideoSinkFilter::CONST_VIDEOFRAME_GLMODEL_ID=1;
 
-	CGLVideoSinkFilter::CGLVideoSinkFilter(const utils::SmartPtr<gl::GLDevice>& glDevice)throw (GstException) : ABaseCallbackSinkFilter("GL Video sink") {
+	CGLVideoSinkFilter::CGLVideoSinkFilter(const utils::SmartPtr<gl::GLDevice>& glDevice)throw (GstException) : ABaseVideoCallbackSinkFilter("GL Video sink") {
 	    if (glDevice == NULL) {
 	        throw GstException("GLVideoSink::GLVideoSink");
 	    }
@@ -36,10 +37,15 @@ namespace multimedia{
 	    if(!_glDevice->addGLModel(1, _videoFrameGLModel)){
 	    	throw GstException("GLVideoSink::GLVideoSink");
 	    }
+
+	    _texture=CONST_INVALID_TEXTURE_ID;
 	}
 
 
 	CGLVideoSinkFilter::~CGLVideoSinkFilter(void) {
+		if(_texture!=CONST_INVALID_TEXTURE_ID){
+			glDeleteTextures(1, &_texture);
+		}
 	}
 
 
@@ -64,6 +70,13 @@ namespace multimedia{
 	            return false;
 	        }
 
+	        if(_texture!=CONST_INVALID_TEXTURE_ID){
+	        	glDeleteTextures(1, &_texture);
+	        	_texture=CONST_INVALID_TEXTURE_ID;
+	        }
+
+	        _texture=(GLuint)this;
+	        glGenTextures( 1, &_texture );
 	        if (strcmp(gst_structure_get_name(gstStructure), "video/x-raw-rgb") == 0) {
 	            gint red_color = 0;
 	            gst_structure_get_int(gstStructure, "red_mask", &red_color);
@@ -75,7 +88,7 @@ namespace multimedia{
 	                _pixelType = GL_UNSIGNED_BYTE;
 	            }
 
-	        } else {
+	        } else if(strcmp(gst_structure_get_name(gstStructure), "video/x-raw-yuv") == 0) {
 	            _glColor = GL_YCBCR_MESA;
 	            unsigned int fourcc;
 	            gst_structure_get_fourcc(gstStructure, "format", &fourcc);
@@ -84,6 +97,8 @@ namespace multimedia{
 	            } else {
 	                _pixelType = GL_UNSIGNED_SHORT_8_8_MESA;
 	            }
+	        }else{
+	        	return false;
 	        }
 
 	    } catch (const utils::LockException&) {
@@ -94,12 +109,12 @@ namespace multimedia{
 	}
 
 
-	bool CGLVideoSinkFilter::onRecieveBuffer(GstPad* gstPad, GstBuffer* gstBuffer) {
+	bool CGLVideoSinkFilter::onRecieveBuffer(GstBaseSink* sink, GstBuffer* gstBuffer) {
 	    try {
 	        utils::AutoLock lock(_lockObject);
 	        VideoFrameGLModel* videoFrameGLModel = static_cast<VideoFrameGLModel*> (_videoFrameGLModel.getPtr());
 	        if (videoFrameGLModel != NULL) {
-	            videoFrameGLModel->UpdateFrame(_frameWidth, _frameHeight, _glColor, _pixelType, gstBuffer);
+	            videoFrameGLModel->UpdateFrame(_texture, _frameWidth, _frameHeight, _glColor, _pixelType, gstBuffer);
 	        }
 
 	    } catch (const utils::LockException&) {

@@ -12,47 +12,39 @@ namespace multimedia {
 		_topLeft = topLeft;
 		_lowRight = lowRight;
 		_topRight = topRight;
-		_texture = 0;
-		_gstBuffer=NULL;
-		glGenTextures(1, &_texture);
 	}
 
 	VideoFrameGLModel::~VideoFrameGLModel(void) {
-		glDeleteTextures(1, &_texture);
-		if(_gstBuffer!=NULL){
-			gst_buffer_unref(_gstBuffer);
-		}
 	}
 
 	bool VideoFrameGLModel::drawModel(void) {
 		try {
 			AutoLock lock(_lockObject);
+			if(_texture==0){
+				return false;
+			}
 
 			glEnable(GL_TEXTURE_2D);
 			glBindTexture(GL_TEXTURE_2D, _texture);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			if(_gstBuffer!=NULL){
-				//glTexImage2D(GL_TEXTURE_2D, 0, 3, _width, _height, 0, _format, _type, GST_BUFFER_DATA(_gstBuffer) );
-				gluBuild2DMipmaps( GL_TEXTURE_2D, 3, _width, _height,
-				                   GL_RGB, GL_UNSIGNED_BYTE, GST_BUFFER_DATA(_gstBuffer)  );
+			if(_frameBuffer.size()>0){
+				glTexImage2D (GL_TEXTURE_2D, 0, _glColor, _width, _height, 0, _glColor, _pixelType, NULL);
+				glTexSubImage2D (GL_TEXTURE_2D, 0, 0, 0, _width, _height,_glColor, _pixelType, &_frameBuffer.at(0));
 			}
 
 			glBegin(GL_QUADS);
-			glBindTexture(GL_TEXTURE_2D, _texture);
-
-			glTexCoord2f(0.0f, 0.0f);
+			glTexCoord2f(0.0f, 1.0f);
 			glVertex3f(_lowLeft.getPosX(), _lowLeft.getPosY(), _lowLeft.getPosZ());
 
-			glTexCoord2f(1.0f, 0.0f);
+			glTexCoord2f(1.0f, 1.0f);
 			glVertex3f(_lowRight.getPosX(), _lowRight.getPosY(), _lowRight.getPosZ());
 
-			glTexCoord2f(1.0f, 1.0f);
+			glTexCoord2f(1.0f, 0.0f);
 			glVertex3f(_topRight.getPosX(), _topRight.getPosY(), _topRight.getPosZ());
 
-			glTexCoord2f(0.0f, 1.0f);
+			glTexCoord2f(0.0f, 0.0f);
 			glVertex3f(_topLeft.getPosX(), _topLeft.getPosY(), _topLeft.getPosZ());
-
 			glEnd();
 		} catch (const LockException&) {
 			return false;
@@ -61,16 +53,22 @@ namespace multimedia {
 		return true;
 	}
 
-	bool VideoFrameGLModel::UpdateFrame(GLsizei width, GLsizei height, GLenum format, GLenum type, GstBuffer* gstBuffer) {
+	bool VideoFrameGLModel::UpdateFrame(GLuint texture, GLsizei width, GLsizei height, GLenum glColor, GLenum pixelType, GstBuffer* gstBuffer) {
 		try {
 			AutoLock lock(_lockObject);
-			if(_gstBuffer!=NULL){
-				gst_buffer_unref(_gstBuffer);
-				_gstBuffer=NULL;
-			}
-
 			if(gstBuffer!=NULL){
-				_gstBuffer=gst_buffer_ref(gstBuffer);
+				_width=width;
+				_height=height;
+				_glColor=glColor;
+				_pixelType=pixelType;
+				if(_frameBuffer.size()!=gstBuffer->size){
+					_frameBuffer.resize(gstBuffer->size);
+				}
+
+
+				memcpy(&_frameBuffer.at(0), GST_BUFFER_DATA (gstBuffer), _frameBuffer.size());
+
+				_texture=texture;
 			}
 
 		} catch (const LockException&) {
