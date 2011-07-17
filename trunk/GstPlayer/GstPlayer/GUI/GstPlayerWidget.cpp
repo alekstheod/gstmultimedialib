@@ -1,7 +1,7 @@
 #include "GstPlayerWidget.h"
 #include <GLEngine/Camera/SimpleGLCamera.h>
 
-namespace gst{
+namespace gstplayer{
 
 	GstPlayerWidget::GstPlayerWidget(QWidget *parent) : QGLWidget(parent){
 		ui.setupUi(this);

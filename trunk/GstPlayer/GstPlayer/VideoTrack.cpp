@@ -7,7 +7,7 @@
 
 #include "VideoTrack.h"
 
-namespace gst {
+namespace gstplayer {
 
 	VideoTrack::VideoTrack(const std::string& uri, utils::SmartPtr< gl::GLDevice >& glDevice)throw(multimedia::GstException) {
 		if(glDevice==NULL){

@@ -12,8 +12,9 @@ using namespace std;
 int main(int argc, char** argv){
 	try{
 		gst_init (&argc, &argv);
-		XVideoFilterGraph graph("file:///windows/D/test.avi");
+		XVideoFilterGraph graph("file:///home/alekstheod/Downloads/battle/test.avi");
 		graph.play();
+		gst_deinit();
 	}catch(const GstException& e){
 		cout<<e.what()<<endl;
 	}

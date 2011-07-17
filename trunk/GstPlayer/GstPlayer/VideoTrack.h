@@ -11,7 +11,7 @@
 #include <Multimedia/FilterGraph/Video/CGLVideoFilterGraph.h>
 #include <GLEngine/GLDevice.h>
 
-namespace gst {
+namespace gstplayer {
 
 	class VideoTrack : public QThread{
 		private:

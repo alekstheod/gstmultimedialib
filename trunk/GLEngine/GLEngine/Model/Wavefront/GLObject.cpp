@@ -135,6 +135,7 @@ namespace gl {
 					_material=tokens[1];
 				}
 			}while(!modelStream.eof() && tokens[0]!=CONST_OBJECT_TOKEN && tokens[0]!=CONST_GROUP_TOKEN);
+
 			if(tokens[0]==CONST_OBJECT_TOKEN || tokens[0]==CONST_GROUP_TOKEN){
 				modelStream.seekg(-line.length()-1, std::ios::cur);
 			}

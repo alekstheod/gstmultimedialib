@@ -27,7 +27,8 @@
 								<option id="gnu.cpp.compiler.exe.debug.option.debugging.level.473495987" name="Debug Level" superClass="gnu.cpp.compiler.exe.debug.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.2133137167" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Multimedia}&quot;"/>
-									<listOptionValue builtIn="false" value="/usr/lib64/glib-2.0/include"/>
+									<listOptionValue builtIn="false" value="/usr/include/libxml2"/>
+									<listOptionValue builtIn="false" value="/usr/lib/i386-linux-gnu/glib-2.0/include/"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Utilities}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/GLEngine}&quot;"/>
 									<listOptionValue builtIn="false" value="/usr/include/gstreamer-0.10"/>
@@ -52,7 +53,6 @@
 								</option>
 								<option id="gnu.cpp.link.option.paths.1747123937" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Multimedia/Debug}&quot;"/>
-									<listOptionValue builtIn="false" value="/usr/lib64/gstreamer-0.10"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/GLEngine/Debug}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Utilities/Debug}&quot;"/>
 								</option>

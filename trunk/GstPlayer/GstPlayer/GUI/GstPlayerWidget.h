@@ -7,7 +7,7 @@
 #include <GstPlayer/VideoTrack.h>
 #include <qtimer.h>
 
-namespace gst{
+namespace gstplayer{
 
 	class GstPlayerWidget : public QGLWidget
 	{

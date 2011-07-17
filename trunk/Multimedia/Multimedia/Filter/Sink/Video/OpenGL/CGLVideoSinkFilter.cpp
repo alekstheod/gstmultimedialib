@@ -34,7 +34,7 @@ namespace multimedia{
 	        throw GstException("GLVideoSink::GLVideoSink");
 	    }
 
-	    if(!_glDevice->addGLModel(1, _videoFrameGLModel)){
+	    if(!_glDevice->addGLModel((unsigned int)_videoFrameGLModel.getPtr(), _videoFrameGLModel)){
 	    	throw GstException("GLVideoSink::GLVideoSink");
 	    }
 

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'gstplayer.ui'
 **
-** Created: Wed Jul 13 00:11:45 2011
+** Created: Sat Jul 16 17:18:47 2011
 **      by: Qt User Interface Compiler version 4.7.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
