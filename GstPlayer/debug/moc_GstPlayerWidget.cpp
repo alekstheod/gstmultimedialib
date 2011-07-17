@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'GstPlayerWidget.h'
 **
-** Created: Thu Jul 14 23:29:49 2011
+** Created: Sat Jul 16 17:18:54 2011
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -17,7 +17,7 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-static const uint qt_meta_data_gst__GstPlayerWidget[] = {
+static const uint qt_meta_data_gstplayer__GstPlayerWidget[] = {
 
  // content:
        5,       // revision
@@ -31,38 +31,38 @@ static const uint qt_meta_data_gst__GstPlayerWidget[] = {
        0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      22,   21,   21,   21, 0x08,
+      28,   27,   27,   27, 0x08,
 
        0        // eod
 };
 
-static const char qt_meta_stringdata_gst__GstPlayerWidget[] = {
-    "gst::GstPlayerWidget\0\0updateScene()\0"
+static const char qt_meta_stringdata_gstplayer__GstPlayerWidget[] = {
+    "gstplayer::GstPlayerWidget\0\0updateScene()\0"
 };
 
-const QMetaObject gst::GstPlayerWidget::staticMetaObject = {
-    { &QGLWidget::staticMetaObject, qt_meta_stringdata_gst__GstPlayerWidget,
-      qt_meta_data_gst__GstPlayerWidget, 0 }
+const QMetaObject gstplayer::GstPlayerWidget::staticMetaObject = {
+    { &QGLWidget::staticMetaObject, qt_meta_stringdata_gstplayer__GstPlayerWidget,
+      qt_meta_data_gstplayer__GstPlayerWidget, 0 }
 };
 
 #ifdef Q_NO_DATA_RELOCATION
-const QMetaObject &gst::GstPlayerWidget::getStaticMetaObject() { return staticMetaObject; }
+const QMetaObject &gstplayer::GstPlayerWidget::getStaticMetaObject() { return staticMetaObject; }
 #endif //Q_NO_DATA_RELOCATION
 
-const QMetaObject *gst::GstPlayerWidget::metaObject() const
+const QMetaObject *gstplayer::GstPlayerWidget::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->metaObject : &staticMetaObject;
 }
 
-void *gst::GstPlayerWidget::qt_metacast(const char *_clname)
+void *gstplayer::GstPlayerWidget::qt_metacast(const char *_clname)
 {
     if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_gst__GstPlayerWidget))
+    if (!strcmp(_clname, qt_meta_stringdata_gstplayer__GstPlayerWidget))
         return static_cast<void*>(const_cast< GstPlayerWidget*>(this));
     return QGLWidget::qt_metacast(_clname);
 }
 
-int gst::GstPlayerWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int gstplayer::GstPlayerWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QGLWidget::qt_metacall(_c, _id, _a);
     if (_id < 0)

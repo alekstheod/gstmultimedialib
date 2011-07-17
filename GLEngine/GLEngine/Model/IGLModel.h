@@ -1,7 +1,9 @@
 #pragma once
 #include <string>
+#include <GLEngine/Model/GLVertex.h>
 
 namespace gl {
+
 	class IGLModel {
 		public:
 
@@ -11,13 +13,8 @@ namespace gl {
 			virtual bool addRotationY(unsigned int rotationId, float angle)=0;
 			virtual bool addRotationZ(unsigned int rotationId, float angle)=0;
 			virtual bool removeAllRotations()=0;
-
-			virtual bool addRotationX(const std::string& objectName, unsigned int rotationId, float angle)=0;
-			virtual bool addRotationY(const std::string& objectName, unsigned int rotationId, float angle)=0;
-			virtual bool addRotationZ(const std::string& objectName, unsigned int rotationId, float angle)=0;
-			virtual bool removeAllRotations(const std::string& objectName)=0;
-
 			virtual ~IGLModel(void) {};
 	};
+
 }
 

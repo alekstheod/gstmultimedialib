@@ -4,10 +4,12 @@ Debug:TARGET = debug/GstPlayer
 QT += core \
     gui \
     opengl
-HEADERS += GstPlayer/VideoTrack.h \
+HEADERS += GstPlayer/GUI/Menu/PlayButtonGLModel.h \
+    GstPlayer/VideoTrack.h \
     GstPlayer/GUI/GstPlayerWidget.h \
     ui_gstplayer.h
-SOURCES += GstPlayer/VideoTrack.cpp \
+SOURCES += GstPlayer/GUI/Menu/PlayButtonGLModel.cpp \
+    GstPlayer/VideoTrack.cpp \
     GstPlayer/GUI/GstPlayerWidget.cpp \
     main.cpp
 FORMS += gstplayer.ui
