@@ -9,14 +9,13 @@
 #define MENUGLMODEL_H_
 #include <Utilities/SmartPtr/SmartPtr.h>
 #include <GLEngine/Model/IGLModel.h>
+#include <GstPlayer/GUI/Menu/PlayButton/PlayButtonGLModel.h>
 
 namespace gstplayer{
 
 	class MenuGLModel : public gl::IGLModel{
 		private:
 			utils::SmartPtr<PlayButtonGLModel> _playButton;
-			utils::SmartPtr<IGLModel> _voiceControl;
-			utils::SmartPtr<IGLModel> _playingControl;
 
 		public:
 			MenuGLModel();
