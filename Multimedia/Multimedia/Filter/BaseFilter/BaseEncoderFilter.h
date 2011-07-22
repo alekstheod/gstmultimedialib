@@ -10,10 +10,11 @@
 #include <Multimedia/GstException.h>
 #include <Multimedia/Utilities/GSmartPtr.h>
 #include <Multimedia/Filter/BaseFilter/IFilter.h>
+#include <Multimedia/GstObject.h>
 
 namespace multimedia {
 
-	class BaseEncoderFilter : IFilter{
+	class BaseEncoderFilter : public IFilter, GstObject{
 		private:
 			GSmartPtr<GstElement> _encoder;
 

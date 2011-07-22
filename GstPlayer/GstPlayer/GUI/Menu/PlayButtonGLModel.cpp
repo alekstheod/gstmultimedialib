@@ -20,6 +20,11 @@ namespace gstplayer {
 	}
 
 
+	bool PlayButtonGLModel::drawModel(void){
+		return true;
+	}
+
+
 	PlayButtonGLModel::~PlayButtonGLModel() {
 		// TODO Auto-generated destructor stub
 	}

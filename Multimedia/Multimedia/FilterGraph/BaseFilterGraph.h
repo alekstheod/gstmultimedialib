@@ -12,10 +12,11 @@
 #include <Multimedia/GstException.h>
 #include <Multimedia/Filter/BaseFilter/IFilter.h>
 #include <Multimedia/Utilities/GSmartPtr.h>
+#include <Multimedia/GstObject.h>
 
 namespace multimedia {
 
-	class BaseFilterGraph {
+	class BaseFilterGraph : public GstObject{
 		private:
 			GMainLoop* _mainLoop;
 			GSmartPtr<GstElement> _pipeline;
