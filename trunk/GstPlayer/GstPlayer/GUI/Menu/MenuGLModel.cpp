@@ -40,15 +40,19 @@ namespace gstplayer{
 	}
 
 
-	bool leftButtonClick(const gl::GLVertex& mousePosition){
-		return true;
+	void MenuGLModel::leftButtonClick(const gl::GLVertex& mousePosition){
+
 	}
 
 
-	bool rightButtonClick(const gl::GLVertex& mousePosition) {
-		return true;
+	void MenuGLModel::rightButtonClick(const gl::GLVertex& mousePosition) {
+
 	}
 
+
+	void MenuGLModel::mouseMoved(const gl::GLVertex& oldMousePosition, gl::GLVertex& newMousePosition){
+
+	}
 
 	MenuGLModel::~MenuGLModel() {
 

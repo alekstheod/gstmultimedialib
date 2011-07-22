@@ -12,10 +12,11 @@
 #include <Multimedia/Filter/BaseFilter/BaseSinkFilter.h>
 #include <Multimedia/GstException.h>
 #include <Multimedia/Filter/BaseFilter/IFilter.h>
+#include <Multimedia/GstObject.h>
 
 namespace multimedia {
 
-	class BaseConverterFilter: public IFilter {
+	class BaseConverterFilter: public IFilter, GstObject {
 		private:
 			GSmartPtr<GstElement> _converter;
 

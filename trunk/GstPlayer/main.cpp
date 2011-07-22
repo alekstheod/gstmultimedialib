@@ -5,7 +5,6 @@
 
 int main(int argc, char *argv[])
 {
-	gst_init(&argc, &argv);
     QApplication a(argc, argv);
     gstplayer::GstPlayerWidget w;
     w.show();

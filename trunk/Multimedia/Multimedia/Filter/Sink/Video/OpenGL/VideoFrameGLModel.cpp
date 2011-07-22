@@ -2,8 +2,6 @@
 #include <Utilities/AutoLock/AutoLock.h>
 #include <string.h>
 
-using namespace utils;
-
 namespace multimedia {
 
 	VideoFrameGLModel::VideoFrameGLModel(const gl::GLVertex& lowLeft, const gl::GLVertex& topLeft, const gl::GLVertex& topRight,
@@ -12,6 +10,7 @@ namespace multimedia {
 		_topLeft = topLeft;
 		_lowRight = lowRight;
 		_topRight = topRight;
+		_texture=0;
 	}
 
 	VideoFrameGLModel::~VideoFrameGLModel(void) {
@@ -19,7 +18,7 @@ namespace multimedia {
 
 	bool VideoFrameGLModel::drawModel(void) {
 		try {
-			AutoLock lock(_lockObject);
+			utils::AutoLock lock(_lockObject);
 			if(_texture==0){
 				return false;
 			}
@@ -46,7 +45,7 @@ namespace multimedia {
 			glTexCoord2f(0.0f, 0.0f);
 			glVertex3f(_topLeft.getPosX(), _topLeft.getPosY(), _topLeft.getPosZ());
 			glEnd();
-		} catch (const LockException&) {
+		} catch (const utils::LockException&) {
 			return false;
 		}
 
@@ -55,7 +54,7 @@ namespace multimedia {
 
 	bool VideoFrameGLModel::UpdateFrame(GLuint texture, GLsizei width, GLsizei height, GLenum glColor, GLenum pixelType, GstBuffer* gstBuffer) {
 		try {
-			AutoLock lock(_lockObject);
+			utils::AutoLock lock(_lockObject);
 			if(gstBuffer!=NULL){
 				_width=width;
 				_height=height;
@@ -65,13 +64,10 @@ namespace multimedia {
 					_frameBuffer.resize(gstBuffer->size);
 				}
 
-
 				memcpy(&_frameBuffer.at(0), GST_BUFFER_DATA (gstBuffer), _frameBuffer.size());
-
 				_texture=texture;
 			}
-
-		} catch (const LockException&) {
+		} catch (const utils::LockException&) {
 			return false;
 		}
 
@@ -81,12 +77,12 @@ namespace multimedia {
 	bool VideoFrameGLModel::UpdateFramePosition(const gl::GLVertex& lowLeft, const gl::GLVertex& topLeft, const gl::GLVertex& topRight,
 			const gl::GLVertex& lowRight) {
 		try {
-			AutoLock lock(_lockObject);
+			utils::AutoLock lock(_lockObject);
 			_lowLeft = lowLeft;
 			_lowRight = lowRight;
 			_topLeft = topLeft;
 			_topRight = topRight;
-		} catch (const LockException&) {
+		} catch (const utils::LockException&) {
 			return false;
 		}
 

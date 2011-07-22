@@ -25,8 +25,9 @@ namespace gstplayer{
 			bool addRotationY(unsigned int rotationId, float angle);
 			bool addRotationZ(unsigned int rotationId, float angle);
 			bool removeAllRotations();
-			bool leftButtonClick(const gl::GLVertex& mousePosition);
-			bool rightButtonClick(const gl::GLVertex& mousePosition);
+			void leftButtonClick(const gl::GLVertex& mousePosition);
+			void rightButtonClick(const gl::GLVertex& mousePosition);
+			void mouseMoved(const gl::GLVertex& oldMousePosition, gl::GLVertex& newMousePosition);
 			virtual ~MenuGLModel();
 	};
 

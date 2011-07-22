@@ -12,10 +12,11 @@
 #include <Multimedia/GstException.h>
 #include <Multimedia/Filter/BaseFilter/BaseDecoderFilter.h>
 #include <Multimedia/Utilities/GSmartPtr.h>
+#include <Multimedia/GstObject.h>
 
 namespace multimedia {
 
-	class BaseDemuxerFilter: public IFilter {
+	class BaseDemuxerFilter: public IFilter, GstObject {
 		private:
 			GSmartPtr<GstElement> _demuxer;
 			GSmartPtr<GstElement> _videoDecoder;

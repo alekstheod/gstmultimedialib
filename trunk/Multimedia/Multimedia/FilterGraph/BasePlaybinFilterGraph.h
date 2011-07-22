@@ -15,10 +15,11 @@
 #include <Multimedia/Filter/BaseFilter/BaseSinkFilter.h>
 #include <Multimedia/Filter/BaseFilter/BaseEncoderFilter.h>
 #include <Multimedia/Filter/BaseFilter/Callback/ABaseVideoCallbackSinkFilter.h>
+#include <Multimedia/GstObject.h>
 
 namespace multimedia {
 
-	class BasePlaybinFilterGraph {
+	class BasePlaybinFilterGraph : public GstObject {
 		private:
 			GMainLoop* _mainLoop;
 			GSmartPtr<GstElement> _pipeline;

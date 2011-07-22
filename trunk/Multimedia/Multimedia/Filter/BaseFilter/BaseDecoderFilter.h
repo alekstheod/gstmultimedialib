@@ -13,10 +13,11 @@
 #include <Multimedia/Filter/BaseFilter/BaseEncoderFilter.h>
 #include <Multimedia/Filter/BaseFilter/IFilter.h>
 #include <Multimedia/Utilities/GSmartPtr.h>
+#include <Multimedia/GstObject.h>
 
 namespace multimedia {
 
-	class BaseDecoderFilter: public IFilter {
+	class BaseDecoderFilter: public IFilter, GstObject {
 		private:
 			friend class BaseDemuxerFilter;
 			friend class BasePlaybinFilterGraph;

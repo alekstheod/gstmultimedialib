@@ -53,7 +53,6 @@ namespace multimedia {
 
 
 	gboolean ABaseCallbackSinkFilter::registerCallbackPlugin(){
-		gst_init(NULL, NULL);
 		return gst_plugin_register_static(	GST_VERSION_MAJOR,
 											GST_VERSION_MINOR,
 											CONST_PLUGIN_NAME.c_str(),

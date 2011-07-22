@@ -117,10 +117,6 @@
 			<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
 			<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 			<storageModule moduleId="org.eclipse.cdt.core.pathentry">
-				<pathentry kind="src" path=""/>
-				<pathentry kind="out" path=""/>
-				<pathentry kind="prj" path="/GLEngine"/>
-				<pathentry kind="prj" path="/Multimedia"/>
 				<pathentry base-path="/usr/include/qt4" include="" kind="inc" path="" system="true"/>
 				<pathentry base-path="/usr/include/qt4" include="QtNetwork" kind="inc" path="" system="true"/>
 				<pathentry base-path="/usr/include/qt4" include="QtHelp" kind="inc" path="" system="true"/>
@@ -144,6 +140,11 @@
 				<pathentry base-path="Utilities" include="" kind="inc" path="" system="true"/>
 				<pathentry base-path="GLEngine" include="" kind="inc" path="" system="true"/>
 				<pathentry base-path="Multimedia" include="" kind="inc" path="" system="true"/>
+				<pathentry include="/usr/include" kind="inc" path="" system="true"/>
+				<pathentry kind="src" path=""/>
+				<pathentry kind="out" path=""/>
+				<pathentry kind="prj" path="/GLEngine"/>
+				<pathentry kind="prj" path="/Multimedia"/>
 			</storageModule>
 		</cconfiguration>
 	</storageModule>
