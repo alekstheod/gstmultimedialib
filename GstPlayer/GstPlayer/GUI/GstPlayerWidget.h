@@ -15,8 +15,9 @@ namespace gstplayer{
 		private:
 			Ui::GstPlayerClass ui;
 			utils::SmartPtr< gl::GLDevice > _glDevice;
-			utils::SmartPtr< VideoTrack > _player;
+			utils::SmartPtr< VideoTrack > _track;
 			utils::SmartPtr<gl::IGLCamera> _camera;
+			utils::SmartPtr<gl::IGLModel> _menu;
 			QTimer _timer;
 
 		protected:

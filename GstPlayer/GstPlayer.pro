@@ -4,11 +4,18 @@ Debug:TARGET = debug/GstPlayer
 QT += core \
     gui \
     opengl
-HEADERS += GstPlayer/GUI/Menu/PlayButtonGLModel.h \
+HEADERS += GstPlayer/GUI/Menu/PlayButton/State/PausedPlayButtonState.h \
+    GstPlayer/GUI/Menu/PlayButton/State/PlayingPlayButtonState.h \
+    GstPlayer/GUI/Menu/PlayButton/PlayButtonGLModel.h \
+    GstPlayer/GUI/Menu/PlayButton/APlayButtonState.h \
+    GstPlayer/GUI/Menu/PlayButton/PlayButtonGLModel.h \
     GstPlayer/VideoTrack.h \
     GstPlayer/GUI/GstPlayerWidget.h \
     ui_gstplayer.h
-SOURCES += GstPlayer/GUI/Menu/PlayButtonGLModel.cpp \
+SOURCES += GstPlayer/GUI/Menu/PlayButton/State/PausedPlayButtonState.cpp \
+    GstPlayer/GUI/Menu/PlayButton/State/PlayingPlayButtonState.cpp \
+    GstPlayer/GUI/Menu/PlayButton/APlayButtonState.cpp \
+    GstPlayer/GUI/Menu/MenuGLModel.cpp \
     GstPlayer/VideoTrack.cpp \
     GstPlayer/GUI/GstPlayerWidget.cpp \
     main.cpp
