@@ -10,6 +10,7 @@
 #include <Utilities/SmartPtr/SmartPtr.h>
 #include <GLEngine/Model/IGLModel.h>
 #include <GstPlayer/GUI/Menu/PlayButton/PlayButtonGLModel.h>
+#include <GLEngine/GLException.h>
 
 namespace gstplayer{
 
@@ -18,7 +19,7 @@ namespace gstplayer{
 			utils::SmartPtr<PlayButtonGLModel> _playButton;
 
 		public:
-			MenuGLModel();
+			MenuGLModel()throw(gl::GLException);
 			bool drawModel(void);
 			bool addRotationX(unsigned int rotationId, float angle);
 			bool addRotationY(unsigned int rotationId, float angle);

@@ -1,5 +1,6 @@
 #include "GstPlayerWidget.h"
 #include <GLEngine/Camera/SimpleGLCamera.h>
+#include <GstPlayer/GUI/Menu/MenuGLModel.h>
 
 namespace gstplayer{
 
@@ -25,8 +26,10 @@ namespace gstplayer{
 		_camera=new gl::SimpleGLCamera;
 		_camera->setPosition(gl::GLVertex(0.0f,0.0f,2.3f));
 		_glDevice->setCamera(_camera);
-		_player=new VideoTrack("file:///home/alekstheod/Downloads/battle/test.avi",_glDevice);
-		_player->start(QThread::NormalPriority);
+		_menu=new MenuGLModel;
+		_glDevice->addGLModel((int)_menu.getPtr(), _menu);
+		_track=new VideoTrack("file:///home/alekstheod/Downloads/battle/test.avi",_glDevice);
+		_track->start(QThread::NormalPriority);
 		_timer.start(20);
 	}
 

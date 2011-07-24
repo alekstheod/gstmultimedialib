@@ -9,14 +9,13 @@
 
 namespace gstplayer{
 
-	MenuGLModel::MenuGLModel() {
-		_playButton;
-		_voiceControl;
-		_playingControl;
+	MenuGLModel::MenuGLModel()throw(gl::GLException) {
+		_playButton=new PlayButtonGLModel(0,0,0,0,"/home/alekstheod");
 	}
 
 
 	bool MenuGLModel::drawModel(void){
+		_playButton->drawModel();
 		return true;
 	}
 
