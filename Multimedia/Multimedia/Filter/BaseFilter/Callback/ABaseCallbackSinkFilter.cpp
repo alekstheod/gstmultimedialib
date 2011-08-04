@@ -5,15 +5,19 @@ namespace multimedia {
 
 	const std::string ABaseCallbackSinkFilter::CONST_PLUGIN_NAME = "callbackplugin";
 	const gboolean ABaseCallbackSinkFilter::CONST_FILTER_INITIALIZATION_STATE=ABaseCallbackSinkFilter::registerCallbackPlugin();
+    int operator==(GstPlugin & plugin, const int & i)
+    {
+        return int();
+    }
 
 
 	gboolean ABaseCallbackSinkFilter::gstPluginInitMethod(GstPlugin* plugin){
-		if(plugin==NULL){
-			return FALSE;
+		if(plugin){
+			return gst_element_register(plugin, CONST_PLUGIN_NAME.c_str(), GST_RANK_NONE, GST_TYPE_CALLBACKPLUGIN);
+
 		}
 
-		gboolean result = gst_element_register(plugin, CONST_PLUGIN_NAME.c_str(), GST_RANK_NONE, GST_TYPE_CALLBACKPLUGIN);
-		return result;
+		return FALSE;
 	}
 
 
@@ -31,7 +35,7 @@ namespace multimedia {
 
 
 	gboolean ABaseCallbackSinkFilter::chainCallback(GstPad* gstPad, GstBuffer* gstBuffer, ABaseCallbackSinkFilter* _this) {
-		if (_this != NULL) {
+		if (_this) {
 			if (!_this->onRecieveBuffer(gstPad, gstBuffer)) {
 				return FALSE;
 			}
@@ -42,7 +46,7 @@ namespace multimedia {
 
 
 	gboolean ABaseCallbackSinkFilter::setCapsCallback(GstPad * pad, GstCaps * caps, ABaseCallbackSinkFilter* _this) {
-		if (_this != NULL) {
+		if (_this) {
 			if (!_this->onSetCaps(pad, caps)) {
 				return FALSE;
 			}
