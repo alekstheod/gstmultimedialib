@@ -10,14 +10,14 @@
 
 namespace multimedia {
 
-class GstObject {
-	public:
-		static const bool CONST_GST_INITIALIZED;
+	class GstObject {
+		public:
+			static const bool CONST_GST_INITIALIZED;
 
-	public:
-		GstObject();
-		static bool initGstreamer();
-		virtual ~GstObject();
+		public:
+			GstObject();
+			static bool initGstreamer();
+			virtual ~GstObject();
 	};
 
 }
