@@ -16,7 +16,10 @@ namespace gstplayer {
 	class APlayButtonState {
 		public:
 			class RECT{
-				private:
+				public:
+			     RECT()
+			    {
+			    }
 					friend class PlayButtonGLModel;
 					float _posX;
 					float _posY;

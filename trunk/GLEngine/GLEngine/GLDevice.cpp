@@ -5,6 +5,8 @@ using namespace utils;
 
 namespace gl{
 
+	const GLuint GLDevice::CONST_INVALID_TEXTURE=0;
+
 	GLDevice::GLDevice(const GLDevice::RECT& windowRect)throw (GLException) {
 	    if (windowRect.left >= windowRect.right) {
 	        throw GLException("GLDevice::GLDevice - Wrong window rect");
@@ -34,12 +36,12 @@ namespace gl{
 	        	_camera->applyCamera();
 	        }
 
-	        std::map<unsigned int, utils::SmartPtr<IGLLight> >::iterator curLight;
+	        std::map<void*, utils::SmartPtr<IGLLight> >::iterator curLight;
 	        for(curLight=_lights.begin(); curLight!=_lights.end();curLight++){
 	        	curLight->second->applyLight();
 	        }
 
-	        std::map<unsigned int, utils::SmartPtr<IGLModel> >::iterator glModel;
+	        std::map<void* , utils::SmartPtr<IGLModel> >::iterator glModel;
 	        for (glModel = _glModels.begin(); glModel != _glModels.end(); glModel++) {
 	            if (glModel->second->drawModel() == false) {
 	                return false;
@@ -54,10 +56,10 @@ namespace gl{
 	    return true;
 	}
 
-	bool GLDevice::addGLModel(unsigned int glModelId, const SmartPtr<IGLModel>& glModel) {
+	bool GLDevice::addGLModel(const SmartPtr<IGLModel>& glModel) {
 	    try {
 	        AutoLock lock(_lockObject);
-	        pair<unsigned int, SmartPtr<IGLModel> > newEntry(glModelId, glModel);
+	        pair<void* , SmartPtr<IGLModel> > newEntry(glModel.getPtr(), glModel);
 	        if (_glModels.insert(newEntry).second == false) {
 	            return false;
 	        }
@@ -68,14 +70,14 @@ namespace gl{
 	    return true;
 	}
 
-	bool GLDevice::removeGLModel(unsigned int glModelId) {
+	bool GLDevice::removeGLModel(const utils::SmartPtr<IGLModel>& glModel) {
 	    try {
 	        utils::AutoLock lock(_lockObject);
-	        if (_glModels.find(glModelId) == _glModels.end()) {
+	        if (_glModels.find(glModel.getPtr()) == _glModels.end()) {
 	            return false;
 	        }
 
-	        _glModels.erase(glModelId);
+	        _glModels.erase(glModel.getPtr());
 	    } catch (const utils::LockException&) {
 	        return false;
 	    }
@@ -109,14 +111,14 @@ namespace gl{
 	    return true;
 	}
 
-	bool GLDevice::removeLight(unsigned int lightId){
+	bool GLDevice::removeLight(const utils::SmartPtr<IGLLight>& light){
 		try{
 			utils::AutoLock lock(_lockObject);
-			if(_lights.find(lightId)==_lights.end()){
+			if(_lights.find(light.getPtr())==_lights.end()){
 				return false;
 			}
 
-			_lights.erase(lightId);
+			_lights.erase(light.getPtr());
 		}catch(const utils::LockException&){
 			return false;
 		}
@@ -124,14 +126,65 @@ namespace gl{
 		return true;
 	}
 
-	bool GLDevice::setLight(unsigned int lightId, const utils::SmartPtr<IGLLight>& light){
+	bool GLDevice::setLight(const utils::SmartPtr<IGLLight>& light){
 		try{
 			utils::AutoLock lock(_lockObject);
-			_lights[lightId]=light;
+			_lights[light.getPtr()]=light;
 		}catch(utils::LockException&){
 			return false;
 		}
 
+		return true;
+	}
+
+
+	bool GLDevice::generateTexture( const GLsizei namesNumber, GLuint& texture ){
+		texture = CONST_INVALID_TEXTURE;
+		if(_textures.empty()){
+			texture=1;
+			_textures.push_back(texture);
+			glGenTextures(namesNumber, &texture);
+		}else{
+			std::list< GLuint >::iterator curTexture;
+			std::list< GLuint >::iterator prevTexture;
+			for( curTexture = _textures.begin(); curTexture != _textures.end(); curTexture++){
+				if( curTexture != _textures.begin()){
+					if( *prevTexture < (*curTexture)-1 ){
+						texture = (*prevTexture) + 1;
+					}
+				}
+
+				prevTexture = curTexture;
+			}
+
+			if(texture != CONST_INVALID_TEXTURE){
+				_textures.push_back(texture);
+			}else{
+				curTexture = (--_textures.end());
+				texture = (*curTexture)+1;
+				_textures.push_back(texture);
+			}
+
+			glGenTextures(namesNumber, &texture);
+		}
+
+		_textures.sort();
+		return true;
+	}
+
+
+	bool GLDevice::releaseTexture( const GLuint texture ){
+		std::list< GLuint >::iterator curTexture=_textures.begin();
+		while( curTexture != _textures.end() && *curTexture != texture){
+			curTexture++;
+		}
+
+		if( curTexture == _textures.end() ){
+			return false;
+		}
+
+		_textures.erase(curTexture);
+		glDeleteTextures(1, &texture);
 		return true;
 	}
 }
