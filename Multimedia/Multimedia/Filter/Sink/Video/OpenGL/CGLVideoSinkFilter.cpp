@@ -34,7 +34,7 @@ namespace multimedia{
 	        throw GstException("GLVideoSink::GLVideoSink");
 	    }
 
-	    if(!_glDevice->addGLModel((unsigned int)_videoFrameGLModel.getPtr(), _videoFrameGLModel)){
+	    if( !_glDevice->addGLModel( _videoFrameGLModel) ){
 	    	throw GstException("GLVideoSink::GLVideoSink");
 	    }
 
@@ -44,7 +44,7 @@ namespace multimedia{
 
 	CGLVideoSinkFilter::~CGLVideoSinkFilter(void) {
 		if(_texture!=CONST_INVALID_TEXTURE_ID){
-			glDeleteTextures(1, &_texture);
+			_glDevice->releaseTexture(_texture);
 		}
 	}
 
@@ -75,8 +75,10 @@ namespace multimedia{
 	        	_texture=CONST_INVALID_TEXTURE_ID;
 	        }
 
-	        _texture=(GLuint)this;
-	        glGenTextures( 1, &_texture );
+	        if(!_glDevice->generateTexture(1, _texture)){
+	        	return false;
+	        }
+
 	        if (strcmp(gst_structure_get_name(gstStructure), "video/x-raw-rgb") == 0) {
 	            gint red_color = 0;
 	            gst_structure_get_int(gstStructure, "red_mask", &red_color);
@@ -113,7 +115,7 @@ namespace multimedia{
 	    try {
 	        utils::AutoLock lock(_lockObject);
 	        VideoFrameGLModel* videoFrameGLModel = static_cast<VideoFrameGLModel*> (_videoFrameGLModel.getPtr());
-	        if (videoFrameGLModel != NULL) {
+	        if ( videoFrameGLModel != NULL ) {
 	            videoFrameGLModel->UpdateFrame(_texture, _frameWidth, _frameHeight, _glColor, _pixelType, gstBuffer);
 	        }
 

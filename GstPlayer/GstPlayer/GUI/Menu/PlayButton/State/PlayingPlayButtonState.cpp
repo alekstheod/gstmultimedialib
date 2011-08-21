@@ -25,10 +25,10 @@ namespace gstplayer {
 
 	bool PlayingPlayButtonState::drawButton(const APlayButtonState::RECT& buttonRect){
 		glBegin(GL_QUADS);
-		glVertex3f(0.2f, 0.2f, 0.1f);
-		glVertex3f(0.2f, 0.0f, 0.1f);
-		glVertex3f(0.0f, 0.0f, 0.1f);
-		glVertex3f(0.0f, 0.2f, 0.1f);
+		glVertex3f(buttonRect._posX , buttonRect._posY , 0.1f);
+		glVertex3f(buttonRect._posX, buttonRect._posY-buttonRect._height , 0.1f);
+		glVertex3f(buttonRect._posX - buttonRect._width , buttonRect._posY - buttonRect._height, 0.1f);
+		glVertex3f(buttonRect._posX - buttonRect._width, buttonRect._posY, 0.1f);
 		glEnd();
 		return true;
 	}

@@ -10,7 +10,7 @@
 namespace gstplayer{
 
 	MenuGLModel::MenuGLModel()throw(gl::GLException) {
-		_playButton=new PlayButtonGLModel(0,0,0,0,"/home/alekstheod");
+		_playButton=new PlayButtonGLModel(0.9f , -0.7f , 0.2, 0.15,"/home/alekstheod");
 	}
 
 

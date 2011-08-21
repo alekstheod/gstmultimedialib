@@ -27,7 +27,7 @@ namespace gstplayer{
 		_camera->setPosition(gl::GLVertex(0.0f,0.0f,2.3f));
 		_glDevice->setCamera(_camera);
 		_menu=new MenuGLModel;
-		_glDevice->addGLModel((int)_menu.getPtr(), _menu);
+		_glDevice->addGLModel(_menu);
 		_track=new VideoTrack("file:///home/alekstheod/Downloads/battle/test.avi",_glDevice);
 		_track->start(QThread::NormalPriority);
 		_timer.start(20);
