@@ -2,6 +2,8 @@
 #ifdef _WIN32
 namespace utils {
 
+	const unsigned int WinLockObject::CONST_DEFAULT_LOCK_TIMEOUT = INFINITY;
+
     WinLockObject::WinLockObject(void) {
         _mutex = CreateMutex(NULL, FALSE, NULL);
         if (_mutex != NULL) {

@@ -1,8 +1,9 @@
 #include "VideoFrameGLModel.h"
 #include <Utilities/AutoLock/AutoLock.h>
-#include <string.h>
 
 namespace multimedia {
+
+	const unsigned int VideoFrameGLModel::CONST_FRAME_LOCK_TIMEOUT=10000;
 
 	VideoFrameGLModel::VideoFrameGLModel(const gl::GLVertex& lowLeft, const gl::GLVertex& topLeft, const gl::GLVertex& topRight,
 			const gl::GLVertex& lowRight) throw (gl::GLException) {
@@ -10,7 +11,9 @@ namespace multimedia {
 		_topLeft = topLeft;
 		_lowRight = lowRight;
 		_topRight = topRight;
+		_gstBuffer=NULL;
 		_texture=0;
+		_lockObject.lock();
 	}
 
 	VideoFrameGLModel::~VideoFrameGLModel(void) {
@@ -19,7 +22,7 @@ namespace multimedia {
 	bool VideoFrameGLModel::drawModel(void) {
 		try {
 			utils::AutoLock lock(_lockObject);
-			if(_texture==0){
+			if(_texture==0 || _gstBuffer==NULL){
 				return false;
 			}
 
@@ -27,9 +30,9 @@ namespace multimedia {
 			glBindTexture(GL_TEXTURE_2D, _texture);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			if(_frameBuffer.size()>0){
+			if(_gstBuffer!=NULL){
 				glTexImage2D (GL_TEXTURE_2D, 0, _glColor, _width, _height, 0, _glColor, _pixelType, NULL);
-				glTexSubImage2D (GL_TEXTURE_2D, 0, 0, 0, _width, _height,_glColor, _pixelType, &_frameBuffer.at(0));
+				glTexSubImage2D (GL_TEXTURE_2D, 0, 0, 0, _width, _height,_glColor, _pixelType, GST_BUFFER_DATA (_gstBuffer));
 			}
 
 			glBegin(GL_QUADS);
@@ -39,8 +42,8 @@ namespace multimedia {
 			glTexCoord2f(1.0f, 1.0f);
 			glVertex3f(_lowRight.getPosX(), _lowRight.getPosY(), _lowRight.getPosZ());
 
-			glTexCoord2f(1.0f, 0.0f);
-			glVertex3f(_topRight.getPosX(), _topRight.getPosY(), _topRight.getPosZ());
+			glTexCoord2f( 1.0f, 0.0f );
+			glVertex3f( _topRight.getPosX(), _topRight.getPosY(), _topRight.getPosZ() );
 
 			glTexCoord2f(0.0f, 0.0f);
 			glVertex3f(_topLeft.getPosX(), _topLeft.getPosY(), _topLeft.getPosZ());
@@ -53,24 +56,18 @@ namespace multimedia {
 	}
 
 	bool VideoFrameGLModel::UpdateFrame(GLuint texture, GLsizei width, GLsizei height, GLenum glColor, GLenum pixelType, GstBuffer* gstBuffer) {
-		try {
-			utils::AutoLock lock(_lockObject);
-			if(gstBuffer!=NULL){
-				_width=width;
-				_height=height;
-				_glColor=glColor;
-				_pixelType=pixelType;
-				if(_frameBuffer.size()!=gstBuffer->size){
-					_frameBuffer.resize(gstBuffer->size);
-				}
+		_width=width;
+		_height=height;
+		_glColor=glColor;
+		_pixelType=pixelType;
+		_texture=texture;
+		_gstBuffer=gstBuffer;
+		_lockObject.unlock();
 
-				memcpy(&_frameBuffer.at(0), GST_BUFFER_DATA (gstBuffer), _frameBuffer.size());
-				_texture=texture;
-			}
-		} catch (const utils::LockException&) {
-			return false;
-		}
+		usleep(CONST_FRAME_LOCK_TIMEOUT);
 
+		_lockObject.lock();
+		_gstBuffer=NULL;
 		return true;
 	}
 

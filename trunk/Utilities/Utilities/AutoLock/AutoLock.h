@@ -12,14 +12,11 @@
 namespace utils {
 
     class AutoLock {
-    public:
-        static const unsigned int CONST_DEFAULT_LOCK_TIMEOUT;
-
     private:
         const LockObject& _lockObject;
 
     public:
-        AutoLock(const LockObject& lockObject, unsigned int waitTime = CONST_DEFAULT_LOCK_TIMEOUT);
+        AutoLock(const LockObject& lockObject, unsigned int waitTime = LockObject::CONST_DEFAULT_LOCK_TIMEOUT);
         ~AutoLock(void)throw ();
     };
 

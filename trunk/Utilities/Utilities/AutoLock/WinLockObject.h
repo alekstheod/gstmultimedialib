@@ -14,6 +14,9 @@ namespace utils {
     /// </summary>
 
     class WinLockObject {
+    public:
+        static const unsigned int CONST_DEFAULT_LOCK_TIMEOUT;
+
     private:
         /// <summary>
         /// Lockable mutex.
@@ -25,7 +28,7 @@ namespace utils {
         /// Default constructor.
         /// </summary>
         WinLockObject(void);
-        bool lock(unsigned int waitTime = INFINITY)const;
+        bool lock(unsigned int waitTime = CONST_DEFAULT_LOCK_TIMEOUT)const;
         bool unlock(void)const;
         virtual ~WinLockObject(void)throw ();
     };

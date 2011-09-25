@@ -11,6 +11,9 @@
 namespace multimedia {
 
 	class VideoFrameGLModel: public gl::IGLModel {
+		public:
+			static const unsigned int CONST_FRAME_LOCK_TIMEOUT;
+
 		private:
 			gl::GLVertex _lowLeft;
 			gl::GLVertex _topLeft;
@@ -22,7 +25,8 @@ namespace multimedia {
 			GLsizei _height;
 			GLenum _glColor;
 			GLenum _pixelType;
-			std::vector<unsigned char> _frameBuffer;
+			//std::vector<unsigned char> _frameBuffer;
+			GstBuffer* _gstBuffer;
 			GLuint _texture;
 
 		public:
