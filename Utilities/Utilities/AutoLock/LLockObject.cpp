@@ -10,6 +10,8 @@
 
 namespace utils {
 
+	const unsigned int LLockObject::CONST_DEFAULT_LOCK_TIMEOUT = 0xFFFFFFFF;
+
     LLockObject::LLockObject() {
         _errorCode = pthread_mutex_init(&_mutex, NULL);
     }
@@ -19,8 +21,7 @@ namespace utils {
             return false;
         }
 
-        pthread_mutex_t mutex = _mutex;
-        if (pthread_mutex_lock(&mutex) != 0) {
+        if (pthread_mutex_lock(&_mutex) != 0) {
             return false;
         }
 
@@ -28,12 +29,11 @@ namespace utils {
     }
 
     bool LLockObject::unlock(void)const {
-        pthread_mutex_t mutex = _mutex;
         if (_errorCode != 0) {
             return false;
         }
 
-        int result = pthread_mutex_unlock(&mutex);
+        int result = pthread_mutex_unlock(&_mutex);
         if (result == EINVAL || result == EFAULT || result == EPERM) {
             return false;
         }
