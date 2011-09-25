@@ -170,7 +170,7 @@ namespace utils {
 	template<class T>
 	void SmartPtr<T>::Attach(T* ptr) {
 		if (_ptr != NULL) {
-			_ptr->Release();
+			_ptr->release();
 		}
 
 		if (ptr != 0) {
