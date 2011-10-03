@@ -1,6 +1,6 @@
 #ifndef GLVIDEOSINK_H
 #define GLVIDEOSINK_H
-#include <GLEngine/GLDevice.h>
+#include <GLEngine/Device.h>
 #include <Multimedia/Filter/BaseFilter/Callback/ABaseVideoCallbackSinkFilter.h>
 #include <Utilities/AutoLock/LockObject.h>
 
@@ -14,16 +14,16 @@ namespace multimedia{
 			GLenum _glColor;
 			GLenum _pixelType;
 
-			gl::GLVertex _lowLeft;
-			gl::GLVertex _lowRight;
-			gl::GLVertex _topRight;
-			gl::GLVertex _topLeft;
+			gl::Vertex _lowLeft;
+			gl::Vertex _lowRight;
+			gl::Vertex _topRight;
+			gl::Vertex _topLeft;
 			GLuint _texture;
 
 			utils::LLockObject _lockObject;
 
-			utils::SmartPtr<gl::GLDevice> _glDevice;
-			utils::SmartPtr<gl::IGLModel> _videoFrameGLModel;
+			utils::SmartPtr<gl::Device> _glDevice;
+			utils::SmartPtr<gl::IModel> _videoFrameGLModel;
 
 		public:
 			static const float CONST_GL_FRAME_HEIGHT;
@@ -37,7 +37,7 @@ namespace multimedia{
 			virtual bool onSetCaps(GstPad * pad, GstCaps * caps);
 
 		public:
-			CGLVideoSinkFilter(const utils::SmartPtr<gl::GLDevice>& glDevice) throw (GstException);
+			CGLVideoSinkFilter(const utils::SmartPtr<gl::Device>& glDevice) throw (GstException);
 			virtual ~CGLVideoSinkFilter(void);
 	};
 

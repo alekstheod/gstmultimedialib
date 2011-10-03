@@ -10,7 +10,7 @@
 
 #include <Multimedia/FilterGraph/BasePlaybinFilterGraph.h>
 #include <Multimedia/Filter/Sink/Video/OpenGL/CGLVideoSinkFilter.h>
-#include <GLEngine/GLDevice.h>
+#include <GLEngine/Device.h>
 
 namespace multimedia {
 
@@ -19,7 +19,7 @@ namespace multimedia {
 			CGLVideoSinkFilter _videoSink;
 
 		public:
-			CGLVideoFilterGraph(const std::string& filename, const utils::SmartPtr<gl::GLDevice>& glDevice);
+			CGLVideoFilterGraph(const std::string& filename, const utils::SmartPtr<gl::Device>& glDevice);
 			virtual ~CGLVideoFilterGraph();
 	};
 
