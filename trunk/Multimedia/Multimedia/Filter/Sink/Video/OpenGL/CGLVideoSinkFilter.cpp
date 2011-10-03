@@ -34,18 +34,13 @@ namespace multimedia{
 	        throw GstException("GLVideoSink::GLVideoSink");
 	    }
 
-	    if( !_glDevice->addGLModel( _videoFrameGLModel) ){
+	    if( !_glDevice->addGLModel( _videoFrameGLModel ) ){
 	    	throw GstException("GLVideoSink::GLVideoSink");
 	    }
-
-	    _texture=CONST_INVALID_TEXTURE_ID;
 	}
 
 
 	CGLVideoSinkFilter::~CGLVideoSinkFilter(void) {
-		if(_texture!=CONST_INVALID_TEXTURE_ID){
-			_glDevice->releaseTexture(_texture);
-		}
 	}
 
 
@@ -68,15 +63,6 @@ namespace multimedia{
 	        const GValue* pixelFormat = gst_structure_get_value(gstStructure, "pixel-aspect-ratio");
 	        if (pixelFormat == NULL) {
 	            return false;
-	        }
-
-	        if(_texture!=CONST_INVALID_TEXTURE_ID){
-	        	glDeleteTextures(1, &_texture);
-	        	_texture=CONST_INVALID_TEXTURE_ID;
-	        }
-
-	        if(!_glDevice->generateTexture(1, _texture)){
-	        	return false;
 	        }
 
 	        if (strcmp(gst_structure_get_name(gstStructure), "video/x-raw-rgb") == 0) {
@@ -116,7 +102,7 @@ namespace multimedia{
 	        utils::AutoLock lock(_lockObject);
 	        VideoFrameModel* videoFrameGLModel = static_cast<VideoFrameModel*> (_videoFrameGLModel.getPtr());
 	        if ( videoFrameGLModel != NULL ) {
-	            videoFrameGLModel->UpdateFrame(_texture, _frameWidth, _frameHeight, _glColor, _pixelType, gstBuffer);
+	            videoFrameGLModel->UpdateFrame(_frameWidth, _frameHeight, _glColor, _pixelType, gstBuffer);
 	        }
 
 	    } catch (const utils::LockException&) {

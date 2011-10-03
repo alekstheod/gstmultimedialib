@@ -7,6 +7,7 @@
 #include <Utilities/AutoLock/LLockObject.h>
 #include <vector>
 #include <gst/gst.h>
+#include <Utilities/SmartPtr/SmartPtr.h>
 
 namespace multimedia {
 
@@ -25,17 +26,17 @@ namespace multimedia {
 			GLsizei _height;
 			GLenum _glColor;
 			GLenum _pixelType;
-			//std::vector<unsigned char> _frameBuffer;
-			GstBuffer* _gstBuffer;
-			GLuint _texture;
+			std::vector<unsigned char> _frameBuffer;
 
 		public:
-			VideoFrameModel(const gl::Vertex& lowLeft, const gl::Vertex& topLeft, const gl::Vertex& topRight,
+			VideoFrameModel(const gl::Vertex& lowLeft,
+							const gl::Vertex& topLeft,
+							const gl::Vertex& topRight,
 							const gl::Vertex& lowRight) throw (gl::GLException);
+
 			bool drawModel(void);
-			bool UpdateFrame(GLuint texture, GLsizei width, GLsizei height, GLenum glColor, GLenum pixelType, GstBuffer* gstBuffer);
-			bool UpdateFramePosition(const gl::Vertex& lowLeft, const gl::Vertex& topLeft, const gl::Vertex& topRight,
-					const gl::Vertex& lowRight);
+			bool UpdateFrame( GLsizei width, GLsizei height, GLenum glColor, GLenum pixelType, GstBuffer* gstBuffer );
+			bool UpdateFramePosition( const gl::Vertex& lowLeft, const gl::Vertex& topLeft, const gl::Vertex& topRight, const gl::Vertex& lowRight );
 			bool addRotationX(unsigned int rotationId, float angle);
 			bool addRotationY(unsigned int rotationId, float angle);
 			bool addRotationZ(unsigned int rotationId, float angle);

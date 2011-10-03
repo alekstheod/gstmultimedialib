@@ -1,4 +1,9 @@
 #include "Device.h"
+#include <GLEngine/Model/IModel.h>
+#include <GLEngine/Camera/ICamera.h>
+#include <GLEngine/Light/ILight.h>
+#include <GLEngine/Model/Vertex.h>
+#include <GLEngine/Model/Texture.h>
 
 using namespace std;
 using namespace utils;
@@ -138,54 +143,54 @@ namespace gl{
 	}
 
 
-	bool Device::generateTexture( const GLsizei namesNumber, GLuint& texture ){
-		texture = CONST_INVALID_TEXTURE;
+	bool Device::generateTexture( utils::SmartPtr< Texture >& newTexture ){
+		bool result=false;
+		GLuint texture = CONST_INVALID_TEXTURE;
 		if(_textures.empty()){
 			texture=1;
-			_textures.push_back(texture);
-			glGenTextures(namesNumber, &texture);
+			newTexture.Attach( new Texture(texture) );
+			std::pair< GLuint, utils::SmartPtr<Texture> > newEntry(texture, newTexture);
+			_textures.insert(newEntry);
 		}else{
-			std::list< GLuint >::iterator curTexture;
-			std::list< GLuint >::iterator prevTexture;
-			for( curTexture = _textures.begin(); curTexture != _textures.end(); curTexture++){
+			typename std::map< GLuint, utils::SmartPtr<Texture> >::iterator curTexture;
+			typename std::map< GLuint, utils::SmartPtr<Texture> >::iterator prevTexture;
+			for( curTexture = _textures.begin(); curTexture != _textures.end() && texture==CONST_INVALID_TEXTURE; curTexture++){
 				if( curTexture != _textures.begin()){
-					if( *prevTexture < (*curTexture)-1 ){
-						texture = (*prevTexture) + 1;
+					GLuint lastTexture=prevTexture->first;
+					GLuint currentTexture=curTexture->first-1;
+					if( lastTexture<currentTexture  ){
+						texture = lastTexture+1;
 					}
 				}
 
 				prevTexture = curTexture;
 			}
 
-			if(texture != CONST_INVALID_TEXTURE){
-				_textures.push_back(texture);
+			if( texture != CONST_INVALID_TEXTURE ){
+				newTexture.Attach( new Texture(texture) );
+				typename std::pair< GLuint, utils::SmartPtr<Texture> > newEntry(texture, newTexture);
+				result=_textures.insert(newEntry).second;
 			}else{
-				curTexture = (--_textures.end());
-				texture = (*curTexture)+1;
-				_textures.push_back(texture);
+				curTexture = ( --_textures.end() );
+				texture = curTexture->first+1;
+				newTexture=new Texture(texture);
+				std::pair< GLuint, utils::SmartPtr<Texture> > newEntry(texture, newTexture);
+				result=_textures.insert(newEntry).second;
 			}
-
-			glGenTextures(namesNumber, &texture);
 		}
 
-		_textures.sort();
-		return true;
+		return result;
 	}
 
 
-	bool Device::releaseTexture( const GLuint texture ){
-		std::list< GLuint >::iterator curTexture=_textures.begin();
-		while( curTexture != _textures.end() && *curTexture != texture){
-			curTexture++;
+	bool Device::releaseTexture( const utils::SmartPtr< Texture >& texture ){
+		bool result=false;
+		if( _textures.find( texture->_texture) != _textures.end() ){
+			_textures.erase(texture->_texture);
+			result=true;
 		}
 
-		if( curTexture == _textures.end() ){
-			return false;
-		}
-
-		_textures.erase(curTexture);
-		glDeleteTextures(1, &texture);
-		return true;
+		return result;
 	}
 }
 
