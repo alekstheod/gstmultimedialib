@@ -27,7 +27,7 @@ INCLUDEPATH += ../GLEngine \
     /usr/include/gstreamer-0.10 \
     /usr/include/glib-2.0 \
     /usr/include/libxml2 \
-    /usr/lib/i386-linux-gnu/glib-2.0/include
+    /usr/lib64/glib-2.0/include
 LIBS += -lMultimedia \
     -L../GLEngine/Debug \
     -L../Utilities/Debug \

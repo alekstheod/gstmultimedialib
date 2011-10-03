@@ -21,9 +21,17 @@ namespace utils {
             return false;
         }
 
-        if (pthread_mutex_lock(&_mutex) != 0) {
-            return false;
+        if( CONST_DEFAULT_LOCK_TIMEOUT==waitTime ){
+            if (pthread_mutex_lock(&_mutex) != 0) {
+                return false;
+            }
+        }else{
+        	timespec timeOut={0, waitTime};
+        	if ( pthread_mutex_timedlock(&_mutex, &timeOut) != 0 ){
+        		return false;
+        	}
         }
+
 
         return true;
     }
