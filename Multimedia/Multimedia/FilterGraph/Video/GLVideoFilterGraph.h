@@ -20,7 +20,7 @@ namespace multimedia {
 			StandardAudioSinkFilter _audioSink;
 
 		public:
-			GLVideoFilterGraph(const std::string& filename, const utils::SmartPtr<gl::GLDevice>& glDevice);
+			GLVideoFilterGraph(const std::string& filename, const utils::SmartPtr<gl::Device>& glDevice);
 			virtual ~GLVideoFilterGraph();
 	};
 

@@ -9,7 +9,7 @@
 
 namespace multimedia {
 
-	CGLVideoFilterGraph::CGLVideoFilterGraph(const std::string& filename, const utils::SmartPtr<gl::GLDevice>& glDevice) :
+	CGLVideoFilterGraph::CGLVideoFilterGraph(const std::string& filename, const utils::SmartPtr<gl::Device>& glDevice) :
 		BasePlaybinFilterGraph(filename), _videoSink(glDevice) {
 		if(!this->setVideoSink(&_videoSink)){
 			throw GstException("CGLVideoFilterGraph::CGLVideoFilterGraph - setVideoSink failed");

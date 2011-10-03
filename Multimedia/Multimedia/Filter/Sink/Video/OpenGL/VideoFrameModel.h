@@ -1,24 +1,24 @@
 #pragma once
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include <GLEngine/Model/IGLModel.h>
+#include <GLEngine/Model/IModel.h>
 #include <GLEngine/GLException.h>
-#include <GLEngine/Model/GLVertex.h>
+#include <GLEngine/Model/Vertex.h>
 #include <Utilities/AutoLock/LLockObject.h>
 #include <vector>
 #include <gst/gst.h>
 
 namespace multimedia {
 
-	class VideoFrameGLModel: public gl::IGLModel {
+	class VideoFrameModel: public gl::IModel {
 		public:
 			static const unsigned int CONST_FRAME_LOCK_TIMEOUT;
 
 		private:
-			gl::GLVertex _lowLeft;
-			gl::GLVertex _topLeft;
-			gl::GLVertex _topRight;
-			gl::GLVertex _lowRight;
+			gl::Vertex _lowLeft;
+			gl::Vertex _topLeft;
+			gl::Vertex _topRight;
+			gl::Vertex _lowRight;
 			utils::LLockObject _lockObject;
 
 			GLsizei _width;
@@ -30,12 +30,12 @@ namespace multimedia {
 			GLuint _texture;
 
 		public:
-			VideoFrameGLModel(const gl::GLVertex& lowLeft, const gl::GLVertex& topLeft, const gl::GLVertex& topRight,
-							const gl::GLVertex& lowRight) throw (gl::GLException);
+			VideoFrameModel(const gl::Vertex& lowLeft, const gl::Vertex& topLeft, const gl::Vertex& topRight,
+							const gl::Vertex& lowRight) throw (gl::GLException);
 			bool drawModel(void);
 			bool UpdateFrame(GLuint texture, GLsizei width, GLsizei height, GLenum glColor, GLenum pixelType, GstBuffer* gstBuffer);
-			bool UpdateFramePosition(const gl::GLVertex& lowLeft, const gl::GLVertex& topLeft, const gl::GLVertex& topRight,
-					const gl::GLVertex& lowRight);
+			bool UpdateFramePosition(const gl::Vertex& lowLeft, const gl::Vertex& topLeft, const gl::Vertex& topRight,
+					const gl::Vertex& lowRight);
 			bool addRotationX(unsigned int rotationId, float angle);
 			bool addRotationY(unsigned int rotationId, float angle);
 			bool addRotationZ(unsigned int rotationId, float angle);
@@ -46,7 +46,7 @@ namespace multimedia {
 			bool removeAllRotations(const std::string& objectName);
 
 			bool removeAllRotations();
-			virtual ~VideoFrameGLModel(void);
+			virtual ~VideoFrameModel(void);
 	};
 
 }

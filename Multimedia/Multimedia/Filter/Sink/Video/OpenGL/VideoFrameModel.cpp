@@ -1,12 +1,12 @@
-#include "VideoFrameGLModel.h"
+#include "VideoFrameModel.h"
 #include <Utilities/AutoLock/AutoLock.h>
 
 namespace multimedia {
 
-	const unsigned int VideoFrameGLModel::CONST_FRAME_LOCK_TIMEOUT=1000;
+	const unsigned int VideoFrameModel::CONST_FRAME_LOCK_TIMEOUT=1000;
 
-	VideoFrameGLModel::VideoFrameGLModel(const gl::GLVertex& lowLeft, const gl::GLVertex& topLeft, const gl::GLVertex& topRight,
-			const gl::GLVertex& lowRight) throw (gl::GLException) {
+	VideoFrameModel::VideoFrameModel(const gl::Vertex& lowLeft, const gl::Vertex& topLeft, const gl::Vertex& topRight,
+			const gl::Vertex& lowRight) throw (gl::GLException) {
 		_lowLeft = lowLeft;
 		_topLeft = topLeft;
 		_lowRight = lowRight;
@@ -16,10 +16,10 @@ namespace multimedia {
 		_lockObject.lock();
 	}
 
-	VideoFrameGLModel::~VideoFrameGLModel(void) {
+	VideoFrameModel::~VideoFrameModel(void) {
 	}
 
-	bool VideoFrameGLModel::drawModel(void) {
+	bool VideoFrameModel::drawModel(void) {
 		try {
 			utils::AutoLock lock(_lockObject, CONST_FRAME_LOCK_TIMEOUT);
 			if(_texture==0 || _gstBuffer==NULL){
@@ -36,17 +36,17 @@ namespace multimedia {
 			}
 
 			glBegin(GL_QUADS);
-			glTexCoord2f(0.0f, 1.0f);
+			glTexCoord2f( 0.0f, 1.0f );
 			glVertex3f(_lowLeft.getPosX(), _lowLeft.getPosY(), _lowLeft.getPosZ());
 
-			glTexCoord2f(1.0f, 1.0f);
+			glTexCoord2f( 1.0f, 1.0f );
 			glVertex3f(_lowRight.getPosX(), _lowRight.getPosY(), _lowRight.getPosZ());
 
 			glTexCoord2f( 1.0f, 0.0f );
 			glVertex3f( _topRight.getPosX(), _topRight.getPosY(), _topRight.getPosZ() );
 
-			glTexCoord2f(0.0f, 0.0f);
-			glVertex3f(_topLeft.getPosX(), _topLeft.getPosY(), _topLeft.getPosZ());
+			glTexCoord2f( 0.0f, 0.0f );
+			glVertex3f( _topLeft.getPosX(), _topLeft.getPosY(), _topLeft.getPosZ() );
 			glEnd();
 		} catch (const utils::LockException&) {
 			return false;
@@ -55,7 +55,7 @@ namespace multimedia {
 		return true;
 	}
 
-	bool VideoFrameGLModel::UpdateFrame(GLuint texture, GLsizei width, GLsizei height, GLenum glColor, GLenum pixelType, GstBuffer* gstBuffer) {
+	bool VideoFrameModel::UpdateFrame(GLuint texture, GLsizei width, GLsizei height, GLenum glColor, GLenum pixelType, GstBuffer* gstBuffer) {
 		_width=width;
 		_height=height;
 		_glColor=glColor;
@@ -71,8 +71,8 @@ namespace multimedia {
 		return true;
 	}
 
-	bool VideoFrameGLModel::UpdateFramePosition(const gl::GLVertex& lowLeft, const gl::GLVertex& topLeft, const gl::GLVertex& topRight,
-		const gl::GLVertex& lowRight) {
+	bool VideoFrameModel::UpdateFramePosition(const gl::Vertex& lowLeft, const gl::Vertex& topLeft, const gl::Vertex& topRight,
+		const gl::Vertex& lowRight) {
 		try {
 			utils::AutoLock lock(_lockObject);
 			_lowLeft = lowLeft;
@@ -86,35 +86,35 @@ namespace multimedia {
 		return true;
 	}
 
-	bool VideoFrameGLModel::addRotationX(unsigned int rotationId, float angle){
+	bool VideoFrameModel::addRotationX(unsigned int rotationId, float angle){
 		return true;
 	}
 
-	bool VideoFrameGLModel::addRotationY(unsigned int rotationId, float angle){
+	bool VideoFrameModel::addRotationY(unsigned int rotationId, float angle){
 		return true;
 	};
 
-	bool VideoFrameGLModel::addRotationZ(unsigned int rotationId, float angle){
+	bool VideoFrameModel::addRotationZ(unsigned int rotationId, float angle){
 		return true;
 	}
 
-	bool VideoFrameGLModel::removeAllRotations(){
+	bool VideoFrameModel::removeAllRotations(){
 		return true;
 	}
 
-	bool VideoFrameGLModel::addRotationX(const std::string& objectName, unsigned int rotationId, float angle){
+	bool VideoFrameModel::addRotationX(const std::string& objectName, unsigned int rotationId, float angle){
 		return false;
 	}
 
-	bool VideoFrameGLModel::addRotationY(const std::string& objectName, unsigned int rotationId, float angle){
+	bool VideoFrameModel::addRotationY(const std::string& objectName, unsigned int rotationId, float angle){
 		return false;
 	}
 
-	bool VideoFrameGLModel::addRotationZ(const std::string& objectName, unsigned int rotationId, float angle){
+	bool VideoFrameModel::addRotationZ(const std::string& objectName, unsigned int rotationId, float angle){
 		return false;
 	}
 
-	bool VideoFrameGLModel::removeAllRotations(const std::string& objectName){
+	bool VideoFrameModel::removeAllRotations(const std::string& objectName){
 		return false;
 	}
 

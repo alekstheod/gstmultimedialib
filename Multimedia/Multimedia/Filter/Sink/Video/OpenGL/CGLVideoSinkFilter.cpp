@@ -1,6 +1,6 @@
 #include <Multimedia/Filter/Sink/Video/OpenGL/CGLVideoSinkFilter.h>
 #include <string.h>
-#include "VideoFrameGLModel.h"
+#include "VideoFrameModel.h"
 
 namespace multimedia{
 
@@ -9,7 +9,7 @@ namespace multimedia{
 	const GLuint CGLVideoSinkFilter::CONST_INVALID_TEXTURE_ID=0;
 	const unsigned int CGLVideoSinkFilter::CONST_VIDEOFRAME_GLMODEL_ID=1;
 
-	CGLVideoSinkFilter::CGLVideoSinkFilter(const utils::SmartPtr<gl::GLDevice>& glDevice)throw (GstException) : ABaseVideoCallbackSinkFilter("GL Video sink") {
+	CGLVideoSinkFilter::CGLVideoSinkFilter(const utils::SmartPtr<gl::Device>& glDevice)throw (GstException) : ABaseVideoCallbackSinkFilter("GL Video sink") {
 	    if (glDevice == NULL) {
 	        throw GstException("GLVideoSink::GLVideoSink");
 	    }
@@ -24,12 +24,12 @@ namespace multimedia{
 	    float left = -right;
 	    float high = CONST_GL_FRAME_HEIGHT / 2.0f;
 	    float low = -high;
-	    _lowLeft = gl::GLVertex(left, low, 0.0f);
-	    _topRight = gl::GLVertex(right, high, 0.0f);
-	    _lowRight = gl::GLVertex(right, low, 0.0f);
-	    _topLeft = gl::GLVertex(left, high, 0.0f);
+	    _lowLeft = gl::Vertex(left, low, 0.0f);
+	    _topRight = gl::Vertex(right, high, 0.0f);
+	    _lowRight = gl::Vertex(right, low, 0.0f);
+	    _topLeft = gl::Vertex(left, high, 0.0f);
 
-	    _videoFrameGLModel = new VideoFrameGLModel(_lowLeft, _topLeft, _topRight, _lowRight);
+	    _videoFrameGLModel = new VideoFrameModel(_lowLeft, _topLeft, _topRight, _lowRight);
 	    if (_videoFrameGLModel == NULL) {
 	        throw GstException("GLVideoSink::GLVideoSink");
 	    }
@@ -114,7 +114,7 @@ namespace multimedia{
 	bool CGLVideoSinkFilter::onRecieveBuffer(GstBaseSink* sink, GstBuffer* gstBuffer) {
 	    try {
 	        utils::AutoLock lock(_lockObject);
-	        VideoFrameGLModel* videoFrameGLModel = static_cast<VideoFrameGLModel*> (_videoFrameGLModel.getPtr());
+	        VideoFrameModel* videoFrameGLModel = static_cast<VideoFrameModel*> (_videoFrameGLModel.getPtr());
 	        if ( videoFrameGLModel != NULL ) {
 	            videoFrameGLModel->UpdateFrame(_texture, _frameWidth, _frameHeight, _glColor, _pixelType, gstBuffer);
 	        }
