@@ -1,20 +1,20 @@
 /*
- * IGLCamera.cpp
+ * IGLLight.cpp
  *
- *  Created on: May 17, 2011
+ *  Created on: May 20, 2011
  *      Author: m1cRo
  */
 
-#include "IGLCamera.h"
+#include "ILight.h"
 
 namespace gl {
 
-	IGLCamera::IGLCamera() {
+	ILight::ILight() {
 		// TODO Auto-generated constructor stub
 
 	}
 
-	IGLCamera::~IGLCamera() {
+	ILight::~ILight() {
 		// TODO Auto-generated destructor stub
 	}
 

@@ -8,15 +8,15 @@
 #ifndef WHITEGLLIGHT_H_
 #define WHITEGLLIGHT_H_
 
-#include "IGLLight.h"
+#include "ILight.h"
 
 namespace gl {
 
-	class WhiteGLLight: public gl::IGLLight {
+	class WhiteLight: public gl::ILight {
 		public:
-			WhiteGLLight();
+			WhiteLight();
 			bool applyLight();
-			virtual ~WhiteGLLight();
+			virtual ~WhiteLight();
 	};
 
 }

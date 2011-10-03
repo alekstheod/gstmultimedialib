@@ -5,7 +5,7 @@
  *      Author: m1cRo
  */
 
-#include "GLModel.h"
+#include "Model.h"
 #include <math.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
@@ -19,7 +19,7 @@ namespace gl{
 	namespace wavefront{
 
 
-		GLModel::GLModel(std::istream& modelStream)throw(gl::GLException){
+		Model::Model(std::istream& modelStream)throw(gl::GLException){
 			if(!modelStream.good() || modelStream.eof()){
 				throw gl::GLException("ObjModel::ObjModel - Wrong argument data is empty");
 			}
@@ -34,9 +34,9 @@ namespace gl{
 						throw GLException("GLModel::GLModel - Illegal modelStream");
 					}
 
-					GLObject obj(modelStream,previewMaxFacesIndex);
+					Object obj(modelStream,previewMaxFacesIndex);
 					previewMaxFacesIndex=obj.getLastVertexNumber();
-					std::pair< std::string, GLObject > newEntry(tokens[1], obj);
+					std::pair< std::string, Object > newEntry(tokens[1], obj);
 					if(!_glObjects.insert(newEntry).second){
 						throw GLException("GLModel::GLModel - Illegal modelStream");
 					}
@@ -45,18 +45,18 @@ namespace gl{
 		}
 
 
-		GLModel::~GLModel(){
+		Model::~Model(){
 		}
 
 
-		bool GLModel::drawModel(){
+		bool Model::drawModel(){
 			glPushMatrix();
 		 	std::map< unsigned int, Rotation>::iterator curRotation;
 		 	for(curRotation=_rotations.begin(); curRotation!=_rotations.end();curRotation++){
 		 		glRotatef(curRotation->second.getAngle(), curRotation->second.getAxisX(), curRotation->second.getAxisY(), curRotation->second.getAxisZ());
 		 	}
 
-		 	std::map< std::string, GLObject>::iterator curObject;
+		 	std::map< std::string, Object>::iterator curObject;
 		 	for(curObject=_glObjects.begin();curObject!=_glObjects.end();curObject++){
 		 		curObject->second.drawObject();
 		 	}
@@ -66,7 +66,7 @@ namespace gl{
 		}
 
 
-		bool GLModel::addRotationX(unsigned int rotationId, float angle){
+		bool Model::addRotationX(unsigned int rotationId, float angle){
 			try{
 				utils::AutoLock lock(_lockObject);
 				_rotations[rotationId]=Rotation(angle,1.0,0.0,0.0);
@@ -78,7 +78,7 @@ namespace gl{
 		}
 
 
-		bool GLModel::addRotationY(unsigned int rotationId, float angle){
+		bool Model::addRotationY(unsigned int rotationId, float angle){
 			try{
 				utils::AutoLock lock(_lockObject);
 				_rotations[rotationId]=Rotation(angle,0.0,1.0,0.0);
@@ -90,7 +90,7 @@ namespace gl{
 		}
 
 
-		bool GLModel::addRotationZ(unsigned int rotationId, float angle){
+		bool Model::addRotationZ(unsigned int rotationId, float angle){
 			try{
 				utils::AutoLock lock(_lockObject);
 				_rotations[rotationId]=Rotation(angle,0.0,0.0,1.0);
@@ -102,7 +102,7 @@ namespace gl{
 		}
 
 
-		bool GLModel::removeAllRotations(){
+		bool Model::removeAllRotations(){
 			bool result=true;
 			try{
 				utils::AutoLock lock(_lockObject);
@@ -114,11 +114,11 @@ namespace gl{
 			return result;
 		}
 
-		bool GLModel::addRotationX(const std::string& objectName, unsigned int rotationId, float angle){
+		bool Model::addRotationX(const std::string& objectName, unsigned int rotationId, float angle){
 			bool result=true;
 			try{
 				utils::AutoLock lock(_lockObject);
-				std::map< std::string, GLObject>::iterator currentObject=_glObjects.find(objectName);
+				std::map< std::string, Object>::iterator currentObject=_glObjects.find(objectName);
 				if(currentObject!=_glObjects.end()){
 					result=currentObject->second.addRotationX(rotationId, angle);
 				}
@@ -130,11 +130,11 @@ namespace gl{
 		}
 
 
-		bool GLModel::addRotationY(const std::string& objectName, unsigned int rotationId, float angle){
+		bool Model::addRotationY(const std::string& objectName, unsigned int rotationId, float angle){
 			bool result=true;
 			try{
 				utils::AutoLock lock(_lockObject);
-				std::map< std::string, GLObject>::iterator currentObject=_glObjects.find(objectName);
+				std::map< std::string, Object>::iterator currentObject=_glObjects.find(objectName);
 				if(currentObject!=_glObjects.end()){
 					result=currentObject->second.addRotationY(rotationId, angle);
 				}
@@ -146,11 +146,11 @@ namespace gl{
 		}
 
 
-		bool GLModel::addRotationZ(const std::string& objectName, unsigned int rotationId, float angle){
+		bool Model::addRotationZ(const std::string& objectName, unsigned int rotationId, float angle){
 			bool result=true;
 			try{
 				utils::AutoLock lock(_lockObject);
-				std::map< std::string, GLObject>::iterator currentObject=_glObjects.find(objectName);
+				std::map< std::string, Object>::iterator currentObject=_glObjects.find(objectName);
 				if(currentObject!=_glObjects.end()){
 					result=currentObject->second.addRotationZ(rotationId, angle);
 				}
@@ -162,11 +162,11 @@ namespace gl{
 		}
 
 
-		bool GLModel::removeAllRotations(const std::string& objectName){
+		bool Model::removeAllRotations(const std::string& objectName){
 			bool result=true;
 			try{
 				utils::AutoLock lock(_lockObject);
-				std::map< std::string, GLObject>::iterator currentObject=_glObjects.find(objectName);
+				std::map< std::string, Object>::iterator currentObject=_glObjects.find(objectName);
 				if(currentObject!=_glObjects.end()){
 					result=currentObject->second.removeAllRotations();
 				}
