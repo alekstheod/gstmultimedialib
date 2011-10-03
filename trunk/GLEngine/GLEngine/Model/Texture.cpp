@@ -18,10 +18,12 @@ Texture::~Texture() {
 	glDeleteTextures(1, &_texture);
 }
 
-void Texture::applyTexture( GLenum target ){
+bool Texture::applyTexture( GLenum target ){
+	glEnable( target );
 	glBindTexture(target, _texture);
 	glTexParameteri(target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	return true;
 }
 
 }
