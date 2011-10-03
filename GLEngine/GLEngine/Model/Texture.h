@@ -17,10 +17,12 @@ private:
 	friend class Device;
 	GLuint _texture;
 
-public:
+protected:
 	Texture( GLuint texture);
-	void applyTexture( GLenum target );
-	~Texture();
+	virtual bool applyTexture( GLenum target );
+
+public:
+	virtual ~Texture();
 };
 
 }

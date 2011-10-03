@@ -1,6 +1,6 @@
 #include "VideoFrameModel.h"
 #include <Utilities/AutoLock/AutoLock.h>
-#include <GLEngine/Model/Texture.h>
+#include <GLEngine/Model/ImageTexture.h>
 #include <algorithm>
 
 namespace multimedia {
@@ -23,12 +23,9 @@ namespace multimedia {
 	bool VideoFrameModel::drawModel(void) {
 		try {
 			utils::AutoLock lock( _lockObject );
-			gl::Texture texture(1000);
-			glEnable( GL_TEXTURE_2D );
+			gl::ImageTexture texture(1000, _width, _height, _glColor, _pixelType );
 			if( !_frameBuffer.empty() ){
-				texture.applyTexture(GL_TEXTURE_2D);
-				glTexImage2D ( GL_TEXTURE_2D, 0, _glColor, _width, _height, 0, _glColor, _pixelType, NULL );
-				glTexSubImage2D (GL_TEXTURE_2D, 0, 0, 0, _width, _height,_glColor, _pixelType, _frameBuffer.data());
+				texture.applyTexture(GL_TEXTURE_2D, _frameBuffer);
 			}
 
 			glBegin(GL_QUADS);
