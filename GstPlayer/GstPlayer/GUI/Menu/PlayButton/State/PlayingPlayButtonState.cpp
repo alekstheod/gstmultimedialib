@@ -19,7 +19,7 @@ namespace gstplayer {
 	}
 
 
-	void PlayingPlayButtonState::clickButton(PlayButtonGLModel* playButton){
+	void PlayingPlayButtonState::clickButton(PlayButtonModel* playButton){
 	}
 
 

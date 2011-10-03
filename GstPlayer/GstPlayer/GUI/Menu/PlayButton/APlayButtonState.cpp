@@ -6,7 +6,7 @@
  */
 
 #include "APlayButtonState.h"
-#include "PlayButtonGLModel.h"
+#include "PlayButtonModel.h"
 
 namespace gstplayer {
 
@@ -16,7 +16,7 @@ namespace gstplayer {
 	APlayButtonState::~APlayButtonState() {
 	}
 
-	bool APlayButtonState::changeState(PlayButtonGLModel* playButton, APlayButtonState* newState){
+	bool APlayButtonState::changeState(PlayButtonModel* playButton, APlayButtonState* newState){
 		if(playButton==NULL || newState==NULL){
 			return false;
 		}

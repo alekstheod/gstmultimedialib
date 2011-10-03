@@ -3,7 +3,7 @@
 
 #include <QtOpenGL/QGLWidget>
 #include "ui_gstplayer.h"
-#include <GLEngine/GLDevice.h>
+#include <GLEngine/Device.h>
 #include <GstPlayer/VideoTrack.h>
 #include <qtimer.h>
 
@@ -14,10 +14,10 @@ namespace gstplayer{
 		Q_OBJECT
 		private:
 			Ui::GstPlayerClass ui;
-			utils::SmartPtr< gl::GLDevice > _glDevice;
+			utils::SmartPtr< gl::Device > _glDevice;
 			utils::SmartPtr< VideoTrack > _track;
-			utils::SmartPtr<gl::IGLCamera> _camera;
-			utils::SmartPtr<gl::IGLModel> _menu;
+			utils::SmartPtr<gl::ICamera> _camera;
+			utils::SmartPtr<gl::IModel> _menu;
 			QTimer _timer;
 
 		protected:

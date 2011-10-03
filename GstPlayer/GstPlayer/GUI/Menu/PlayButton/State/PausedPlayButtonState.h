@@ -24,7 +24,7 @@ namespace gstplayer {
 
 		public:
 			PausedPlayButtonState(const std::string& texturePath)throw(gl::GLException);
-			void clickButton(PlayButtonGLModel* playButton);
+			void clickButton(PlayButtonModel* playButton);
 			bool drawButton(const APlayButtonState::RECT& buttonRect);
 			virtual ~PausedPlayButtonState();
 	};
