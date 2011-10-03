@@ -34,12 +34,12 @@
 								<option id="gnu.cpp.compiler.lib.debug.option.optimization.level.616956445" name="Optimization Level" superClass="gnu.cpp.compiler.lib.debug.option.optimization.level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.lib.debug.option.debugging.level.1405248650" name="Debug Level" superClass="gnu.cpp.compiler.lib.debug.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.872974244" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Utilities}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/GLEngine}&quot;"/>
-									<listOptionValue builtIn="false" value="/usr/lib/glib-2.0/include/"/>
+									<listOptionValue builtIn="false" value="/usr/include/gstreamer-0.10"/>
+									<listOptionValue builtIn="false" value="/usr/lib64/glib-2.0/include/"/>
 									<listOptionValue builtIn="false" value="/usr/include/libxml2"/>
 									<listOptionValue builtIn="false" value="/usr/include/glib-2.0"/>
-									<listOptionValue builtIn="false" value="/usr/include/gstreamer-0.10"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Utilities}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/GLEngine}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1520703485" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
@@ -49,6 +49,7 @@
 								<option id="gnu.c.compiler.lib.debug.option.debugging.level.2089849139" name="Debug Level" superClass="gnu.c.compiler.lib.debug.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.include.paths.887651200" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="/usr/include/gstreamer-0.10"/>
+									<listOptionValue builtIn="false" value="/usr/lib64/glib-2.0/include/"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Utilities}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}&quot;"/>
 									<listOptionValue builtIn="false" value="/usr/lib/glib-2.0/include/"/>

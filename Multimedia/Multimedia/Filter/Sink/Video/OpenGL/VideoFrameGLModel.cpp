@@ -3,7 +3,7 @@
 
 namespace multimedia {
 
-	const unsigned int VideoFrameGLModel::CONST_FRAME_LOCK_TIMEOUT=10000;
+	const unsigned int VideoFrameGLModel::CONST_FRAME_LOCK_TIMEOUT=1000;
 
 	VideoFrameGLModel::VideoFrameGLModel(const gl::GLVertex& lowLeft, const gl::GLVertex& topLeft, const gl::GLVertex& topRight,
 			const gl::GLVertex& lowRight) throw (gl::GLException) {
@@ -21,7 +21,7 @@ namespace multimedia {
 
 	bool VideoFrameGLModel::drawModel(void) {
 		try {
-			utils::AutoLock lock(_lockObject);
+			utils::AutoLock lock(_lockObject, CONST_FRAME_LOCK_TIMEOUT);
 			if(_texture==0 || _gstBuffer==NULL){
 				return false;
 			}
@@ -72,7 +72,7 @@ namespace multimedia {
 	}
 
 	bool VideoFrameGLModel::UpdateFramePosition(const gl::GLVertex& lowLeft, const gl::GLVertex& topLeft, const gl::GLVertex& topRight,
-			const gl::GLVertex& lowRight) {
+		const gl::GLVertex& lowRight) {
 		try {
 			utils::AutoLock lock(_lockObject);
 			_lowLeft = lowLeft;
