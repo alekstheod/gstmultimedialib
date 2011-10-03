@@ -1,6 +1,6 @@
 #include "GstPlayerWidget.h"
-#include <GLEngine/Camera/SimpleGLCamera.h>
-#include <GstPlayer/GUI/Menu/MenuGLModel.h>
+#include <GLEngine/Camera/SimpleCamera.h>
+#include <GstPlayer/GUI/Menu/MenuModel.h>
 
 namespace gstplayer{
 
@@ -17,18 +17,18 @@ namespace gstplayer{
 
 	void GstPlayerWidget::initializeGL(){
 		QRect qRect=this->geometry();
-		gl::GLDevice::RECT rect;
+		gl::Device::RECT rect;
 		rect.left=qRect.left();
 		rect.right=qRect.right();
 		rect.top=qRect.top();
 		rect.bottom=qRect.bottom();
-		_glDevice=new gl::GLDevice(rect);
-		_camera=new gl::SimpleGLCamera;
-		_camera->setPosition(gl::GLVertex(0.0f,0.0f,2.3f));
+		_glDevice=new gl::Device(rect);
+		_camera=new gl::SimpleCamera;
+		_camera->setPosition(gl::Vertex(0.0f,0.0f,2.3f));
 		_glDevice->setCamera(_camera);
-		_menu=new MenuGLModel;
+		_menu=new MenuModel;
 		_glDevice->addGLModel(_menu);
-		_track=new VideoTrack("file:///home/alekstheod/Downloads/battle/test.avi",_glDevice);
+		_track=new VideoTrack("file:///home/alekstheod/Downloads/Killer_outbreaks.s01e02.avi",_glDevice);
 		_track->start(QThread::NormalPriority);
 		_timer.start(20);
 	}

@@ -77,7 +77,7 @@ namespace gstplayer {
 	}
 
 
-	void PausedPlayButtonState::clickButton(PlayButtonGLModel* playButton){
+	void PausedPlayButtonState::clickButton(PlayButtonModel* playButton){
 
 	}
 

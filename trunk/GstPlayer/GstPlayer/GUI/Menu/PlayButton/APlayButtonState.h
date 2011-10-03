@@ -11,7 +11,7 @@
 
 namespace gstplayer {
 
-	class PlayButtonGLModel;
+	class PlayButtonModel;
 
 	class APlayButtonState {
 		public:
@@ -20,7 +20,7 @@ namespace gstplayer {
 			     RECT()
 			    {
 			    }
-					friend class PlayButtonGLModel;
+					friend class PlayButtonModel;
 					float _posX;
 					float _posY;
 					float _width;
@@ -36,11 +36,11 @@ namespace gstplayer {
 			};
 
 		protected:
-			bool changeState(PlayButtonGLModel* playButton, APlayButtonState* newState);
+			bool changeState(PlayButtonModel* playButton, APlayButtonState* newState);
 
 		public:
 			APlayButtonState();
-			virtual void clickButton(PlayButtonGLModel* playButton)=0;
+			virtual void clickButton(PlayButtonModel* playButton)=0;
 			virtual bool drawButton(const RECT& buttonRect)=0;
 			virtual ~APlayButtonState();
 	};
