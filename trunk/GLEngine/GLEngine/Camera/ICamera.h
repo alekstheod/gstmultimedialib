@@ -7,17 +7,17 @@
 
 #ifndef IGLCAMERA_H_
 #define IGLCAMERA_H_
-#include <GLEngine/Model/GLVertex.h>
+#include <GLEngine/Model/Vertex.h>
 
 namespace gl {
 
-	class IGLCamera {
+	class ICamera {
 		public:
-			IGLCamera();
-			virtual void setPosition(const GLVertex& position)=0;
-			virtual void lookAt(const GLVertex& position)=0;
+			ICamera();
+			virtual void setPosition(const Vertex& position)=0;
+			virtual void lookAt(const Vertex& position)=0;
 			virtual void applyCamera()=0;
-			virtual ~IGLCamera();
+			virtual ~ICamera();
 	};
 
 }

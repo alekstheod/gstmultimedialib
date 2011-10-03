@@ -10,23 +10,23 @@
 #include <vector>
 #include <map>
 #include <string>
-#include <GLEngine/Model/IGLModel.h>
+#include <GLEngine/Model/IModel.h>
 #include <GLEngine/GLException.h>
 #include <Utilities/AutoLock/LockObject.h>
-#include <GLEngine/Model/Wavefront/GLObject.h>
+#include <GLEngine/Model/Wavefront/Object.h>
 
 namespace gl{
 
 	namespace wavefront{
 
-		class GLModel : public gl::IGLModel {
+		class Model : public gl::IModel {
 			private:
-				std::map< std::string, GLObject> _glObjects;
+				std::map< std::string, Object> _glObjects;
 				std::map< unsigned int, Rotation> _rotations;
 				utils::LockObject _lockObject;
 
 			public:
-				GLModel(std::istream& modelStream)throw(gl::GLException);
+				Model(std::istream& modelStream)throw(gl::GLException);
 				bool drawModel(); // Draws the model on the screen
 				bool addRotationX(unsigned int rotationId, float angle);
 				bool addRotationY(unsigned int rotationId, float angle);
@@ -38,7 +38,7 @@ namespace gl{
 				bool addRotationZ(const std::string& objectName, unsigned int rotationId, float angle);
 				bool removeAllRotations(const std::string& objectName);
 
-				virtual ~GLModel();
+				virtual ~Model();
 		};
 
 

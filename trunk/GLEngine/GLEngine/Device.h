@@ -6,14 +6,14 @@
 #include <Utilities/SmartPtr/SmartPtr.h>
 #include <Utilities/AutoLock/LockObject.h>
 #include <GLEngine/GLException.h>
-#include <GLEngine/Model/GLVertex.h>
-#include <GLEngine/Model/IGLModel.h>
-#include <GLEngine/Camera/IGLCamera.h>
-#include <GLEngine/Light/IGLLight.h>
+#include <GLEngine/Model/Vertex.h>
+#include <GLEngine/Model/IModel.h>
+#include <GLEngine/Camera/ICamera.h>
+#include <GLEngine/Light/ILight.h>
 
 namespace gl {
 
-	class GLDevice {
+	class Device {
 		public:
 			struct RECT {
 					int left;
@@ -31,23 +31,23 @@ namespace gl {
 			bool _windowWasResized;
 			unsigned int _windowWidth;
 			unsigned int _windowHeight;
-			std::map<void* , utils::SmartPtr<IGLModel> > _glModels;
-			utils::SmartPtr<IGLCamera> _camera;
-			std::map<void* , utils::SmartPtr<IGLLight> > _lights;
+			std::map<void* , utils::SmartPtr<IModel> > _glModels;
+			utils::SmartPtr<ICamera> _camera;
+			std::map<void* , utils::SmartPtr<ILight> > _lights;
 			std::list< GLuint > _textures;
 
 		public:
-			GLDevice(const GLDevice::RECT&) throw (GLException);
+			Device(const Device::RECT&) throw (GLException);
 			bool drawModels(void);
-			bool setCamera(const utils::SmartPtr<IGLCamera>& camera);
-			bool addGLModel(const utils::SmartPtr<IGLModel>& glModel);
-			bool removeGLModel(const utils::SmartPtr<IGLModel>& glModel);
+			bool setCamera(const utils::SmartPtr<ICamera>& camera);
+			bool addGLModel(const utils::SmartPtr<IModel>& glModel);
+			bool removeGLModel(const utils::SmartPtr<IModel>& glModel);
 			bool setPerspective(unsigned int windowWidth, unsigned int windowHeight);
-			bool removeLight(const utils::SmartPtr<IGLLight>& light);
-			bool setLight(const utils::SmartPtr<IGLLight>& light);
+			bool removeLight(const utils::SmartPtr<ILight>& light);
+			bool setLight(const utils::SmartPtr<ILight>& light);
 			bool generateTexture( const GLsizei namesNumber, GLuint& texture);
 			bool releaseTexture( const GLuint texture);
-			virtual ~GLDevice(void) throw ();
+			virtual ~Device(void) throw ();
 	};
 
 }

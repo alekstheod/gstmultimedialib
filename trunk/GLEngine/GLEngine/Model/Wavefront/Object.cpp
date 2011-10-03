@@ -5,7 +5,7 @@
  *      Author: m1cRo
  */
 
-#include "GLObject.h"
+#include "Object.h"
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <Utilities/StrUtil/StrUtil.h>
@@ -17,15 +17,15 @@ namespace gl {
 
 	namespace wavefront {
 
-		const unsigned int GLObject::CONST_POINTS_PER_VERTEX = 3;
-		const unsigned int GLObject::CONST_TOTAL_FLOATS_IN_TRIANGLE = 9;
-		const std::string GLObject::CONST_FACES_TOKEN="f";
-		const std::string GLObject::CONST_VERTEX_NORMALS_TOKEN="vn";
-		const std::string GLObject::CONST_VERTECES_TOKEN="v";
-		const std::string GLObject::CONST_OBJECT_TOKEN="o";
-		const std::string GLObject::CONST_GROUP_TOKEN="g";
+		const unsigned int Object::CONST_POINTS_PER_VERTEX = 3;
+		const unsigned int Object::CONST_TOTAL_FLOATS_IN_TRIANGLE = 9;
+		const std::string Object::CONST_FACES_TOKEN="f";
+		const std::string Object::CONST_VERTEX_NORMALS_TOKEN="vn";
+		const std::string Object::CONST_VERTECES_TOKEN="v";
+		const std::string Object::CONST_OBJECT_TOKEN="o";
+		const std::string Object::CONST_GROUP_TOKEN="g";
 
-		GLObject::GLObject(std::istream& modelStream, unsigned int previewMaxFacesIndex)throw(gl::GLException){
+		Object::Object(std::istream& modelStream, unsigned int previewMaxFacesIndex)throw(gl::GLException){
 			if(!modelStream.good() || modelStream.eof()){
 				throw gl::GLException("ObjModel::ObjModel - Wrong argument data is empty");
 			}
@@ -141,11 +141,11 @@ namespace gl {
 			}
 		}
 
-		GLObject::~GLObject() {
+		Object::~Object() {
 			// TODO Auto-generated destructor stub
 		}
 
-		bool GLObject::addRotationX(unsigned int rotationId, float angle){
+		bool Object::addRotationX(unsigned int rotationId, float angle){
 			try{
 				utils::AutoLock lock(_lockObject);
 				_rotations[rotationId]=Rotation(angle,1.0,0.0,0.0);
@@ -156,7 +156,7 @@ namespace gl {
 			return true;
 		}
 
-		bool GLObject::addRotationY(unsigned int rotationId, float angle){
+		bool Object::addRotationY(unsigned int rotationId, float angle){
 			try{
 				utils::AutoLock lock(_lockObject);
 				_rotations[rotationId]=Rotation(angle,0.0,1.0,0.0);
@@ -167,7 +167,7 @@ namespace gl {
 			return true;
 		}
 
-		bool GLObject::addRotationZ(unsigned int rotationId, float angle){
+		bool Object::addRotationZ(unsigned int rotationId, float angle){
 			try{
 				utils::AutoLock lock(_lockObject);
 				_rotations[rotationId]=Rotation(angle,0.0,0.0,1.0);
@@ -178,7 +178,7 @@ namespace gl {
 			return true;
 		}
 
-		bool GLObject::removeAllRotations(){
+		bool Object::removeAllRotations(){
 			try{
 				utils::AutoLock lock(_lockObject);
 				_rotations.clear();
@@ -189,7 +189,7 @@ namespace gl {
 			return true;
 		}
 
-		bool GLObject::drawObject(){
+		bool Object::drawObject(){
 			bool result=true;
 		 	glEnableClientState(GL_VERTEX_ARRAY);						// Enable vertex arrays
 		 	glEnableClientState(GL_NORMAL_ARRAY);						// Enable normal arrays
@@ -215,7 +215,7 @@ namespace gl {
 			return result;
 		}
 
-		unsigned int GLObject::getLastVertexNumber(){
+		unsigned int Object::getLastVertexNumber(){
 			unsigned int result=0;
 			try{
 				utils::AutoLock lock(_lockObject);

@@ -19,7 +19,7 @@ namespace gl {
 
 	namespace wavefront {
 
-		class GLObject {
+		class Object {
 			public:
 				static const unsigned int CONST_POINTS_PER_VERTEX;
 				static const unsigned int CONST_TOTAL_FLOATS_IN_TRIANGLE;
@@ -40,14 +40,14 @@ namespace gl {
 				utils::LockObject _lockObject;
 
 			public:
-				GLObject(std::istream& modelStream, unsigned int previewMaxFacesIndex)throw(gl::GLException);
+				Object(std::istream& modelStream, unsigned int previewMaxFacesIndex)throw(gl::GLException);
 				bool drawObject();
 				bool addRotationX(unsigned int rotationId, float angle);
 				bool addRotationY(unsigned int rotationId, float angle);
 				bool addRotationZ(unsigned int rotationId, float angle);
 				bool removeAllRotations();
 				unsigned int getLastVertexNumber();
-				virtual ~GLObject();
+				virtual ~Object();
 		};
 
 	}

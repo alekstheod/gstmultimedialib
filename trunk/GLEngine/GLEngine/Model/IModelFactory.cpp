@@ -5,16 +5,16 @@
  *      Author: m1cRo
  */
 
-#include "IGLModelFactory.h"
+#include "IModelFactory.h"
 
 namespace gl {
 
-	IGLModelFactory::IGLModelFactory() {
+	IModelFactory::IModelFactory() {
 		// TODO Auto-generated constructor stub
 
 	}
 
-	IGLModelFactory::~IGLModelFactory() {
+	IModelFactory::~IModelFactory() {
 		// TODO Auto-generated destructor stub
 	}
 

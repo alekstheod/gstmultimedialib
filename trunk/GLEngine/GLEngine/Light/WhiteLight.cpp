@@ -5,22 +5,22 @@
  *      Author: m1cRo
  */
 
-#include "WhiteGLLight.h"
+#include "WhiteLight.h"
 #include <GL/gl.h>
 
 
 namespace gl {
 
-	WhiteGLLight::WhiteGLLight() {
+	WhiteLight::WhiteLight() {
 		// TODO Auto-generated constructor stub
 
 	}
 
-	WhiteGLLight::~WhiteGLLight() {
+	WhiteLight::~WhiteLight() {
 		// TODO Auto-generated destructor stub
 	}
 
-	bool WhiteGLLight::applyLight(){
+	bool WhiteLight::applyLight(){
         GLfloat mat_specular[]={1.0,1.0,1.0,1.0};
         GLfloat mat_shininess[]={50.0};
         GLfloat light_position[]={-10.0,5.0,5.0,0.0};

@@ -9,15 +9,15 @@
 #define IGLMODELFACTORY_H_
 #include <Utilities/SmartPtr/SmartPtr.h>
 #include <vector>
-#include <GLEngine/Model/IGLModel.h>
+#include <GLEngine/Model/IModel.h>
 
 namespace gl {
 
-	class IGLModelFactory {
+	class IModelFactory {
 		public:
-			IGLModelFactory();
-			virtual ~IGLModelFactory();
-			virtual utils::SmartPtr<IGLModel> getInstance(const std::vector<unsigned char>& modelData)=0;
+			IModelFactory();
+			virtual ~IModelFactory();
+			virtual utils::SmartPtr<IModel> getInstance(const std::vector<unsigned char>& modelData)=0;
 	};
 
 }

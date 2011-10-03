@@ -1,13 +1,13 @@
-#include "GLDevice.h"
+#include "Device.h"
 
 using namespace std;
 using namespace utils;
 
 namespace gl{
 
-	const GLuint GLDevice::CONST_INVALID_TEXTURE=0;
+	const GLuint Device::CONST_INVALID_TEXTURE=0;
 
-	GLDevice::GLDevice(const GLDevice::RECT& windowRect)throw (GLException) {
+	Device::Device(const Device::RECT& windowRect)throw (GLException) {
 	    if (windowRect.left >= windowRect.right) {
 	        throw GLException("GLDevice::GLDevice - Wrong window rect");
 	    }
@@ -23,10 +23,10 @@ namespace gl{
 	    glMatrixMode(GL_MODELVIEW);
 	}
 
-	GLDevice::~GLDevice(void)throw (){
+	Device::~Device(void)throw (){
 	}
 
-	bool GLDevice::drawModels(void) {
+	bool Device::drawModels(void) {
 	    try {
 	        AutoLock lock(_lockObject);
 	        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -36,12 +36,12 @@ namespace gl{
 	        	_camera->applyCamera();
 	        }
 
-	        std::map<void*, utils::SmartPtr<IGLLight> >::iterator curLight;
+	        std::map<void*, utils::SmartPtr<ILight> >::iterator curLight;
 	        for(curLight=_lights.begin(); curLight!=_lights.end();curLight++){
 	        	curLight->second->applyLight();
 	        }
 
-	        std::map<void* , utils::SmartPtr<IGLModel> >::iterator glModel;
+	        std::map<void* , utils::SmartPtr<IModel> >::iterator glModel;
 	        for (glModel = _glModels.begin(); glModel != _glModels.end(); glModel++) {
 	            if (glModel->second->drawModel() == false) {
 	                return false;
@@ -56,10 +56,10 @@ namespace gl{
 	    return true;
 	}
 
-	bool GLDevice::addGLModel(const SmartPtr<IGLModel>& glModel) {
+	bool Device::addGLModel(const SmartPtr<IModel>& glModel) {
 	    try {
 	        AutoLock lock(_lockObject);
-	        pair<void* , SmartPtr<IGLModel> > newEntry(glModel.getPtr(), glModel);
+	        pair<void* , SmartPtr<IModel> > newEntry(glModel.getPtr(), glModel);
 	        if (_glModels.insert(newEntry).second == false) {
 	            return false;
 	        }
@@ -70,7 +70,7 @@ namespace gl{
 	    return true;
 	}
 
-	bool GLDevice::removeGLModel(const utils::SmartPtr<IGLModel>& glModel) {
+	bool Device::removeGLModel(const utils::SmartPtr<IModel>& glModel) {
 	    try {
 	        utils::AutoLock lock(_lockObject);
 	        if (_glModels.find(glModel.getPtr()) == _glModels.end()) {
@@ -85,7 +85,7 @@ namespace gl{
 	    return true;
 	}
 
-	bool GLDevice::setPerspective(unsigned int windowWidth, unsigned int windowHeight) {
+	bool Device::setPerspective(unsigned int windowWidth, unsigned int windowHeight) {
 	    try {
 	        AutoLock lock(_lockObject);
 			glMatrixMode(GL_PROJECTION);
@@ -100,7 +100,7 @@ namespace gl{
 	    return true;
 	}
 
-	bool GLDevice::setCamera(const utils::SmartPtr<IGLCamera>& camera){
+	bool Device::setCamera(const utils::SmartPtr<ICamera>& camera){
 	    try {
 	    	AutoLock lock(_lockObject);
 			_camera=camera;
@@ -111,7 +111,7 @@ namespace gl{
 	    return true;
 	}
 
-	bool GLDevice::removeLight(const utils::SmartPtr<IGLLight>& light){
+	bool Device::removeLight(const utils::SmartPtr<ILight>& light){
 		try{
 			utils::AutoLock lock(_lockObject);
 			if(_lights.find(light.getPtr())==_lights.end()){
@@ -126,7 +126,7 @@ namespace gl{
 		return true;
 	}
 
-	bool GLDevice::setLight(const utils::SmartPtr<IGLLight>& light){
+	bool Device::setLight(const utils::SmartPtr<ILight>& light){
 		try{
 			utils::AutoLock lock(_lockObject);
 			_lights[light.getPtr()]=light;
@@ -138,7 +138,7 @@ namespace gl{
 	}
 
 
-	bool GLDevice::generateTexture( const GLsizei namesNumber, GLuint& texture ){
+	bool Device::generateTexture( const GLsizei namesNumber, GLuint& texture ){
 		texture = CONST_INVALID_TEXTURE;
 		if(_textures.empty()){
 			texture=1;
@@ -173,7 +173,7 @@ namespace gl{
 	}
 
 
-	bool GLDevice::releaseTexture( const GLuint texture ){
+	bool Device::releaseTexture( const GLuint texture ){
 		std::list< GLuint >::iterator curTexture=_textures.begin();
 		while( curTexture != _textures.end() && *curTexture != texture){
 			curTexture++;
