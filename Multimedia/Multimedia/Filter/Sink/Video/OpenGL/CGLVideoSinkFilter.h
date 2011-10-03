@@ -1,6 +1,7 @@
 #ifndef GLVIDEOSINK_H
 #define GLVIDEOSINK_H
 #include <GLEngine/Device.h>
+#include <GLEngine/Model/Vertex.h>
 #include <Multimedia/Filter/BaseFilter/Callback/ABaseVideoCallbackSinkFilter.h>
 #include <Utilities/AutoLock/LockObject.h>
 
@@ -18,7 +19,6 @@ namespace multimedia{
 			gl::Vertex _lowRight;
 			gl::Vertex _topRight;
 			gl::Vertex _topLeft;
-			GLuint _texture;
 
 			utils::LLockObject _lockObject;
 

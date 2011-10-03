@@ -9,13 +9,19 @@
 
 namespace gl {
 
-Texture::Texture() {
-	// TODO Auto-generated constructor stub
-
+Texture::Texture( GLuint texture ) {
+	_texture=texture;
+	glGenTextures(1, &_texture);
 }
 
 Texture::~Texture() {
-	// TODO Auto-generated destructor stub
+	glDeleteTextures(1, &_texture);
+}
+
+void Texture::applyTexture( GLenum target ){
+	glBindTexture(target, _texture);
+	glTexParameteri(target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 }
 
 }

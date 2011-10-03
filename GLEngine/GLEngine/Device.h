@@ -2,16 +2,16 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <map>
-#include <list>
 #include <Utilities/SmartPtr/SmartPtr.h>
 #include <Utilities/AutoLock/LockObject.h>
 #include <GLEngine/GLException.h>
-#include <GLEngine/Model/Vertex.h>
-#include <GLEngine/Model/IModel.h>
-#include <GLEngine/Camera/ICamera.h>
-#include <GLEngine/Light/ILight.h>
 
 namespace gl {
+
+	class ICamera;
+	class IModel;
+	class ILight;
+	class Texture;
 
 	class Device {
 		public:
@@ -34,7 +34,7 @@ namespace gl {
 			std::map<void* , utils::SmartPtr<IModel> > _glModels;
 			utils::SmartPtr<ICamera> _camera;
 			std::map<void* , utils::SmartPtr<ILight> > _lights;
-			std::list< GLuint > _textures;
+			std::map< GLuint, utils::SmartPtr< Texture > > _textures;
 
 		public:
 			Device(const Device::RECT&) throw (GLException);
@@ -45,8 +45,8 @@ namespace gl {
 			bool setPerspective(unsigned int windowWidth, unsigned int windowHeight);
 			bool removeLight(const utils::SmartPtr<ILight>& light);
 			bool setLight(const utils::SmartPtr<ILight>& light);
-			bool generateTexture( const GLsizei namesNumber, GLuint& texture);
-			bool releaseTexture( const GLuint texture);
+			bool generateTexture( utils::SmartPtr< Texture >& newTexture );
+			bool releaseTexture( const utils::SmartPtr< Texture >& texture);
 			virtual ~Device(void) throw ();
 	};
 

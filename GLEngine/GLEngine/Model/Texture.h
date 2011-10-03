@@ -7,13 +7,20 @@
 
 #ifndef TEXTURE_H_
 #define TEXTURE_H_
+#include <GL/gl.h>
+#include <GL/glu.h>
 
 namespace gl {
 
 class Texture {
+private:
+	friend class Device;
+	GLuint _texture;
+
 public:
-	Texture();
-	virtual ~Texture();
+	Texture( GLuint texture);
+	void applyTexture( GLenum target );
+	~Texture();
 };
 
 }
