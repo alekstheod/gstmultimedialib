@@ -42,7 +42,7 @@ namespace utils {
 			/// <summary>
 			///
 			/// </summary>
-			SmartPtr & operator=(const SmartPtr<T>& smartPtr);
+			SmartPtr<T>& operator=(const SmartPtr<T>& smartPtr);
 
 			/// <summary>
 			///
@@ -62,7 +62,7 @@ namespace utils {
 			/// <summary>
 			/// Will return the holding instance pointer.
 			/// </summary>
-			T * operator->() const;
+			T* operator->() const;
 
 			/// <summary>
 			/// Will return the holding instance pointer.
