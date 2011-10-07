@@ -11,15 +11,15 @@
 
 namespace utils {
 
-    class IPixel {
-    public:
-        virtual unsigned int getBitsPerPixel(void)const = 0;
-        virtual bool getPixelData(std::vector<unsigned char>& data)const = 0;
-        virtual unsigned int getPixelDataSize(void)const = 0;
+class IPixel {
+public:
+	virtual unsigned int getBitsPerPixel(void) const = 0;
+	virtual bool getPixelData(std::vector<unsigned char>& data) const = 0;
+	virtual unsigned int getPixelDataSize(void) const = 0;
 
-        virtual ~IPixel() {
-        };
-    };
+	virtual ~IPixel() {
+	}
+};
 
 }
 #endif /* IPIXEL_H_ */

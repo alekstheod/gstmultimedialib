@@ -63,29 +63,30 @@ G_BEGIN_DECLS
 #define GST_IS_VIDEO_CALLBACKPLUGIN_CLASS(klass) \
   (G_TYPE_CHECK_CLASS_TYPE((klass),GST_TYPE_VIDEO_CALLBACKPLUGIN))
 
-typedef struct _GstCallbackVideoCallbackPlugin      GstCallbackVideoCallbackPlugin;
+typedef struct _GstCallbackVideoCallbackPlugin GstCallbackVideoCallbackPlugin;
 typedef struct _GstCallbackVideoCallbackPluginClass GstCallbackVideoCallbackPluginClass;
 
-static const char* render_video_callback_property="render_callback";
-static const char* setcaps_video_callback_property="setcaps_callback";
-static const char* chain_video_callback_arg_property="chain_callback_arg";
+static const char* render_video_callback_property = "render_callback";
+static const char* setcaps_video_callback_property = "setcaps_callback";
+static const char* chain_video_callback_arg_property = "chain_callback_arg";
 
-typedef gboolean (*RenderVideoCallback)(GstBaseSink* sink, GstBuffer* gstBuffer, void* arg);
-typedef gboolean (*SetCapsVideoCallback)(GstPad * pad, GstCaps * caps, void* arg);
+typedef gboolean (*RenderVideoCallback)(GstBaseSink* sink, GstBuffer* gstBuffer,
+		void* arg);
+typedef gboolean (*SetCapsVideoCallback)(GstPad * pad, GstCaps * caps,
+		void* arg);
 
-struct _GstCallbackVideoCallbackPlugin{
-  GstVideoSink  element;
-  RenderVideoCallback render_callback;
-  SetCapsVideoCallback setcaps_callback;
-  void* arg;
+struct _GstCallbackVideoCallbackPlugin {
+	GstVideoSink element;
+	RenderVideoCallback render_callback;
+	SetCapsVideoCallback setcaps_callback;
+	void* arg;
 };
 
 struct _GstCallbackVideoCallbackPluginClass {
-	GstVideoSinkClass  parent_class;
+	GstVideoSinkClass parent_class;
 };
 
-GType gst_callback_videocallbackplugin_get_type (void);
+GType gst_callback_videocallbackplugin_get_type(void);
 
 G_END_DECLS
-
 #endif /* __GST_CALLBACKPLUGIN_H__ */

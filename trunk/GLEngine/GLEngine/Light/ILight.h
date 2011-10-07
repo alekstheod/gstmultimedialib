@@ -10,12 +10,12 @@
 
 namespace gl {
 
-	class ILight {
-		public:
-			ILight();
-			virtual bool applyLight()=0;
-			virtual ~ILight();
-	};
+class ILight {
+public:
+	ILight();
+	virtual bool applyLight()=0;
+	virtual ~ILight();
+};
 
 }
 

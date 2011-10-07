@@ -5,5 +5,5 @@ using namespace utils;
 sprimitive::sprimitive(void) {
 }
 
-sprimitive::~sprimitive(void)throw () {
+sprimitive::~sprimitive(void) throw () {
 }

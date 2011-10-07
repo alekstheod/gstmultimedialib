@@ -9,24 +9,27 @@
 
 namespace multimedia {
 
-	BaseSinkFilter::BaseSinkFilter(const std::string& pluginName, const std::string& description) throw (GstException) {
-		_output = gst_element_factory_make(pluginName.c_str(), description.c_str());
-		if (_output == NULL) {
-			throw GstException("BaseOutputFilter::BaseOutputFilter - create output filter named '" + pluginName + "' failed");
-		}
+BaseSinkFilter::BaseSinkFilter(const std::string& pluginName,
+		const std::string& description) throw (GstException) {
+	_output = gst_element_factory_make(pluginName.c_str(), description.c_str());
+	if (_output == NULL) {
+		throw GstException(
+				"BaseOutputFilter::BaseOutputFilter - create output filter named '"
+						+ pluginName + "' failed");
+	}
+}
+
+bool BaseSinkFilter::addToPipeline(GstElement* pipeline) {
+	if (pipeline == NULL) {
+		return false;
 	}
 
-	bool BaseSinkFilter::addToPipeline(GstElement* pipeline) {
-		if (pipeline == NULL) {
-			return false;
-		}
+	return gst_bin_add(GST_BIN(pipeline), _output.getPtr());
+}
 
-		return gst_bin_add(GST_BIN(pipeline), _output.getPtr());
-	}
+BaseSinkFilter::~BaseSinkFilter(void) {
 
-	BaseSinkFilter::~BaseSinkFilter(void) {
-
-	}
+}
 
 }
 

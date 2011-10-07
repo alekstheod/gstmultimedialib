@@ -12,13 +12,13 @@
 
 namespace multimedia {
 
-	class BaseStreamingFilterGraph: public BasePlaybinFilterGraph {
-		private:
+class BaseStreamingFilterGraph: public BasePlaybinFilterGraph {
+private:
 
-		public:
-			BaseStreamingFilterGraph(const std::string& fileName) throw (GstException);
-			virtual ~BaseStreamingFilterGraph(void);
-	};
+public:
+	BaseStreamingFilterGraph(const std::string& fileName) throw (GstException);
+	virtual ~BaseStreamingFilterGraph(void);
+};
 
 }
 

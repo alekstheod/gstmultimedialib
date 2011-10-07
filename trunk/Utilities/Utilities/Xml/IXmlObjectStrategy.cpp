@@ -2,10 +2,10 @@
 
 namespace utils {
 
-    IXmlObjectStrategy::IXmlObjectStrategy(void) {
-    }
+IXmlObjectStrategy::IXmlObjectStrategy(void) {
+}
 
-    IXmlObjectStrategy::~IXmlObjectStrategy(void) {
-    }
+IXmlObjectStrategy::~IXmlObjectStrategy(void) {
+}
 
 }

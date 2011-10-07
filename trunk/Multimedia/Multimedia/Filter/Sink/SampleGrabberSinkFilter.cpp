@@ -9,23 +9,23 @@
 
 namespace multimedia {
 
-	SampleGrabberSinkFilter::SampleGrabberSinkFilter(const std::string& description):ABaseCallbackSinkFilter(description) {
-		// TODO Auto-generated constructor stub
+SampleGrabberSinkFilter::SampleGrabberSinkFilter(const std::string& description) :
+		ABaseCallbackSinkFilter(description) {
+	// TODO Auto-generated constructor stub
 
-	}
+}
 
-	SampleGrabberSinkFilter::~SampleGrabberSinkFilter() {
-		// TODO Auto-generated destructor stub
-	}
+SampleGrabberSinkFilter::~SampleGrabberSinkFilter() {
+	// TODO Auto-generated destructor stub
+}
 
+bool SampleGrabberSinkFilter::onRecieveBuffer(GstPad* gstPad,
+		GstBuffer* gstBuffer) {
+	return true;
+}
 
-	bool SampleGrabberSinkFilter::onRecieveBuffer(GstPad* gstPad, GstBuffer* gstBuffer){
-		return true;
-	}
-
-
-	bool SampleGrabberSinkFilter::onSetCaps(GstPad * pad, GstCaps * caps){
-		return true;
-	}
+bool SampleGrabberSinkFilter::onSetCaps(GstPad * pad, GstCaps * caps) {
+	return true;
+}
 
 }

@@ -19,32 +19,32 @@
 
 namespace multimedia {
 
-	class BasePlaybinFilterGraph : public GstObject {
-		private:
-			GMainLoop* _mainLoop;
-			GSmartPtr<GstElement> _pipeline;
+class BasePlaybinFilterGraph: public GstObject {
+private:
+	GMainLoop* _mainLoop;
+	GSmartPtr<GstElement> _pipeline;
 
-		public:
-			const std::string CONST_FILE_NAME;
-			static const std::string CONST_PLAYBIN_PLUGIN_NAME;
-			static const std::string CONST_PLAYBIN_PLUGIN_DESCRIPTION;
+public:
+	const std::string CONST_FILE_NAME;
+	static const std::string CONST_PLAYBIN_PLUGIN_NAME;
+	static const std::string CONST_PLAYBIN_PLUGIN_DESCRIPTION;
 
-		private:
-			static gboolean mainLoop(GstBus* bus, GstMessage* msg, gpointer data);
+private:
+	static gboolean mainLoop(GstBus* bus, GstMessage* msg, gpointer data);
 
-		protected:
-			bool setAudioSink(BaseSinkFilter* audioSink);
-			bool setVideoSink(BaseSinkFilter* videoSink);
-			bool setVideoSink(ABaseVideoCallbackSinkFilter* videoSink);
-			bool setEncoder(BaseEncoderFilter* encoder);
+protected:
+	bool setAudioSink(BaseSinkFilter* audioSink);
+	bool setVideoSink(BaseSinkFilter* videoSink);
+	bool setVideoSink(ABaseVideoCallbackSinkFilter* videoSink);
+	bool setEncoder(BaseEncoderFilter* encoder);
 
-		public:
-			BasePlaybinFilterGraph(const std::string& fileName) throw (GstException);
-			bool play(void);
-			bool stop(void);
-			bool rewind(void);
-			virtual ~BasePlaybinFilterGraph();
-	};
+public:
+	BasePlaybinFilterGraph(const std::string& fileName) throw (GstException);
+	bool play(void);
+	bool stop(void);
+	bool rewind(void);
+	virtual ~BasePlaybinFilterGraph();
+};
 
 }
 

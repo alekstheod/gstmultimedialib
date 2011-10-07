@@ -9,24 +9,26 @@
 
 namespace gstplayer {
 
-	VideoTrack::VideoTrack(const std::string& uri, utils::SmartPtr< gl::Device >& glDevice)throw(multimedia::GstException) {
-		if(glDevice==NULL){
-			throw multimedia::GstException("GstPlayer::GstPlayer - Wrong argument glDevice==NULL");
-		}
-
-		_uri=uri;
-		_glDevice=glDevice;
+VideoTrack::VideoTrack(const std::string& uri,
+		utils::SmartPtr<gl::Device>& glDevice) throw (multimedia::GstException) {
+	if (glDevice == NULL) {
+		throw multimedia::GstException(
+				"GstPlayer::GstPlayer - Wrong argument glDevice==NULL");
 	}
 
-	VideoTrack::~VideoTrack() {
-		if(_filterGraph!=NULL){
-			_filterGraph->stop();
-			this->wait(1000);
-		}
-	}
+	_uri = uri;
+	_glDevice = glDevice;
+}
 
-	void VideoTrack::run(){
-		_filterGraph=new multimedia::CGLVideoFilterGraph(_uri, _glDevice);
-		_filterGraph->play();
+VideoTrack::~VideoTrack() {
+	if (_filterGraph != NULL) {
+		_filterGraph->stop();
+		this->wait(1000);
 	}
+}
+
+void VideoTrack::run() {
+	_filterGraph = new multimedia::CGLVideoFilterGraph(_uri, _glDevice);
+	_filterGraph->play();
+}
 }

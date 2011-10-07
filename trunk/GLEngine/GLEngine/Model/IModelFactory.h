@@ -13,12 +13,13 @@
 
 namespace gl {
 
-	class IModelFactory {
-		public:
-			IModelFactory();
-			virtual ~IModelFactory();
-			virtual utils::SmartPtr<IModel> getInstance(const std::vector<unsigned char>& modelData)=0;
-	};
+class IModelFactory {
+public:
+	IModelFactory();
+	virtual ~IModelFactory();
+	virtual utils::SmartPtr<IModel> getInstance(
+			const std::vector<unsigned char>& modelData)=0;
+};
 
 }
 

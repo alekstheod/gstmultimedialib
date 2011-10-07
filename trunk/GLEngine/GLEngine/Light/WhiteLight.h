@@ -12,12 +12,12 @@
 
 namespace gl {
 
-	class WhiteLight: public gl::ILight {
-		public:
-			WhiteLight();
-			bool applyLight();
-			virtual ~WhiteLight();
-	};
+class WhiteLight: public gl::ILight {
+public:
+	WhiteLight();
+	bool applyLight();
+	virtual ~WhiteLight();
+};
 
 }
 

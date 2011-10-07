@@ -9,17 +9,17 @@
 
 namespace multimedia {
 
-	const std::string FFMp3DecoderFilter::CONST_PLUGIN_NAME = "ffdec_mp3";
-	const std::string FFMp3DecoderFilter::CONST_PLUGIN_DESCRIPTION = "Mp3Decoder";
+const std::string FFMp3DecoderFilter::CONST_PLUGIN_NAME = "ffdec_mp3";
+const std::string FFMp3DecoderFilter::CONST_PLUGIN_DESCRIPTION = "Mp3Decoder";
 
-	FFMp3DecoderFilter::FFMp3DecoderFilter(void) throw (GstException) :
+FFMp3DecoderFilter::FFMp3DecoderFilter(void) throw (GstException) :
 		BaseDecoderFilter(CONST_PLUGIN_NAME, CONST_PLUGIN_DESCRIPTION) {
-		// TODO Auto-generated constructor stub
+	// TODO Auto-generated constructor stub
 
-	}
+}
 
-	FFMp3DecoderFilter::~FFMp3DecoderFilter(void) {
-		// TODO Auto-generated destructor stub
-	}
+FFMp3DecoderFilter::~FFMp3DecoderFilter(void) {
+	// TODO Auto-generated destructor stub
+}
 
 }

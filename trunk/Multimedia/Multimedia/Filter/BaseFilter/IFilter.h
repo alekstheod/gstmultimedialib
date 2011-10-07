@@ -11,16 +11,16 @@
 
 namespace multimedia {
 
-	/**
-	 * Basic filter interface.
-	 *
-	 */
-	class IFilter {
-		public:
-			IFilter(void);
-			virtual bool addToPipeline(GstElement* pipeline) = 0;
-			virtual ~IFilter(void);
-	};
+/**
+ * Basic filter interface.
+ *
+ */
+class IFilter {
+public:
+	IFilter(void);
+	virtual bool addToPipeline(GstElement* pipeline) = 0;
+	virtual ~IFilter(void);
+};
 
 }
 

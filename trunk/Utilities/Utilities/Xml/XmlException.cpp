@@ -2,10 +2,11 @@
 
 namespace utils {
 
-    XmlException::XmlException(const std::string& message) : AException(message) {
-    }
+XmlException::XmlException(const std::string& message) :
+		AException(message) {
+}
 
-    XmlException::~XmlException(void)throw () {
-    }
+XmlException::~XmlException(void) throw () {
+}
 
 }

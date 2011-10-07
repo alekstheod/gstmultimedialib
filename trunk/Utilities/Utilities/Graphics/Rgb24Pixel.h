@@ -11,30 +11,30 @@
 
 namespace utils {
 
-    class Rgb24Pixel : public IPixel {
-    private:
-        unsigned char _red;
-        unsigned char _green;
-        unsigned char _blue;
+class Rgb24Pixel: public IPixel {
+private:
+	unsigned char _red;
+	unsigned char _green;
+	unsigned char _blue;
 
-    public:
-        static const unsigned int CONST_BITS_PER_PIXEL;
+public:
+	static const unsigned int CONST_BITS_PER_PIXEL;
 
-    public:
-        Rgb24Pixel();
-        Rgb24Pixel(unsigned char red, unsigned char green, unsigned char blue);
-        Rgb24Pixel(const Rgb24Pixel& pixel);
-        const Rgb24Pixel & operator +=(const Rgb24Pixel& pixel);
-        const Rgb24Pixel & operator -=(const Rgb24Pixel& pixel);
-        const Rgb24Pixel operator -(const Rgb24Pixel& pixel)const;
-        const Rgb24Pixel operator +(const Rgb24Pixel& pixel)const;
-        const Rgb24Pixel & operator =(const Rgb24Pixel& pixel);
-        bool operator ==(const Rgb24Pixel& pixel)const;
-        unsigned int getBitsPerPixel(void)const;
-        bool getPixelData(std::vector<unsigned char>& data)const;
-        unsigned int getPixelDataSize(void)const;
-        virtual ~Rgb24Pixel();
-    };
+public:
+	Rgb24Pixel();
+	Rgb24Pixel(unsigned char red, unsigned char green, unsigned char blue);
+	Rgb24Pixel(const Rgb24Pixel& pixel);
+	const Rgb24Pixel & operator +=(const Rgb24Pixel& pixel);
+	const Rgb24Pixel & operator -=(const Rgb24Pixel& pixel);
+	const Rgb24Pixel operator -(const Rgb24Pixel& pixel) const;
+	const Rgb24Pixel operator +(const Rgb24Pixel& pixel) const;
+	const Rgb24Pixel & operator =(const Rgb24Pixel& pixel);
+	bool operator ==(const Rgb24Pixel& pixel) const;
+	unsigned int getBitsPerPixel(void) const;
+	bool getPixelData(std::vector<unsigned char>& data) const;
+	unsigned int getPixelDataSize(void) const;
+	virtual ~Rgb24Pixel();
+};
 
 }
 

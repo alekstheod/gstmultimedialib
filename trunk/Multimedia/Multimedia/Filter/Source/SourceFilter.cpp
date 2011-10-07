@@ -10,49 +10,52 @@
 
 namespace multimedia {
 
-	const std::string SourceFilter::CONST_PLUGIN_NAME = "filesrc";
+const std::string SourceFilter::CONST_PLUGIN_NAME = "filesrc";
 
-	SourceFilter::SourceFilter(const std::string& fileName) throw (GstException) {
-		if (fileName.empty()) {
-			throw GstException("SourceFilter::SourceFilter - Empty fileName");
-		}
-		_source = gst_element_factory_make(CONST_PLUGIN_NAME.c_str(), fileName.c_str());
-		if (_source == NULL) {
-			throw GstException("SourceFilter::SourceFilter - File source create failed");
-		}
-
-		g_object_set(G_OBJECT(_source.getPtr()), "location", fileName.c_str(), NULL);
+SourceFilter::SourceFilter(const std::string& fileName) throw (GstException) {
+	if (fileName.empty()) {
+		throw GstException("SourceFilter::SourceFilter - Empty fileName");
+	}
+	_source = gst_element_factory_make(CONST_PLUGIN_NAME.c_str(),
+			fileName.c_str());
+	if (_source == NULL) {
+		throw GstException(
+				"SourceFilter::SourceFilter - File source create failed");
 	}
 
-	bool SourceFilter::addToPipeline(GstElement* pipeline) {
-		if (pipeline == NULL) {
-			return false;
-		}
+	g_object_set(G_OBJECT(_source.getPtr()), "location", fileName.c_str(),
+			NULL);
+}
 
-		return gst_bin_add(GST_BIN(pipeline), _source.getPtr());
+bool SourceFilter::addToPipeline(GstElement* pipeline) {
+	if (pipeline == NULL) {
+		return false;
 	}
 
-	bool SourceFilter::Connect(BaseDemuxerFilter* demuxer) {
-		if (demuxer == NULL) {
-			return false;
-		}
+	return gst_bin_add(GST_BIN(pipeline), _source.getPtr());
+}
 
-		gst_object_ref(static_cast<GstElement*> (_source.getPtr()));
-		return gst_element_link(_source.getPtr(), demuxer->_demuxer.getPtr());
+bool SourceFilter::Connect(BaseDemuxerFilter* demuxer) {
+	if (demuxer == NULL) {
+		return false;
 	}
 
-	bool SourceFilter::Connect(BaseSinkFilter* output) {
-		if (output == NULL) {
-			return false;
-		}
+	gst_object_ref(static_cast<GstElement*>(_source.getPtr()));
+	return gst_element_link(_source.getPtr(), demuxer->_demuxer.getPtr());
+}
 
-		gst_object_ref(static_cast<GstElement*> (_source.getPtr()));
-		return gst_element_link(_source.getPtr(), output->_output.getPtr());
+bool SourceFilter::Connect(BaseSinkFilter* output) {
+	if (output == NULL) {
+		return false;
 	}
 
-	SourceFilter::~SourceFilter(void) {
+	gst_object_ref(static_cast<GstElement*>(_source.getPtr()));
+	return gst_element_link(_source.getPtr(), output->_output.getPtr());
+}
 
-	}
+SourceFilter::~SourceFilter(void) {
+
+}
 
 }
 

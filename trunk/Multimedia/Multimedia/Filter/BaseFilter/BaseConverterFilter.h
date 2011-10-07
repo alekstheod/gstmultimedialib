@@ -16,20 +16,21 @@
 
 namespace multimedia {
 
-	class BaseConverterFilter: public IFilter, GstObject {
-		private:
-			GSmartPtr<GstElement> _converter;
+class BaseConverterFilter: public IFilter, GstObject {
+private:
+	GSmartPtr<GstElement> _converter;
 
-		private:
-			friend class BaseDecoderFilter;
-			friend class BasePlaybinFilterGraph;
+private:
+	friend class BaseDecoderFilter;
+	friend class BasePlaybinFilterGraph;
 
-		public:
-			BaseConverterFilter(const std::string& pluginName, const std::string& description) throw (GstException);
-			bool connect(BaseSinkFilter* outputFilter);
-			bool addToPipeline(GstElement* pipeline);
-			virtual ~BaseConverterFilter(void);
-	};
+public:
+	BaseConverterFilter(const std::string& pluginName,
+			const std::string& description) throw (GstException);
+	bool connect(BaseSinkFilter* outputFilter);
+	bool addToPipeline(GstElement* pipeline);
+	virtual ~BaseConverterFilter(void);
+};
 
 }
 

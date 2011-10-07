@@ -14,9 +14,9 @@
 namespace utils {
 
 #ifdef WIN32
-    typedef WinLockObject LockObject;
+typedef WinLockObject LockObject;
 #elif linux
-    typedef LLockObject LockObject;
+typedef LLockObject LockObject;
 #endif
 
 }

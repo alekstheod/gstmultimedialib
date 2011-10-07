@@ -14,14 +14,15 @@
 
 namespace multimedia {
 
-	class CGLVideoFilterGraph: public multimedia::BasePlaybinFilterGraph {
-		private:
-			CGLVideoSinkFilter _videoSink;
+class CGLVideoFilterGraph: public multimedia::BasePlaybinFilterGraph {
+private:
+	CGLVideoSinkFilter _videoSink;
 
-		public:
-			CGLVideoFilterGraph(const std::string& filename, const utils::SmartPtr<gl::Device>& glDevice);
-			virtual ~CGLVideoFilterGraph();
-	};
+public:
+	CGLVideoFilterGraph(const std::string& filename,
+			const utils::SmartPtr<gl::Device>& glDevice);
+	virtual ~CGLVideoFilterGraph();
+};
 
 }
 

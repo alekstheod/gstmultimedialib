@@ -10,26 +10,26 @@
 
 namespace gl {
 
-	namespace wavefront {
+namespace wavefront {
 
-		class Rotation {
-			private:
-				float _angle;
-				float _xAxis;
-				float _yAxis;
-				float _zAxis;
+class Rotation {
+private:
+	float _angle;
+	float _xAxis;
+	float _yAxis;
+	float _zAxis;
 
-			public:
-				Rotation();
-				Rotation(float angle, float xAxis, float yAxis, float zAxis);
-				float getAngle();
-				float getAxisX();
-				float getAxisY();
-				float getAxisZ();
-				virtual ~Rotation();
-		};
+public:
+	Rotation();
+	Rotation(float angle, float xAxis, float yAxis, float zAxis);
+	float getAngle();
+	float getAxisX();
+	float getAxisY();
+	float getAxisZ();
+	virtual ~Rotation();
+};
 
-	}
+}
 
 }
 

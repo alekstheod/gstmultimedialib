@@ -62,30 +62,30 @@ G_BEGIN_DECLS
 #define GST_IS_CALLBACKPLUGIN_CLASS(klass) \
   (G_TYPE_CHECK_CLASS_TYPE((klass),GST_TYPE_CALLBACKPLUGIN))
 
-typedef struct _GstCallbackCallbackPlugin      GstCallbackCallbackPlugin;
+typedef struct _GstCallbackCallbackPlugin GstCallbackCallbackPlugin;
 typedef struct _GstCallbackCallbackPluginClass GstCallbackCallbackPluginClass;
 
-static const char* chain_callback_property="chain_callback";
-static const char* setcaps_callback_property="setcaps_callback";
-static const char* chain_callback_arg_property="chain_callback_arg";
+static const char* chain_callback_property = "chain_callback";
+static const char* setcaps_callback_property = "setcaps_callback";
+static const char* chain_callback_arg_property = "chain_callback_arg";
 
-typedef gboolean (*ChainCallback)(GstPad* gstPad, GstBuffer* gstBuffer, void* arg);
+typedef gboolean (*ChainCallback)(GstPad* gstPad, GstBuffer* gstBuffer,
+		void* arg);
 typedef gboolean (*SetCapsCallback)(GstPad * pad, GstCaps * caps, void* arg);
 
-struct _GstCallbackCallbackPlugin{
-  GstElement element;
-  GstPad* sinkpad;
-  ChainCallback chain_callback;
-  SetCapsCallback setcaps_callback;
-  void* arg;
+struct _GstCallbackCallbackPlugin {
+	GstElement element;
+	GstPad* sinkpad;
+	ChainCallback chain_callback;
+	SetCapsCallback setcaps_callback;
+	void* arg;
 };
 
 struct _GstCallbackCallbackPluginClass {
-  GstElementClass parent_class;
+	GstElementClass parent_class;
 };
 
-GType gst_callback_callbackplugin_get_type (void);
+GType gst_callback_callbackplugin_get_type(void);
 
 G_END_DECLS
-
 #endif /* __GST_CALLBACKPLUGIN_H__ */

@@ -14,15 +14,15 @@
 
 namespace multimedia {
 
-	class XImageVideoFilterGraph: public multimedia::BasePlaybinFilterGraph {
-		private:
-			XImageVideoSinkFilter _videoSink;
-			StandardAudioSinkFilter _audioSink;
+class XImageVideoFilterGraph: public multimedia::BasePlaybinFilterGraph {
+private:
+	XImageVideoSinkFilter _videoSink;
+	StandardAudioSinkFilter _audioSink;
 
-		public:
-			XImageVideoFilterGraph(const std::string& fileName)throw(GstException);
-			virtual ~XImageVideoFilterGraph();
-	};
+public:
+	XImageVideoFilterGraph(const std::string& fileName) throw (GstException);
+	virtual ~XImageVideoFilterGraph();
+};
 
 }
 

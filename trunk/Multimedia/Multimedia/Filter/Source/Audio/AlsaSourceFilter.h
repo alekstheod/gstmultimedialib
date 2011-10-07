@@ -10,23 +10,23 @@
 #include <Multimedia/GstException.h>
 #include <Multimedia/Utilities/GSmartPtr.h>
 
-namespace multimedia{
+namespace multimedia {
 
-	class AlsaSourceFilter {
-	private:
-	    GSmartPtr<GstElement> _alsaSource;
+class AlsaSourceFilter {
+private:
+	GSmartPtr<GstElement> _alsaSource;
 
-	private:
-	    friend class BaseFilterGraph;
-	    friend class BasePlaybinFilterGraph;
+private:
+	friend class BaseFilterGraph;
+	friend class BasePlaybinFilterGraph;
 
-	public:
-	    static const std::string CONST_PLUGIN_NAME;
+public:
+	static const std::string CONST_PLUGIN_NAME;
 
-	public:
-	    AlsaSourceFilter(const std::string& pluginDescription)throw (GstException);
-	    virtual ~AlsaSourceFilter(void);
-	};
+public:
+	AlsaSourceFilter(const std::string& pluginDescription) throw (GstException);
+	virtual ~AlsaSourceFilter(void);
+};
 
 }
 

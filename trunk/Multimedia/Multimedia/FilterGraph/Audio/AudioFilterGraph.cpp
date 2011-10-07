@@ -7,20 +7,25 @@
 
 #include "AudioFilterGraph.h"
 
-namespace multimedia{
+namespace multimedia {
 
-	AudioFilterGraph::AudioFilterGraph(const std::string& fileName)throw (GstException) : BasePlaybinFilterGraph(fileName), _sourceFilter(fileName), _audioSink("Audio_Out") {
-	    if (!setAudioSink(&_audioSink)) {
-	        throw GstException("AudioFilterGraph::AudioFilterGraph - Set audio sink failed");
-	    }
-
-	    if (!setVideoSink(&_videoOutputFilter)) {
-	        throw GstException("AudioFilterGraph::AudioFilterGraph - Set video sink failed");
-	    }
+AudioFilterGraph::AudioFilterGraph(const std::string& fileName)
+		throw (GstException) :
+		BasePlaybinFilterGraph(fileName), _sourceFilter(fileName), _audioSink(
+				"Audio_Out") {
+	if (!setAudioSink(&_audioSink)) {
+		throw GstException(
+				"AudioFilterGraph::AudioFilterGraph - Set audio sink failed");
 	}
 
-	AudioFilterGraph::~AudioFilterGraph(void) {
-	    // TODO Auto-generated destructor stub
+	if (!setVideoSink(&_videoOutputFilter)) {
+		throw GstException(
+				"AudioFilterGraph::AudioFilterGraph - Set video sink failed");
 	}
+}
+
+AudioFilterGraph::~AudioFilterGraph(void) {
+	// TODO Auto-generated destructor stub
+}
 
 }

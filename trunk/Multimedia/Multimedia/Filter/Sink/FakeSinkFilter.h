@@ -12,15 +12,15 @@
 
 namespace multimedia {
 
-	class FakeSinkFilter: public BaseSinkFilter {
-		public:
-			static const std::string CONST_PLUGIN_NAME;
-			static const std::string CONST_PLUGIN_DESCRIPTION;
+class FakeSinkFilter: public BaseSinkFilter {
+public:
+	static const std::string CONST_PLUGIN_NAME;
+	static const std::string CONST_PLUGIN_DESCRIPTION;
 
-		public:
-			FakeSinkFilter();
-			virtual ~FakeSinkFilter();
-	};
+public:
+	FakeSinkFilter();
+	virtual ~FakeSinkFilter();
+};
 
 }
 

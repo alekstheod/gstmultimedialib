@@ -9,15 +9,15 @@
 
 namespace multimedia {
 
-	const std::string XImageVideoSinkFilter::CONST_PLUGIN_NAME="ximagesink";
+const std::string XImageVideoSinkFilter::CONST_PLUGIN_NAME = "ximagesink";
 
-	XImageVideoSinkFilter::XImageVideoSinkFilter(const std::string& description):BaseSinkFilter(CONST_PLUGIN_NAME,description) {
-		// TODO Auto-generated constructor stub
-	}
+XImageVideoSinkFilter::XImageVideoSinkFilter(const std::string& description) :
+		BaseSinkFilter(CONST_PLUGIN_NAME, description) {
+	// TODO Auto-generated constructor stub
+}
 
-
-	XImageVideoSinkFilter::~XImageVideoSinkFilter() {
-		// TODO Auto-generated destructor stub
-	}
+XImageVideoSinkFilter::~XImageVideoSinkFilter() {
+	// TODO Auto-generated destructor stub
+}
 
 }

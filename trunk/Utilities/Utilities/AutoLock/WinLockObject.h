@@ -5,33 +5,32 @@
 #include <windows.h>
 #include "Utilities/AutoLock/LockException.h"
 
-
 namespace utils {
 
-    /// <summary>
-    /// Lock object provide methods for thread synchronizing.
-    /// Contain an MUTEX handle that can be used to lock and unlock the section of code with sharing the current object by different threads.
-    /// </summary>
+	/// <summary>
+	/// Lock object provide methods for thread synchronizing.
+	/// Contain an MUTEX handle that can be used to lock and unlock the section of code with sharing the current object by different threads.
+	/// </summary>
 
-    class WinLockObject {
-    public:
-        static const unsigned int CONST_DEFAULT_LOCK_TIMEOUT;
+	class WinLockObject {
+	public:
+		static const unsigned int CONST_DEFAULT_LOCK_TIMEOUT;
 
-    private:
-        /// <summary>
-        /// Lockable mutex.
-        /// </summary>
-        HANDLE _mutex;
+	private:
+		/// <summary>
+		/// Lockable mutex.
+		/// </summary>
+		HANDLE _mutex;
 
-    public:
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
-        WinLockObject(void);
-        bool lock(unsigned int waitTime = CONST_DEFAULT_LOCK_TIMEOUT)const;
-        bool unlock(void)const;
-        virtual ~WinLockObject(void)throw ();
-    };
+	public:
+		/// <summary>
+		/// Default constructor.
+		/// </summary>
+		WinLockObject(void);
+		bool lock(unsigned int waitTime = CONST_DEFAULT_LOCK_TIMEOUT)const;
+		bool unlock(void)const;
+		virtual ~WinLockObject(void)throw ();
+	};
 
 }
 #endif

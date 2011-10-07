@@ -12,15 +12,16 @@
 
 namespace multimedia {
 
-	class XVideoImageSink: public multimedia::BaseSinkFilter {
-		public:
-			static const std::string CONST_PLUGIN_NAME;
+class XVideoImageSink: public multimedia::BaseSinkFilter {
+public:
+	static const std::string CONST_PLUGIN_NAME;
 
-		public:
-			XVideoImageSink(const std::string& description)throw(GstException);
-			XVideoImageSink(const std::string& description, gulong xWindowId)throw(GstException);
-			virtual ~XVideoImageSink();
-	};
+public:
+	XVideoImageSink(const std::string& description) throw (GstException);
+	XVideoImageSink(const std::string& description, gulong xWindowId)
+			throw (GstException);
+	virtual ~XVideoImageSink();
+};
 
 }
 

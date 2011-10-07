@@ -15,34 +15,36 @@
 #include <Utilities/AutoLock/LockObject.h>
 #include <GLEngine/Model/Wavefront/Object.h>
 
-namespace gl{
+namespace gl {
 
-	namespace wavefront{
+namespace wavefront {
 
-		class Model : public gl::IModel {
-			private:
-				std::map< std::string, Object> _glObjects;
-				std::map< unsigned int, Rotation> _rotations;
-				utils::LockObject _lockObject;
+class Model: public gl::IModel {
+private:
+	std::map<std::string, Object> _glObjects;
+	std::map<unsigned int, Rotation> _rotations;
+	utils::LockObject _lockObject;
 
-			public:
-				Model(std::istream& modelStream)throw(gl::GLException);
-				bool drawModel(); // Draws the model on the screen
-				bool addRotationX(unsigned int rotationId, float angle);
-				bool addRotationY(unsigned int rotationId, float angle);
-				bool addRotationZ(unsigned int rotationId, float angle);
-				bool removeAllRotations();
+public:
+	Model(std::istream& modelStream) throw (gl::GLException);
+	bool drawModel(); // Draws the model on the screen
+	bool addRotationX(unsigned int rotationId, float angle);
+	bool addRotationY(unsigned int rotationId, float angle);
+	bool addRotationZ(unsigned int rotationId, float angle);
+	bool removeAllRotations();
 
-				bool addRotationX(const std::string& objectName, unsigned int rotationId, float angle);
-				bool addRotationY(const std::string& objectName, unsigned int rotationId, float angle);
-				bool addRotationZ(const std::string& objectName, unsigned int rotationId, float angle);
-				bool removeAllRotations(const std::string& objectName);
+	bool addRotationX(const std::string& objectName, unsigned int rotationId,
+			float angle);
+	bool addRotationY(const std::string& objectName, unsigned int rotationId,
+			float angle);
+	bool addRotationZ(const std::string& objectName, unsigned int rotationId,
+			float angle);
+	bool removeAllRotations(const std::string& objectName);
 
-				virtual ~Model();
-		};
+	virtual ~Model();
+};
 
-
-	}
+}
 }
 
 #endif /* MODEL_OBJ_H_ */

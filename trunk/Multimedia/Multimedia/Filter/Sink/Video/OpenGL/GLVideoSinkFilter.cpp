@@ -9,15 +9,16 @@
 
 namespace multimedia {
 
-	const std::string GLVideoSinkFilter::CONST_PLUGIN_NAME="glimagesink";
+const std::string GLVideoSinkFilter::CONST_PLUGIN_NAME = "glimagesink";
 
-	GLVideoSinkFilter::GLVideoSinkFilter(const std::string& description) : BaseSinkFilter(CONST_PLUGIN_NAME, description) {
-		// TODO Auto-generated constructor stub
+GLVideoSinkFilter::GLVideoSinkFilter(const std::string& description) :
+		BaseSinkFilter(CONST_PLUGIN_NAME, description) {
+	// TODO Auto-generated constructor stub
 
-	}
+}
 
-	GLVideoSinkFilter::~GLVideoSinkFilter() {
-		// TODO Auto-generated destructor stub
-	}
+GLVideoSinkFilter::~GLVideoSinkFilter() {
+	// TODO Auto-generated destructor stub
+}
 
 }

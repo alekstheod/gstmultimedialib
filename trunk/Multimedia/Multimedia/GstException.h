@@ -11,11 +11,11 @@
 
 namespace multimedia {
 
-	class GstException: public utils::AException {
-		public:
-			GstException(const std::string&);
-			virtual ~GstException() throw ();
-	};
+class GstException: public utils::AException {
+public:
+	GstException(const std::string&);
+	virtual ~GstException() throw ();
+};
 
 }
 

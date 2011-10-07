@@ -9,27 +9,28 @@
 
 namespace gstplayer {
 
-	const std::string PlayingPlayButtonState::CONST_BUTTON_TEXTURE_NAME = "play_button_playing.png";
+const std::string PlayingPlayButtonState::CONST_BUTTON_TEXTURE_NAME =
+		"play_button_playing.png";
 
-	PlayingPlayButtonState::PlayingPlayButtonState(const std::string& texturePath)throw(gl::GLException) {
-	}
+PlayingPlayButtonState::PlayingPlayButtonState(const std::string& texturePath)
+		throw (gl::GLException) {
+}
 
+PlayingPlayButtonState::~PlayingPlayButtonState() {
+}
 
-	PlayingPlayButtonState::~PlayingPlayButtonState() {
-	}
+void PlayingPlayButtonState::clickButton(PlayButtonModel* playButton) {
+}
 
-
-	void PlayingPlayButtonState::clickButton(PlayButtonModel* playButton){
-	}
-
-
-	bool PlayingPlayButtonState::drawButton(const APlayButtonState::RECT& buttonRect){
-		glBegin(GL_QUADS);
-		glVertex3f(buttonRect._posX , buttonRect._posY , 0.1f);
-		glVertex3f(buttonRect._posX, buttonRect._posY-buttonRect._height , 0.1f);
-		glVertex3f(buttonRect._posX - buttonRect._width , buttonRect._posY - buttonRect._height, 0.1f);
-		glVertex3f(buttonRect._posX - buttonRect._width, buttonRect._posY, 0.1f);
-		glEnd();
-		return true;
-	}
+bool PlayingPlayButtonState::drawButton(
+		const APlayButtonState::RECT& buttonRect) {
+	glBegin(GL_QUADS);
+	glVertex3f(buttonRect._posX, buttonRect._posY, 0.1f);
+	glVertex3f(buttonRect._posX, buttonRect._posY - buttonRect._height, 0.1f);
+	glVertex3f(buttonRect._posX - buttonRect._width,
+			buttonRect._posY - buttonRect._height, 0.1f);
+	glVertex3f(buttonRect._posX - buttonRect._width, buttonRect._posY, 0.1f);
+	glEnd();
+	return true;
+}
 }
