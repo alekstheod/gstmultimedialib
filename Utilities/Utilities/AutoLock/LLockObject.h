@@ -14,20 +14,20 @@
 
 namespace utils {
 
-    class LLockObject {
-    public:
-        static const unsigned int CONST_DEFAULT_LOCK_TIMEOUT;
+class LLockObject {
+public:
+	static const unsigned int CONST_DEFAULT_LOCK_TIMEOUT;
 
-    private:
-        mutable pthread_mutex_t _mutex;
-        int _errorCode;
+private:
+	mutable pthread_mutex_t _mutex;
+	int _errorCode;
 
-    public:
-        LLockObject();
-        bool lock(unsigned int waitTime=CONST_DEFAULT_LOCK_TIMEOUT)const;
-        bool unlock(void)const;
-        virtual ~LLockObject()throw ();
-    };
+public:
+	LLockObject();
+	bool lock(unsigned int waitTime = CONST_DEFAULT_LOCK_TIMEOUT) const;
+	bool unlock(void) const;
+	virtual ~LLockObject() throw ();
+};
 
 }
 #endif

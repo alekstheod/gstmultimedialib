@@ -10,16 +10,16 @@
 
 #include <Multimedia/Filter/BaseFilter/BaseSinkFilter.h>
 
-namespace multimedia{
+namespace multimedia {
 
-	class StandardAudioSinkFilter : public BaseSinkFilter {
-	public:
-	    static const std::string CONST_PLUGIN_NAME;
+class StandardAudioSinkFilter: public BaseSinkFilter {
+public:
+	static const std::string CONST_PLUGIN_NAME;
 
-	public:
-	    StandardAudioSinkFilter(const std::string& description)throw (GstException);
-	    virtual ~StandardAudioSinkFilter(void);
-	};
+public:
+	StandardAudioSinkFilter(const std::string& description) throw (GstException);
+	virtual ~StandardAudioSinkFilter(void);
+};
 
 }
 

@@ -10,17 +10,17 @@
 
 #include <Multimedia/Filter/BaseFilter/BaseDecoderFilter.h>
 
-namespace multimedia{
+namespace multimedia {
 
-	class FFMp3DecoderFilter : public BaseDecoderFilter {
-	public:
-	    static const std::string CONST_PLUGIN_NAME;
-	    static const std::string CONST_PLUGIN_DESCRIPTION;
+class FFMp3DecoderFilter: public BaseDecoderFilter {
+public:
+	static const std::string CONST_PLUGIN_NAME;
+	static const std::string CONST_PLUGIN_DESCRIPTION;
 
-	public:
-	    FFMp3DecoderFilter(void)throw (GstException);
-	    virtual ~FFMp3DecoderFilter(void);
-	};
+public:
+	FFMp3DecoderFilter(void) throw (GstException);
+	virtual ~FFMp3DecoderFilter(void);
+};
 
 }
 

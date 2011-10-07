@@ -8,12 +8,12 @@
 
 namespace multimedia {
 
-	IFilter::IFilter(void) {
+IFilter::IFilter(void) {
 
-	}
+}
 
-	IFilter::~IFilter(void) {
+IFilter::~IFilter(void) {
 
-	}
+}
 }
 

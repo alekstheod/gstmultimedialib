@@ -15,19 +15,20 @@
 
 namespace gstplayer {
 
-	class PausedPlayButtonState: public gstplayer::APlayButtonState {
-		public:
-			static const std::string CONST_BUTTON_TEXTURE_NAME;
+class PausedPlayButtonState: public gstplayer::APlayButtonState {
+public:
+	static const std::string CONST_BUTTON_TEXTURE_NAME;
 
-		private:
-			GLuint _texture;
+private:
+	GLuint _texture;
 
-		public:
-			PausedPlayButtonState(const std::string& texturePath)throw(gl::GLException);
-			void clickButton(PlayButtonModel* playButton);
-			bool drawButton(const APlayButtonState::RECT& buttonRect);
-			virtual ~PausedPlayButtonState();
-	};
+public:
+	PausedPlayButtonState(const std::string& texturePath)
+			throw (gl::GLException);
+	void clickButton(PlayButtonModel* playButton);
+	bool drawButton(const APlayButtonState::RECT& buttonRect);
+	virtual ~PausedPlayButtonState();
+};
 
 }
 

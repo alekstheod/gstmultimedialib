@@ -17,18 +17,18 @@
 
 namespace multimedia {
 
-	class Mp3FilterGraph: public BaseFilterGraph {
-		private:
-			SourceFilter _src;
-			FFMp3DemuxerFilter _demuxer;
-			FFMp3DecoderFilter _decoder;
-			AudioConverterFilter _converter;
-			StandardAudioSinkFilter _audioOutput;
+class Mp3FilterGraph: public BaseFilterGraph {
+private:
+	SourceFilter _src;
+	FFMp3DemuxerFilter _demuxer;
+	FFMp3DecoderFilter _decoder;
+	AudioConverterFilter _converter;
+	StandardAudioSinkFilter _audioOutput;
 
-		public:
-			Mp3FilterGraph(const std::string& sourceFileName) throw (GstException);
-			virtual ~Mp3FilterGraph(void);
-	};
+public:
+	Mp3FilterGraph(const std::string& sourceFileName) throw (GstException);
+	virtual ~Mp3FilterGraph(void);
+};
 
 }
 

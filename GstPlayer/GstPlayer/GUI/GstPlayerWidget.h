@@ -7,33 +7,31 @@
 #include <GstPlayer/VideoTrack.h>
 #include <qtimer.h>
 
-namespace gstplayer{
+namespace gstplayer {
 
-	class GstPlayerWidget : public QGLWidget
-	{
-		Q_OBJECT
-		private:
-			Ui::GstPlayerClass ui;
-			utils::SmartPtr< gl::Device > _glDevice;
-			utils::SmartPtr< VideoTrack > _track;
-			utils::SmartPtr<gl::ICamera> _camera;
-			utils::SmartPtr<gl::IModel> _menu;
-			QTimer _timer;
+class GstPlayerWidget: public QGLWidget {
+Q_OBJECT
+private:
+	Ui::GstPlayerClass ui;
+	utils::SmartPtr<gl::Device> _glDevice;
+	utils::SmartPtr<VideoTrack> _track;
+	utils::SmartPtr<gl::ICamera> _camera;
+	utils::SmartPtr<gl::IModel> _menu;
+	QTimer _timer;
 
-		protected:
-			 void initializeGL();
-			 void resizeGL(int width, int height);
-			 void paintGL();
+protected:
+	void initializeGL();
+	void resizeGL(int width, int height);
+	void paintGL();
 
-		private slots:
-			void updateScene();
+private slots:
+	void updateScene();
 
-		public:
-			GstPlayerWidget(QWidget *parent = 0);
-			~GstPlayerWidget();
-	};
+public:
+	GstPlayerWidget(QWidget *parent = 0);
+	~GstPlayerWidget();
+};
 
 }
-
 
 #endif // GSTPLAYERWIDGET_H

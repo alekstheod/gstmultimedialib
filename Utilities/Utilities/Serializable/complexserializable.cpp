@@ -5,5 +5,5 @@ using namespace utils;
 complexserializable::complexserializable(void) {
 }
 
-complexserializable::~complexserializable(void)throw () {
+complexserializable::~complexserializable(void) throw () {
 }

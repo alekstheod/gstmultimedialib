@@ -18,8 +18,8 @@ private:
 	GLuint _texture;
 
 protected:
-	Texture( GLuint texture);
-	virtual bool applyTexture( GLenum target );
+	Texture(GLuint texture);
+	virtual bool applyTexture(GLenum target);
 
 public:
 	virtual ~Texture();

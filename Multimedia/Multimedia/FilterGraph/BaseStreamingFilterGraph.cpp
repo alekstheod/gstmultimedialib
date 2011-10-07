@@ -7,16 +7,18 @@
 
 #include "BaseStreamingFilterGraph.h"
 
-namespace multimedia{
+namespace multimedia {
 
-	BaseStreamingFilterGraph::BaseStreamingFilterGraph(const std::string& fileName)throw (GstException) : BasePlaybinFilterGraph(fileName) {
-	    // TODO Auto-generated constructor stub
+BaseStreamingFilterGraph::BaseStreamingFilterGraph(const std::string& fileName)
+		throw (GstException) :
+		BasePlaybinFilterGraph(fileName) {
+	// TODO Auto-generated constructor stub
 
-	}
+}
 
-	BaseStreamingFilterGraph::~BaseStreamingFilterGraph(void) {
-	    // TODO Auto-generated destructor stub
-	}
+BaseStreamingFilterGraph::~BaseStreamingFilterGraph(void) {
+	// TODO Auto-generated destructor stub
+}
 
 }
 

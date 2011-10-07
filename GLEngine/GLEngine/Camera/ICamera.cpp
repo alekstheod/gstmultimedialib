@@ -9,13 +9,13 @@
 
 namespace gl {
 
-	ICamera::ICamera() {
-		// TODO Auto-generated constructor stub
+ICamera::ICamera() {
+	// TODO Auto-generated constructor stub
 
-	}
+}
 
-	ICamera::~ICamera() {
-		// TODO Auto-generated destructor stub
-	}
+ICamera::~ICamera() {
+	// TODO Auto-generated destructor stub
+}
 
 }

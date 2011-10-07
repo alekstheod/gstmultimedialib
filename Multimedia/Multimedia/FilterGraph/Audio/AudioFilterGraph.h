@@ -14,16 +14,16 @@
 
 namespace multimedia {
 
-	class AudioFilterGraph: public BasePlaybinFilterGraph {
-		private:
-			FakeSinkFilter _videoOutputFilter;
-			SourceFilter _sourceFilter;
-			StandardAudioSinkFilter _audioSink;
+class AudioFilterGraph: public BasePlaybinFilterGraph {
+private:
+	FakeSinkFilter _videoOutputFilter;
+	SourceFilter _sourceFilter;
+	StandardAudioSinkFilter _audioSink;
 
-		public:
-			AudioFilterGraph(const std::string& fileName) throw (GstException);
-			virtual ~AudioFilterGraph(void);
-	};
+public:
+	AudioFilterGraph(const std::string& fileName) throw (GstException);
+	virtual ~AudioFilterGraph(void);
+};
 
 }
 

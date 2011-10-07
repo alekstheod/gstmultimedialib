@@ -16,21 +16,22 @@
 
 namespace multimedia {
 
-	class BaseSinkFilter: public IFilter, GstObject {
-		protected:
-			GSmartPtr<GstElement> _output;
+class BaseSinkFilter: public IFilter, GstObject {
+protected:
+	GSmartPtr<GstElement> _output;
 
-		private:
-			friend class BaseConverterFilter;
-			friend class BaseDecoderFilter;
-			friend class SourceFilter;
-			friend class BasePlaybinFilterGraph;
+private:
+	friend class BaseConverterFilter;
+	friend class BaseDecoderFilter;
+	friend class SourceFilter;
+	friend class BasePlaybinFilterGraph;
 
-		public:
-			BaseSinkFilter(const std::string& pluginName, const std::string& description) throw (GstException);
-			bool addToPipeline(GstElement* pipeline);
-			virtual ~BaseSinkFilter(void);
-	};
+public:
+	BaseSinkFilter(const std::string& pluginName,
+			const std::string& description) throw (GstException);
+	bool addToPipeline(GstElement* pipeline);
+	virtual ~BaseSinkFilter(void);
+};
 
 }
 

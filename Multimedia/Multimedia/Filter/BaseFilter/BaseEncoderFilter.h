@@ -14,19 +14,20 @@
 
 namespace multimedia {
 
-	class BaseEncoderFilter : public IFilter, GstObject{
-		private:
-			GSmartPtr<GstElement> _encoder;
+class BaseEncoderFilter: public IFilter, GstObject {
+private:
+	GSmartPtr<GstElement> _encoder;
 
-		private:
-			friend class BasePlaybinFilterGraph;
-			friend class BaseDecoderFilter;
+private:
+	friend class BasePlaybinFilterGraph;
+	friend class BaseDecoderFilter;
 
-		public:
-			BaseEncoderFilter(const std::string& pluginName, const std::string& description) throw (GstException);
-			bool addToPipeline(GstElement* pipeline);
-			virtual ~BaseEncoderFilter(void);
-	};
+public:
+	BaseEncoderFilter(const std::string& pluginName,
+			const std::string& description) throw (GstException);
+	bool addToPipeline(GstElement* pipeline);
+	virtual ~BaseEncoderFilter(void);
+};
 
 }
 

@@ -2,10 +2,10 @@
 
 namespace utils {
 
-    XmlDocument::XmlDocument(void) {
-    }
+XmlDocument::XmlDocument(void) {
+}
 
-    XmlDocument::~XmlDocument(void) {
-    }
+XmlDocument::~XmlDocument(void) {
+}
 
 }

@@ -10,21 +10,19 @@
 
 namespace multimedia {
 
-	const bool GstObject::CONST_GST_INITIALIZED=initGstreamer();
+const bool GstObject::CONST_GST_INITIALIZED = initGstreamer();
 
-	GstObject::GstObject() {
-		// TODO Auto-generated constructor stub
-	}
+GstObject::GstObject() {
+	// TODO Auto-generated constructor stub
+}
 
+bool GstObject::initGstreamer() {
+	gst_init(NULL, NULL);
+	return true;
+}
 
-	bool GstObject::initGstreamer(){
-		gst_init(NULL, NULL);
-		return true;
-	}
-
-
-	GstObject::~GstObject() {
-		// TODO Auto-generated destructor stub
-	}
+GstObject::~GstObject() {
+	// TODO Auto-generated destructor stub
+}
 
 }

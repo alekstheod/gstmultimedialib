@@ -9,19 +9,23 @@
 
 namespace multimedia {
 
-	XImageVideoFilterGraph::XImageVideoFilterGraph(const std::string& fileName) throw (GstException) :
-		BasePlaybinFilterGraph(fileName), _videoSink("VideoSink"), _audioSink("AudioSink") {
-		if (!setAudioSink(&_audioSink)) {
-			throw GstException("XImageVideoFilterGraph::XImageVideoFilterGraph- Set audio sink failed");
-		}
-
-		if (!setVideoSink(&_videoSink)) {
-			throw GstException("XImageVideoFilterGraph::XImageVideoFilterGraph - Set video sink failed");
-		}
+XImageVideoFilterGraph::XImageVideoFilterGraph(const std::string& fileName)
+		throw (GstException) :
+		BasePlaybinFilterGraph(fileName), _videoSink("VideoSink"), _audioSink(
+				"AudioSink") {
+	if (!setAudioSink(&_audioSink)) {
+		throw GstException(
+				"XImageVideoFilterGraph::XImageVideoFilterGraph- Set audio sink failed");
 	}
 
-	XImageVideoFilterGraph::~XImageVideoFilterGraph() {
-		// TODO Auto-generated destructor stub
+	if (!setVideoSink(&_videoSink)) {
+		throw GstException(
+				"XImageVideoFilterGraph::XImageVideoFilterGraph - Set video sink failed");
 	}
+}
+
+XImageVideoFilterGraph::~XImageVideoFilterGraph() {
+	// TODO Auto-generated destructor stub
+}
 
 }

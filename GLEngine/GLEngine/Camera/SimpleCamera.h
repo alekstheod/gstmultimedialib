@@ -12,22 +12,22 @@
 
 namespace gl {
 
-	class SimpleCamera: public gl::ICamera {
-		public:
-			static const Vertex CONST_DEFAULT_CAMERA_POSITION;
-			static const Vertex CONST_DEFAULT_LOOKAT_POSITION;
+class SimpleCamera: public gl::ICamera {
+public:
+	static const Vertex CONST_DEFAULT_CAMERA_POSITION;
+	static const Vertex CONST_DEFAULT_LOOKAT_POSITION;
 
-		private:
-			Vertex _cameraPosition;
-			Vertex _lookAtPosition;
+private:
+	Vertex _cameraPosition;
+	Vertex _lookAtPosition;
 
-		public:
-			SimpleCamera();
-			void setPosition(const Vertex& position);
-			void lookAt(const Vertex& position);
-			void applyCamera();
-			virtual ~SimpleCamera();
-	};
+public:
+	SimpleCamera();
+	void setPosition(const Vertex& position);
+	void lookAt(const Vertex& position);
+	void applyCamera();
+	virtual ~SimpleCamera();
+};
 
 }
 

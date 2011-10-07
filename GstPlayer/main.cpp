@@ -1,7 +1,7 @@
 #include "GstPlayer/GUI/GstPlayerWidget.h"
 
-#include <QtGui>
-#include <QApplication>
+#include <QtGui/QtGui>
+#include <QtGui/QApplication>
 
 int main(int argc, char *argv[])
 {

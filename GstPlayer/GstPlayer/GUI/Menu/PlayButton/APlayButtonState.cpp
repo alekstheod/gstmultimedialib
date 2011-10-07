@@ -10,19 +10,20 @@
 
 namespace gstplayer {
 
-	APlayButtonState::APlayButtonState() {
+APlayButtonState::APlayButtonState() {
+}
+
+APlayButtonState::~APlayButtonState() {
+}
+
+bool APlayButtonState::changeState(PlayButtonModel* playButton,
+		APlayButtonState* newState) {
+	if (playButton == NULL || newState == NULL) {
+		return false;
 	}
 
-	APlayButtonState::~APlayButtonState() {
-	}
-
-	bool APlayButtonState::changeState(PlayButtonModel* playButton, APlayButtonState* newState){
-		if(playButton==NULL || newState==NULL){
-			return false;
-		}
-
-		playButton->_buttonState.Attach(newState);
-		return true;
-	}
+	playButton->_buttonState.Attach(newState);
+	return true;
+}
 
 }

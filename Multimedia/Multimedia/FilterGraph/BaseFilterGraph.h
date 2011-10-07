@@ -16,24 +16,24 @@
 
 namespace multimedia {
 
-	class BaseFilterGraph : public GstObject{
-		private:
-			GMainLoop* _mainLoop;
-			GSmartPtr<GstElement> _pipeline;
+class BaseFilterGraph: public GstObject {
+private:
+	GMainLoop* _mainLoop;
+	GSmartPtr<GstElement> _pipeline;
 
-		private:
-			static gboolean MainLoop(GstBus *bus, GstMessage *msg, gpointer data);
+private:
+	static gboolean MainLoop(GstBus *bus, GstMessage *msg, gpointer data);
 
-		protected:
-			bool addFilter(IFilter* filter);
+protected:
+	bool addFilter(IFilter* filter);
 
-		public:
-			BaseFilterGraph(const std::string& graphName) throw (GstException);
-			bool play(void);
-			bool stop(void);
-			bool rewind(void);
-			virtual ~BaseFilterGraph(void);
-	};
+public:
+	BaseFilterGraph(const std::string& graphName) throw (GstException);
+	bool play(void);
+	bool stop(void);
+	bool rewind(void);
+	virtual ~BaseFilterGraph(void);
+};
 
 }
 

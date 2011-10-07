@@ -9,14 +9,15 @@
 
 namespace multimedia {
 
-	GstException::GstException(const std::string& message) : utils::AException(message) {
-		// TODO Auto-generated constructor stub
+GstException::GstException(const std::string& message) :
+		utils::AException(message) {
+	// TODO Auto-generated constructor stub
 
-	}
+}
 
-	GstException::~GstException() throw () {
-		// TODO Auto-generated destructor stub
-	}
+GstException::~GstException() throw () {
+	// TODO Auto-generated destructor stub
+}
 
 }
 

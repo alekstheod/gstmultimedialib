@@ -23,8 +23,10 @@ private:
 	GLenum _pixelType;
 
 public:
-	ImageTexture(GLuint textureId, GLsizei imageWidth, GLsizei imageHeight, GLenum glColor, GLenum pixelType);
-	bool applyTexture( GLenum target, const std::vector< unsigned char >& imageBuffer );
+	ImageTexture(GLuint textureId, GLsizei imageWidth, GLsizei imageHeight,
+			GLenum glColor, GLenum pixelType);
+	bool applyTexture(GLenum target,
+			const std::vector<unsigned char>& imageBuffer);
 	virtual ~ImageTexture();
 };
 

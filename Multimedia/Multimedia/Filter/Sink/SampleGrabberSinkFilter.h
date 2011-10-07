@@ -11,15 +11,15 @@
 
 namespace multimedia {
 
-	class SampleGrabberSinkFilter : public ABaseCallbackSinkFilter {
-		protected:
-			virtual bool onRecieveBuffer(GstPad* gstPad, GstBuffer* gstBuffer);
-			virtual bool onSetCaps(GstPad * pad, GstCaps * caps);
+class SampleGrabberSinkFilter: public ABaseCallbackSinkFilter {
+protected:
+	virtual bool onRecieveBuffer(GstPad* gstPad, GstBuffer* gstBuffer);
+	virtual bool onSetCaps(GstPad * pad, GstCaps * caps);
 
-		public:
-			SampleGrabberSinkFilter(const std::string& description);
-			virtual ~SampleGrabberSinkFilter();
-	};
+public:
+	SampleGrabberSinkFilter(const std::string& description);
+	virtual ~SampleGrabberSinkFilter();
+};
 
 }
 

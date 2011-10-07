@@ -4,40 +4,40 @@ namespace utils {
 
 	const unsigned int WinLockObject::CONST_DEFAULT_LOCK_TIMEOUT = INFINITY;
 
-    WinLockObject::WinLockObject(void) {
-        _mutex = CreateMutex(NULL, FALSE, NULL);
-        if (_mutex != NULL) {
-            ReleaseMutex(_mutex);
-        }
-    }
+	WinLockObject::WinLockObject(void) {
+		_mutex = CreateMutex(NULL, FALSE, NULL);
+		if (_mutex != NULL) {
+			ReleaseMutex(_mutex);
+		}
+	}
 
-    WinLockObject::~WinLockObject(void)throw () {
-        if (_mutex != NULL) {
-            ReleaseMutex(_mutex);
-            CloseHandle(_mutex);
-        }
-    }
+	WinLockObject::~WinLockObject(void)throw () {
+		if (_mutex != NULL) {
+			ReleaseMutex(_mutex);
+			CloseHandle(_mutex);
+		}
+	}
 
-    bool WinLockObject::unlock(void)const {
-        if (_mutex != NULL) {
-            ReleaseMutex(_mutex);
-        }else{
-            return false;
-        }
+	bool WinLockObject::unlock(void)const {
+		if (_mutex != NULL) {
+			ReleaseMutex(_mutex);
+		} else {
+			return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    bool WinLockObject::lock(unsigned int waitTime)const {
-        if(mutex==NULL){
-            return false;
-        }
+	bool WinLockObject::lock(unsigned int waitTime)const {
+		if(mutex==NULL) {
+			return false;
+		}
 
-        if (WaitForSingleObject(_mutex, waitTime) != WAIT_OBJECT_0) {
-            return false;
-        }
+		if (WaitForSingleObject(_mutex, waitTime) != WAIT_OBJECT_0) {
+			return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 }
 #endif

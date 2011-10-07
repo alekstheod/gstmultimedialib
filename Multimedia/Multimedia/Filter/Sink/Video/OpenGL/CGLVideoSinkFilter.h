@@ -5,41 +5,42 @@
 #include <Multimedia/Filter/BaseFilter/Callback/ABaseVideoCallbackSinkFilter.h>
 #include <Utilities/AutoLock/LockObject.h>
 
-namespace multimedia{
+namespace multimedia {
 
-	class CGLVideoSinkFilter: public ABaseVideoCallbackSinkFilter {
-		private:
-			gint _frameRate;
-			gint _frameWidth;
-			gint _frameHeight;
-			GLenum _glColor;
-			GLenum _pixelType;
+class CGLVideoSinkFilter: public ABaseVideoCallbackSinkFilter {
+private:
+	gint _frameRate;
+	gint _frameWidth;
+	gint _frameHeight;
+	GLenum _glColor;
+	GLenum _pixelType;
 
-			gl::Vertex _lowLeft;
-			gl::Vertex _lowRight;
-			gl::Vertex _topRight;
-			gl::Vertex _topLeft;
+	gl::Vertex _lowLeft;
+	gl::Vertex _lowRight;
+	gl::Vertex _topRight;
+	gl::Vertex _topLeft;
 
-			utils::LLockObject _lockObject;
+	utils::LLockObject _lockObject;
 
-			utils::SmartPtr<gl::Device> _glDevice;
-			utils::SmartPtr<gl::IModel> _videoFrameGLModel;
+	utils::SmartPtr<gl::Device> _glDevice;
+	utils::SmartPtr<gl::IModel> _videoFrameGLModel;
 
-		public:
-			static const float CONST_GL_FRAME_HEIGHT;
-			static const float CONST_GL_FRAME_WIDTH;
-			static const GLuint CONST_INVALID_TEXTURE_ID;
-			static const GLuint CONST_VALID_TEXTURE_ID;
-			static const unsigned int CONST_VIDEOFRAME_GLMODEL_ID;
+public:
+	static const float CONST_GL_FRAME_HEIGHT;
+	static const float CONST_GL_FRAME_WIDTH;
+	static const GLuint CONST_INVALID_TEXTURE_ID;
+	static const GLuint CONST_VALID_TEXTURE_ID;
+	static const unsigned int CONST_VIDEOFRAME_GLMODEL_ID;
 
-		protected:
-			virtual bool onRecieveBuffer(GstBaseSink* sink, GstBuffer* gstBuffer);
-			virtual bool onSetCaps(GstPad * pad, GstCaps * caps);
+protected:
+	virtual bool onRecieveBuffer(GstBaseSink* sink, GstBuffer* gstBuffer);
+	virtual bool onSetCaps(GstPad * pad, GstCaps * caps);
 
-		public:
-			CGLVideoSinkFilter(const utils::SmartPtr<gl::Device>& glDevice) throw (GstException);
-			virtual ~CGLVideoSinkFilter(void);
-	};
+public:
+	CGLVideoSinkFilter(const utils::SmartPtr<gl::Device>& glDevice)
+			throw (GstException);
+	virtual ~CGLVideoSinkFilter(void);
+};
 
 }
 

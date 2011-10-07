@@ -7,18 +7,20 @@
 
 #include <Multimedia/Filter/Intermediate/Audio/AudioConverterFilter.h>
 
-namespace multimedia{
+namespace multimedia {
 
-	const std::string AudioConverterFilter::CONST_PLUGIN_NAME = "audioconvert";
-	const std::string AudioConverterFilter::CONST_PLUGIN_DESCRIPTION = "AudioConverter";
+const std::string AudioConverterFilter::CONST_PLUGIN_NAME = "audioconvert";
+const std::string AudioConverterFilter::CONST_PLUGIN_DESCRIPTION =
+		"AudioConverter";
 
-	AudioConverterFilter::AudioConverterFilter(void)throw (GstException) : BaseConverterFilter(CONST_PLUGIN_NAME, CONST_PLUGIN_DESCRIPTION) {
-	    // TODO Auto-generated constructor stub
+AudioConverterFilter::AudioConverterFilter(void) throw (GstException) :
+		BaseConverterFilter(CONST_PLUGIN_NAME, CONST_PLUGIN_DESCRIPTION) {
+	// TODO Auto-generated constructor stub
 
-	}
+}
 
-	AudioConverterFilter::~AudioConverterFilter(void) {
-	    // TODO Auto-generated destructor stub
-	}
+AudioConverterFilter::~AudioConverterFilter(void) {
+	// TODO Auto-generated destructor stub
+}
 
 }
