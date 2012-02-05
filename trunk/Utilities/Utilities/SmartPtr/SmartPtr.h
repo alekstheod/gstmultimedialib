@@ -1,199 +1,264 @@
+/**
+*  Copyright (c) 2011, Alex Theodoridis
+*  All rights reserved.
+
+*  Redistribution and use in source and binary forms, with
+*  or without modification, are permitted provided that the
+*  following conditions are met:
+*  Redistributions of source code must retain the above
+*  copyright notice, this list of conditions and the following disclaimer.
+*  Redistributions in binary form must reproduce the above
+*  copyright notice, this list of conditions and the following
+*  disclaimer in the documentation and/or other materials
+*  provided with the distribution.
+
+*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS
+*  AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+*  INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+*  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+*  IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+*  ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY,
+*  OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+*  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+*  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+*  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+*  OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+*  ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+*  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+*/
+
 #ifndef UTILS_SMARTPTR_H
 #define UTILS_SMARTPTR_H
 
-#include <Utilities/SmartPtr/SharedPtr.h>
+#include <Utilities/SmartPtr/SharedCounter.h>
 
 namespace utils {
-
-/// <summary>
-/// Simple reference counted smart pointer implementation
-/// </summary>
+	
+/**
+* SmartPtr class represent a container for the
+* typical c++ pointers. Each pointer which will
+* be handled by this class will be assotiated with
+* an instance of SharedCounter. SharedCounter will
+* be responsible to count the number of references
+* which are point to the contained pointer.
+*/
 template<class T>
 class SmartPtr {
 private:
-	SharedPtr<T>* _ptr;
+    SharedCounter* _counter;
+	T* _ptr;
 
 public:
-	/// <summary>
-	/// Empty constructor will set the _ptr=NULL.
-	/// </summary>
-	SmartPtr(void);
-
-	/// <summary>
-	/// Constructor with arguments will initialize the object.
-	/// </summary>
-	SmartPtr(T* ptr);
-
-	/// <summary>
-	///
-	/// </summary>
-	SmartPtr(const SmartPtr<T>& smartPtr);
-
-	/// <summary>
-	///
-	/// </summary>
-	void Attach(T* ptr);
-
-	/// <summary>
-	///
-	/// </summary>
-	void Release(void);
-
-	/// <summary>
-	///
-	/// </summary>
-	SmartPtr<T>& operator=(const SmartPtr<T>& smartPtr);
-
-	/// <summary>
-	///
-	/// </summary>
-	bool operator ==(const SmartPtr<T>& smartPtr) const;
-
-	/// <summary>
-	///
-	/// </summary>
-	bool operator ==(T* ptr) const;
-
-	/// <summary>
-	///
-	/// </summary>
-	bool operator !=(const SmartPtr<T>& smartPtr) const;
-
-	/// <summary>
-	/// Will return the holding instance pointer.
-	/// </summary>
-	T* operator->() const;
-
-	/// <summary>
-	/// Will return the holding instance pointer.
-	/// </summary>
-	T* getPtr(void) const;
-
-	/// <summary>
-	/// Destructor.
-	/// </summary>
-	~SmartPtr(void);
-};
-
-template<class T>
-SmartPtr<T>::SmartPtr(void) {
-	_ptr = NULL;
-}
-
-template<class T>
-SmartPtr<T>::SmartPtr(T* ptr) {
-	if (ptr == 0) {
+    /**
+    *
+	*/
+    SmartPtr(void){
 		_ptr = NULL;
-	} else {
-		_ptr = new SharedPtr<T>(ptr);
-	}
-}
-
-template<class T>
-SmartPtr<T>::SmartPtr(const SmartPtr<T>& smartPtr) {
-	_ptr = NULL;
-	if (smartPtr._ptr != NULL) {
-		smartPtr._ptr->addRef();
-		_ptr = smartPtr._ptr;
-	}
-}
-
-template<class T>
-T* utils::SmartPtr<T>::getPtr(void) const {
-	if (_ptr == NULL) {
-		return NULL;
+		_counter = NULL;
 	}
 
-	return _ptr->getPtr();
-}
+    /**
+    * Will initialize the object by using the given
+	* pointer. In case if the given pointer is NULL
+	* SharedCounter will not be allocated and the
+	* contained pointer will be initialized as NULL.
+	*/
+    SmartPtr(T* ptr){
+		if (ptr == NULL) {
+			_ptr = NULL;
+			_counter = NULL;
+		} else {
+			_counter = new SharedCounter;
+			_ptr = ptr;
+		}
+	}
 
-template<class T>
-T* SmartPtr<T>::operator->() const {
-	return _ptr->operator ->();
-}
+    /**
+    *
+	*/
+    SmartPtr(const SmartPtr<T>& smartPtr){
+	    _ptr = NULL;
+		_counter = NULL;
+		if (smartPtr._counter != NULL) {
+			smartPtr._counter->addRef();
+			_counter = smartPtr._counter;
+			_ptr = smartPtr._ptr;
+		}
+	}
+	
+    /**
+    *
+	*/
+    template<class T2>
+    SmartPtr(const SmartPtr<T2>& smartPtr){
+	    _ptr = NULL;
+		_counter = NULL;
+		T* ptr = static_cast< T* > (smartPtr._ptr );
+		if (smartPtr._counter != NULL) {
+			smartPtr._counter->addRef();
+			_ptr = ptr;
+			_counter = smartPtr._counter;
+		}
+	}
 
-template<class T>
-SmartPtr<T>& SmartPtr<T>::operator=(const SmartPtr<T>& smartPtr) {
-	if (smartPtr._ptr == _ptr) {
+    /**
+    *
+	*/
+    template<class T2>
+    void Attach(T2* ptr){
+		release();
+		T* newPtr = static_cast< T* >(ptr);
+		if (newPtr != NULL) {
+			_ptr = ptr;
+			_counter = new SharedCounter;
+		}
+	}
+
+	/**
+    *
+	*/
+    template<class T2>
+    SmartPtr & operator=(const SmartPtr<T2>& smartPtr){
+		 static_cast< T* >( smartPtr.getPtr() );
+		if (smartPtr.getPtr() == _ptr) {
+			return *this;
+		}
+
+		release();
+		if (smartPtr.getCounter() !=NULL) {
+			_counter = smartPtr.getCounter();
+			_counter->addRef();
+			_ptr = smartPtr.getPtr();
+		}
+
 		return *this;
 	}
-
-	if (_ptr != 0) {
-		_ptr->release();
-	}
-
-	_ptr = smartPtr._ptr;
-	if (_ptr != 0) {
-		_ptr->addRef();
-	}
-
-	return *this;
-}
-
-template<class T>
-bool SmartPtr<T>::operator==(const SmartPtr<T>& smartPtr) const {
-	if (_ptr == smartPtr._ptr) {
-		return true;
-	}
-
-	return false;
-}
-
-template<class T>
-bool SmartPtr<T>::operator==(T* ptr) const {
-	if (_ptr == NULL) {
-		if (ptr == NULL) {
-			return true;
-		} else {
-			return false;
+	
+	/**
+    * Will asssign the pointer from the given instance
+	* of SmartPtr to the current instance of this class.
+	* the shared counter will be incremented if and only if
+	* the given container contains an instance of SharedCounter.
+	*/
+    SmartPtr & operator=(const SmartPtr<T>& smartPtr){
+		if (smartPtr._ptr == _ptr) {
+			return *this;
 		}
-	} else if (_ptr != NULL) {
-		if (_ptr->operator ->() == ptr) {
-			return true;
-		} else {
-			return false;
+
+		release();
+		if (smartPtr._counter !=NULL) {
+			_counter = smartPtr._counter;
+			_counter->addRef();
+			_ptr = smartPtr._ptr;
 		}
+
+		return *this;
+	}
+	
+    /**
+    * Will decrement the number of the referenced object.
+	* in case of SharedCounter::release return 0, this method
+	* will release the instances of SharedCounter and shared pointer.
+	*/
+    void release(void){
+	    if (_counter != NULL && _counter->release() == 0 ) {
+			delete _ptr;
+		}
+
+		_counter = NULL;
+		_ptr = NULL;
 	}
 
-	return false;
-}
-
-template<class T>
-bool SmartPtr<T>::operator!=(const SmartPtr<T>& smartPtr) const {
-	if (_ptr != smartPtr._ptr) {
-		return true;
+    /**
+    *
+	*/
+    template<class T2>
+    bool operator ==(const SmartPtr<T2>& smartPtr) const{
+		T* ptr = static_cast< T* >( smartPtr.getPtr() );
+		return (_ptr == ptr); 
 	}
 
-	return false;
-}
+    /**
+    *
+	*/
+    template<class T2>
+    bool operator ==(const T2* ptr) const{
+		bool result = false;
+		static_cast< T* > ( ptr );
+	    if (_ptr == NULL) {
+			result =  (ptr == NULL) ;
+		} else {
+			result =  (_ptr == ptr);
+		}
 
-template<class T>
-void SmartPtr<T>::Attach(T* ptr) {
-	if (_ptr != NULL) {
-		_ptr->release();
+		return result;
 	}
 
-	if (ptr != 0) {
-		_ptr = new SharedPtr<T>(ptr);
-	} else {
-		_ptr = 0;
+    /**
+    *
+	*/
+    bool operator ==(const T* ptr) const{
+		bool result = false;
+	    if (_ptr == NULL) {
+			result =  (ptr == NULL) ;
+		} else {
+			result =  (_ptr== ptr);
+		}
+
+		return result;
 	}
-}
-
-template<class T>
-void SmartPtr<T>::Release(void) {
-	if (_ptr != NULL) {
-		_ptr->release();
+	
+	/**
+	 * 
+	 */
+	SharedCounter* getCounter()const{
+		return _counter;
+	}
+	
+    /**
+    *
+	*/
+    bool operator !=(const SmartPtr<T>& smartPtr) const{
+		return  (_ptr != smartPtr._ptr) ;
+	}
+	
+    /**
+    * 
+	*/
+    template<class T2>
+    bool operator !=(const SmartPtr<T2>& smartPtr) const{
+		T* ptr = static_cast< T* >( smartPtr.getPtr() );
+		return  (_ptr != ptr) ;
 	}
 
-	_ptr = NULL;
+    /**
+    * Will return a pointer.
+	*/
+    T * operator->() const{
+		return _ptr;
+	}
+
+    /**
+    * Will return a pointer.
+	*/
+    T* getPtr(void) const{
+		return _ptr;
+	}
+
+    /**
+    *
+	*/
+    ~SmartPtr(void){
+		release();
+	}
+};
+
 }
 
-template<class T>
-SmartPtr<T>::~SmartPtr(void) {
-	Release();
-}
-
+template<class Var, class Var2>
+static bool operator == (  const Var* arg1, const utils::SmartPtr< Var2 >& arg2 ){
+	const Var2* tmp = static_cast< const Var2* >( arg1 );
+	return  ( tmp == arg2.getPtr() );
 }
 
 #endif
