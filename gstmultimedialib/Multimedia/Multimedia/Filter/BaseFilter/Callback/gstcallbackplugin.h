@@ -69,8 +69,7 @@ static const char* chain_callback_property = "chain_callback";
 static const char* setcaps_callback_property = "setcaps_callback";
 static const char* chain_callback_arg_property = "chain_callback_arg";
 
-typedef gboolean (*ChainCallback)(GstPad* gstPad, GstBuffer* gstBuffer,
-		void* arg);
+typedef gboolean (*ChainCallback)(GstPad* gstPad, GstBuffer* gstBuffer, void* arg);
 typedef gboolean (*SetCapsCallback)(GstPad * pad, GstCaps * caps, void* arg);
 
 struct _GstCallbackCallbackPlugin {
