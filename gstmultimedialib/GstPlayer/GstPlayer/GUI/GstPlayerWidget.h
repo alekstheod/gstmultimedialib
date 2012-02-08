@@ -2,7 +2,6 @@
 #define GSTPLAYERWIDGET_H
 
 #include <QtOpenGL/QGLWidget>
-#include "ui_gstplayer.h"
 #include <GLEngine/Device.h>
 #include <GstPlayer/VideoTrack.h>
 #include <qtimer.h>
@@ -12,7 +11,6 @@ namespace gstplayer {
 class GstPlayerWidget: public QGLWidget {
 Q_OBJECT
 private:
-	Ui::GstPlayerClass ui;
 	utils::SmartPtr<gl::Device> _glDevice;
 	utils::SmartPtr<VideoTrack> _track;
 	utils::SmartPtr<gl::ICamera> _camera;

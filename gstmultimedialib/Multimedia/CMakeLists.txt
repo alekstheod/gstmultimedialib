@@ -12,7 +12,6 @@ if (GLUT_FOUND)
 endif (GLUT_FOUND)
 
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
-#SET( CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 find_package (GLIB2 REQUIRED)
 if (GLIB2_FOUND)
  message( "Glib-2.0 include dirs : " "${PKG_GLIB_INCLUDE_DIRS}" )

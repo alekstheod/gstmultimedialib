@@ -4,9 +4,7 @@
 
 namespace gstplayer {
 
-GstPlayerWidget::GstPlayerWidget(QWidget *parent) :
-		QGLWidget(parent) {
-	ui.setupUi(this);
+GstPlayerWidget::GstPlayerWidget(QWidget *parent) : QGLWidget(parent) {
 	_timer.setInterval(20);
 	_timer.connect(&_timer, SIGNAL(timeout()), this, SLOT(updateScene()));
 }
