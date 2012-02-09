@@ -47,6 +47,7 @@
 #define __GST_CALLBACKPLUGIN_H__
 
 #include <gst/gst.h>
+#include <Multimedia/Filter/BaseFilter/Callback/GstCookie.h>
 
 G_BEGIN_DECLS
 
@@ -69,15 +70,15 @@ static const char* chain_callback_property = "chain_callback";
 static const char* setcaps_callback_property = "setcaps_callback";
 static const char* chain_callback_arg_property = "chain_callback_arg";
 
-typedef gboolean (*ChainCallback)(GstPad* gstPad, GstBuffer* gstBuffer, void* arg);
-typedef gboolean (*SetCapsCallback)(GstPad * pad, GstCaps * caps, void* arg);
+typedef gboolean (*ChainCallback)(GstPad* gstPad, GstBuffer* gstBuffer, GstCookie* arg);
+typedef gboolean (*SetCapsCallback)(GstPad * pad, GstCaps * caps, GstCookie* arg);
 
 struct _GstCallbackCallbackPlugin {
 	GstElement element;
 	GstPad* sinkpad;
 	ChainCallback chain_callback;
 	SetCapsCallback setcaps_callback;
-	void* arg;
+	GstCookie* arg;
 };
 
 struct _GstCallbackCallbackPluginClass {
