@@ -44,25 +44,29 @@ ABaseVideoCallbackSinkFilter::~ABaseVideoCallbackSinkFilter(void) {
 }
 
 gboolean ABaseVideoCallbackSinkFilter::renderCallback(GstBaseSink* sink,
-		GstBuffer* gstBuffer, ABaseVideoCallbackSinkFilter* _this) {
-	if (_this != NULL) {
-		if (!_this->onRecieveBuffer(sink, gstBuffer)) {
-			return FALSE;
+		GstBuffer* gstBuffer, GstCookie* _this) {
+	gboolean result = FALSE;
+	ABaseVideoCallbackSinkFilter* __this = static_cast< ABaseVideoCallbackSinkFilter* > (_this);
+	if (__this != NULL) {
+		if (!__this->onRecieveBuffer(sink, gstBuffer)) {
+			result = TRUE;
 		}
 	}
 
-	return TRUE;
+	return result;
 }
 
 gboolean ABaseVideoCallbackSinkFilter::setCapsCallback(GstPad * pad,
-		GstCaps * caps, ABaseVideoCallbackSinkFilter* _this) {
-	if (_this != NULL) {
-		if (!_this->onSetCaps(pad, caps)) {
-			return FALSE;
+		GstCaps * caps, GstCookie* _this) {
+	gboolean result = FALSE;
+	ABaseVideoCallbackSinkFilter* __this = static_cast< ABaseVideoCallbackSinkFilter* > (_this);
+	if (__this != NULL) {
+		if (!__this->onSetCaps(pad, caps)) {
+			result = TRUE;
 		}
 	}
 
-	return TRUE;
+	return result;
 }
 
 gboolean ABaseVideoCallbackSinkFilter::registerCallbackPlugin() {

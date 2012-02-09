@@ -13,10 +13,11 @@
 #include <gst/base/gstbasesink.h>
 #include <Multimedia/GstException.h>
 #include <Multimedia/Filter/BaseFilter/BaseSinkFilter.h>
+#include <Multimedia/Filter/BaseFilter/Callback/GstCookie.h>
 
 namespace multimedia {
 
-class ABaseVideoCallbackSinkFilter: public BaseSinkFilter {
+class ABaseVideoCallbackSinkFilter: public BaseSinkFilter, GstCookie {
 public:
 protected:
 	virtual bool onRecieveBuffer(GstBaseSink* sink, GstBuffer* gstBuffer) = 0;
@@ -29,9 +30,9 @@ private:
 	static const gboolean CONST_FILTER_INITIALIZATION_STATE;
 	static gboolean registerCallbackPlugin();
 	static gboolean renderCallback(GstBaseSink* sink, GstBuffer* gstBuffer,
-			ABaseVideoCallbackSinkFilter* _this);
+			GstCookie* _this);
 	static gboolean setCapsCallback(GstPad * pad, GstCaps * caps,
-			ABaseVideoCallbackSinkFilter* _this);
+			GstCookie* _this);
 	static gboolean gstPluginInitMethod(GstPlugin *plugin);
 	friend class BasePlaybinFilterGraph;
 	friend class BaseFilterGraph;

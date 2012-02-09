@@ -148,9 +148,9 @@ static void gst_callback_callbackplugin_init(GstCallbackCallbackPlugin * filter,
 	gst_pad_set_chain_function(filter->sinkpad,
 			GST_DEBUG_FUNCPTR(gst_callback_callbackplugin_chain));
 	gst_element_add_pad(GST_ELEMENT(filter), filter->sinkpad);
-	filter->chain_callback = NULL;
-	filter->setcaps_callback = NULL;
-	filter->arg = NULL;
+	filter->chain_callback = 0;
+	filter->setcaps_callback = 0;
+	filter->arg = 0;
 }
 
 static void gst_callback_callbackplugin_set_property(GObject * object,
@@ -212,7 +212,7 @@ static gboolean gst_callback_callbackplugin_set_caps(GstPad * pad,
 	GstCallbackCallbackPlugin *filter;
 	filter = GST_CALLBACKPLUGIN (gst_pad_get_parent (pad));
 	gboolean result = TRUE;
-	if (filter->setcaps_callback != NULL) {
+	if (filter->setcaps_callback != 0) {
 		result = filter->setcaps_callback(pad, caps, filter->arg);
 	}
 
@@ -227,7 +227,7 @@ static GstFlowReturn gst_callback_callbackplugin_chain(GstPad* pad,
 	GstCallbackCallbackPlugin *filter;
 	filter = GST_CALLBACKPLUGIN (GST_OBJECT_PARENT (pad));
 	GstFlowReturn result = GST_FLOW_OK;
-	if (filter->chain_callback != NULL) {
+	if (filter->chain_callback != 0) {
 		filter->chain_callback(pad, buf, filter->arg);
 	}
 

@@ -38,25 +38,29 @@ ABaseCallbackSinkFilter::~ABaseCallbackSinkFilter(void) {
 }
 
 gboolean ABaseCallbackSinkFilter::chainCallback(GstPad* gstPad,
-		GstBuffer* gstBuffer, ABaseCallbackSinkFilter* _this) {
-	if (_this) {
-		if (!_this->onRecieveBuffer(gstPad, gstBuffer)) {
-			return FALSE;
+		GstBuffer* gstBuffer, GstCookie* _this) {
+	gboolean result = FALSE;
+	ABaseCallbackSinkFilter* __this = static_cast< ABaseCallbackSinkFilter* > (_this);
+	if (__this) {
+		if (__this->onRecieveBuffer(gstPad, gstBuffer)) {
+			result = TRUE;
 		}
 	}
 
-	return TRUE;
+	return result;
 }
 
 gboolean ABaseCallbackSinkFilter::setCapsCallback(GstPad * pad, GstCaps * caps,
-		ABaseCallbackSinkFilter* _this) {
-	if (_this) {
-		if (!_this->onSetCaps(pad, caps)) {
-			return FALSE;
+		GstCookie* _this) {
+	gboolean result = FALSE;
+	ABaseCallbackSinkFilter* __this = static_cast< ABaseCallbackSinkFilter* > (_this);
+	if (__this) {
+		if (!__this->onSetCaps(pad, caps)) {
+			result = TRUE;
 		}
 	}
 
-	return TRUE;
+	return result;
 }
 
 gboolean ABaseCallbackSinkFilter::registerCallbackPlugin() {
