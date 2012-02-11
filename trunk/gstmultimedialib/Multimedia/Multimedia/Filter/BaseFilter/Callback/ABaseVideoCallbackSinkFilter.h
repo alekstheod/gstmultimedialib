@@ -10,10 +10,10 @@
 #include <Multimedia/Utilities/GSmartPtr.h>
 #include <string>
 #include <gst/gst.h>
-#include <gst/base/gstbasesink.h>
 #include <Multimedia/GstException.h>
 #include <Multimedia/Filter/BaseFilter/BaseSinkFilter.h>
 #include <Multimedia/Filter/BaseFilter/Callback/GstCookie.h>
+#include <gst/base/gstbasesink.h>
 
 namespace multimedia {
 

@@ -9,7 +9,6 @@
 namespace gstplayer {
 
 class GstPlayerWidget: public QGLWidget {
-Q_OBJECT
 private:
 	utils::SmartPtr<gl::Device> _glDevice;
 	utils::SmartPtr<VideoTrack> _track;

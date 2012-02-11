@@ -43,9 +43,9 @@ Multimedia/Filter/Intermediate/Audio/FFMp3DecoderFilter.cpp
 Multimedia/Filter/Intermediate/Audio/FFMp3DemuxerFilter.cpp
 Multimedia/Filter/Intermediate/FFAviDemuxerFilter.cpp
 Multimedia/Filter/Sink/Audio/StandardAudioSinkFilter.cpp
+Multimedia/Filter/Sink/Video/OpenGL/VideoFrameModel.cpp
 Multimedia/Filter/Sink/Video/OpenGL/CGLVideoSinkFilter.cpp
 Multimedia/Filter/Sink/Video/OpenGL/GLVideoSinkFilter.cpp
-Multimedia/Filter/Sink/Video/OpenGL/VideoFrameModel.cpp
 Multimedia/Filter/Sink/Video/XImageVideoSinkFilter.cpp
 Multimedia/Filter/Sink/Video/XVideoImageSink.cpp
 Multimedia/Filter/Sink/FakeSinkFilter.cpp
@@ -61,3 +61,14 @@ Multimedia/FilterGraph/Video/XVideoFilterGraph.cpp
 Multimedia/FilterGraph/BaseFilterGraph.cpp
 Multimedia/FilterGraph/BasePlaybinFilterGraph.cpp
 Multimedia/FilterGraph/BaseStreamingFilterGraph.cpp)
+
+target_link_libraries(Multimedia
+			${PROJECT_SOURCE_DIR}/../build/Utilities/libUtilities.a;
+			${PROJECT_SOURCE_DIR}/../build/GLEngine/libGLEngine.a;
+			${PROJECT_SOURCE_DIR}/../build/Multimedia/libMultimedia.a;
+			${OPENGL_LIBRARIES}
+			${GLUT_LIBRARY}
+			${QT_LIBRARIES}
+			${PKG_GLIB_LIBRARIES}  
+			${GSTREAMER_LIBRARIES}
+)

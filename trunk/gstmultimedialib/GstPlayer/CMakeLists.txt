@@ -35,15 +35,19 @@ add_executable( GstPlayer main.cpp
 GstPlayer/VideoTrack.cpp
 GstPlayer/GUI/GstPlayerWidget.cpp
 GstPlayer/GUI/Menu/MenuModel.cpp
-GstPlayer/GUI/Menu/PlayButton/APlayButtonState.cpp)
+GstPlayer/GUI/Menu/PlayButton/APlayButtonState.cpp
+GstPlayer/GUI/Menu/PlayButton/State/PausedPlayButtonState.cpp
+GstPlayer/GUI/Menu/PlayButton/State/PlayingPlayButtonState.cpp
+)
 
 target_link_libraries(GstPlayer
-			${PROJECT_SOURCE_DIR}/../build/Utilities/libUtilities.a;
-			${PROJECT_SOURCE_DIR}/../build/GLEngine/libGLEngine.a;
 			${PROJECT_SOURCE_DIR}/../build/Multimedia/libMultimedia.a;
+			${PROJECT_SOURCE_DIR}/../build/GLEngine/libGLEngine.a;
+			${PROJECT_SOURCE_DIR}/../build/Utilities/libUtilities.a;
 			${OPENGL_LIBRARIES}
 			${GLUT_LIBRARY}
 			${QT_LIBRARIES}
 			${PKG_GLIB_LIBRARIES}  
+			${GSTREAMER_VIDEO_LIBRARY}
 			${GSTREAMER_LIBRARIES}
 )
