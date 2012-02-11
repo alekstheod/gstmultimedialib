@@ -55,7 +55,7 @@ gboolean ABaseCallbackSinkFilter::setCapsCallback(GstPad * pad, GstCaps * caps,
 	gboolean result = FALSE;
 	ABaseCallbackSinkFilter* __this = static_cast< ABaseCallbackSinkFilter* > (_this);
 	if (__this) {
-		if (!__this->onSetCaps(pad, caps)) {
+		if (__this->onSetCaps(pad, caps)) {
 			result = TRUE;
 		}
 	}
