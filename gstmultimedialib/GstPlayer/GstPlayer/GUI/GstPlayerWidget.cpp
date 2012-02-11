@@ -25,9 +25,7 @@ void GstPlayerWidget::initializeGL() {
 	_glDevice->setCamera(_camera);
 	_menu = new MenuModel;
 	_glDevice->addGLModel(_menu);
-	_track = new VideoTrack(
-			"file:///home/alekstheod/Documents/test.avi",
-			_glDevice);
+	_track = new VideoTrack( "file:///home/alekstheod/Documents/test.avi", _glDevice);
 	_track->start(QThread::NormalPriority);
 	_timer.start(20);
 }
