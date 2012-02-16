@@ -48,7 +48,6 @@
 
 #include <gst/gst.h>
 #include <gst/video/gstvideosink.h>
-#include <Multimedia/Filter/BaseFilter/Callback/GstCookie.h>
 
 G_BEGIN_DECLS
 
@@ -72,15 +71,15 @@ static const char* setcaps_video_callback_property = "setcaps_callback";
 static const char* chain_video_callback_arg_property = "chain_callback_arg";
 
 typedef gboolean (*RenderVideoCallback)(GstBaseSink* sink, GstBuffer* gstBuffer,
-		GstCookie* arg);
+		void* arg);
 typedef gboolean (*SetCapsVideoCallback)(GstPad * pad, GstCaps * caps,
-		GstCookie* arg);
+		void* arg);
 
 struct _GstCallbackVideoCallbackPlugin {
 	GstVideoSink element;
 	RenderVideoCallback render_callback;
 	SetCapsVideoCallback setcaps_callback;
-	GstCookie* arg;
+	void* arg;
 };
 
 struct _GstCallbackVideoCallbackPluginClass {

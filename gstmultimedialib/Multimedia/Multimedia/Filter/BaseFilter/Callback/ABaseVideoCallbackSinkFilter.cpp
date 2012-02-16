@@ -44,9 +44,9 @@ ABaseVideoCallbackSinkFilter::~ABaseVideoCallbackSinkFilter(void) {
 }
 
 gboolean ABaseVideoCallbackSinkFilter::renderCallback(GstBaseSink* sink,
-		GstBuffer* gstBuffer, GstCookie* _this) {
+		GstBuffer* gstBuffer, void* _this) {
 	gboolean result = FALSE;
-	ABaseVideoCallbackSinkFilter* __this = static_cast< ABaseVideoCallbackSinkFilter* > (_this);
+	ABaseVideoCallbackSinkFilter* __this = ( ABaseVideoCallbackSinkFilter*  ) (_this);
 	if (__this != NULL) {
 		if (__this->onRecieveBuffer(sink, gstBuffer)) {
 			result = TRUE;
@@ -57,9 +57,9 @@ gboolean ABaseVideoCallbackSinkFilter::renderCallback(GstBaseSink* sink,
 }
 
 gboolean ABaseVideoCallbackSinkFilter::setCapsCallback(GstPad * pad,
-		GstCaps * caps, GstCookie* _this) {
+		GstCaps * caps, void* _this) {
 	gboolean result = FALSE;
-	ABaseVideoCallbackSinkFilter* __this = static_cast< ABaseVideoCallbackSinkFilter* > (_this);
+	ABaseVideoCallbackSinkFilter* __this = ( ABaseVideoCallbackSinkFilter* ) (_this);
 	if (__this != NULL) {
 		if (__this->onSetCaps(pad, caps)) {
 			result = TRUE;
