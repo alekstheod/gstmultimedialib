@@ -38,7 +38,7 @@ ABaseCallbackSinkFilter::~ABaseCallbackSinkFilter(void) {
 }
 
 gboolean ABaseCallbackSinkFilter::chainCallback(GstPad* gstPad,
-		GstBuffer* gstBuffer, GstCookie* _this) {
+		GstBuffer* gstBuffer, void* _this) {
 	gboolean result = FALSE;
 	ABaseCallbackSinkFilter* __this = static_cast< ABaseCallbackSinkFilter* > (_this);
 	if (__this) {
@@ -51,7 +51,7 @@ gboolean ABaseCallbackSinkFilter::chainCallback(GstPad* gstPad,
 }
 
 gboolean ABaseCallbackSinkFilter::setCapsCallback(GstPad * pad, GstCaps * caps,
-		GstCookie* _this) {
+		void* _this) {
 	gboolean result = FALSE;
 	ABaseCallbackSinkFilter* __this = static_cast< ABaseCallbackSinkFilter* > (_this);
 	if (__this) {
