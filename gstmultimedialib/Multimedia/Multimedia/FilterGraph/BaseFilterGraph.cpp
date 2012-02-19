@@ -79,6 +79,7 @@ bool BaseFilterGraph::play(void) {
 	if (ret == GST_STATE_CHANGE_FAILURE) {
 		return false;
 	}
+	
 	g_main_loop_run(_mainLoop);
 	return true;
 }
