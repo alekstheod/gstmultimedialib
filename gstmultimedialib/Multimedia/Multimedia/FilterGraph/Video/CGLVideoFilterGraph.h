@@ -20,7 +20,7 @@ private:
 
 public:
 	CGLVideoFilterGraph(const std::string& filename,
-			const utils::SmartPtr<gl::Device>& glDevice);
+			const utils::SharedPtr<gl::Device>& glDevice);
 	virtual ~CGLVideoFilterGraph();
 };
 

@@ -7,7 +7,7 @@
 #include <Utilities/AutoLock/LLockObject.h>
 #include <vector>
 #include <gst/gst.h>
-#include <Utilities/SmartPtr/SmartPtr.h>
+#include <Utilities/SmartPtr/SharedPtr.h>
 
 namespace multimedia {
 

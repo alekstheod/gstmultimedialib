@@ -7,7 +7,7 @@
 
 #ifndef APLAYBUTTONSTATE_H_
 #define APLAYBUTTONSTATE_H_
-#include <Utilities/SmartPtr/SmartPtr.h>
+#include <Utilities/SmartPtr/SharedPtr.h>
 
 namespace gstplayer {
 

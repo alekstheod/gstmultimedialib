@@ -7,7 +7,7 @@
 
 #ifndef IGLMODELFACTORY_H_
 #define IGLMODELFACTORY_H_
-#include <Utilities/SmartPtr/SmartPtr.h>
+#include <Utilities/SmartPtr/SharedPtr.h>
 #include <vector>
 #include <GLEngine/Model/IModel.h>
 
@@ -17,7 +17,7 @@ class IModelFactory {
 public:
 	IModelFactory();
 	virtual ~IModelFactory();
-	virtual utils::SmartPtr<IModel> getInstance(
+	virtual utils::SharedPtr<IModel> getInstance(
 			const std::vector<unsigned char>& modelData)=0;
 };
 

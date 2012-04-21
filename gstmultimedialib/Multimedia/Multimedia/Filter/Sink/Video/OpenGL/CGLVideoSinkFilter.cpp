@@ -10,7 +10,7 @@ const GLuint CGLVideoSinkFilter::CONST_INVALID_TEXTURE_ID = 0;
 const unsigned int CGLVideoSinkFilter::CONST_VIDEOFRAME_GLMODEL_ID = 1;
 
 CGLVideoSinkFilter::CGLVideoSinkFilter(
-		const utils::SmartPtr<gl::Device>& glDevice) throw (GstException) :
+		const utils::SharedPtr<gl::Device>& glDevice) throw (GstException) :
 		ABaseVideoCallbackSinkFilter("GL Video sink") {
 	if (glDevice == NULL) {
 		throw GstException("GLVideoSink::GLVideoSink");

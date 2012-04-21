@@ -11,7 +11,7 @@
 #include <GLEngine/Model/IModel.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include <Utilities/SmartPtr/SmartPtr.h>
+#include <Utilities/SmartPtr/SharedPtr.h>
 #include <GstPlayer/GUI/Menu/PlayButton/State/PausedPlayButtonState.h>
 #include <GLEngine/GLException.h>
 
@@ -22,12 +22,12 @@ class APlayButtonState;
 /*
  * PlayButtonModel represent the play button on GstPlayer menu.
  * This class contain inline methods in order to prevent linker errors
- * in case of SmartPtr<T> using with the T = APlayButtonState.
+ * in case of SharedPtr<T> using with the T = APlayButtonState.
  */
 class PlayButtonModel: public gl::IModel {
 private:
 	friend class APlayButtonState;
-	utils::SmartPtr<APlayButtonState> _buttonState;
+	utils::SharedPtr<APlayButtonState> _buttonState;
 	std::string _menuTexturesPath;
 	APlayButtonState::RECT _rect;
 

@@ -3,7 +3,7 @@ project(Utilities)
 set(GST_LICENSE "BSD")
 include_directories(.)
 
-add_library(Utilities
+add_library(Utilities STATIC
 	    Utilities/AException.cpp
 	    Utilities/AutoLock/LLockObject.cpp
 	    Utilities/AutoLock/WinLockObject.cpp
