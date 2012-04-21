@@ -10,10 +10,10 @@ namespace gstplayer {
 
 class GstPlayerWidget: public QGLWidget {
 private:
-	utils::SmartPtr<gl::Device> _glDevice;
-	utils::SmartPtr<VideoTrack> _track;
-	utils::SmartPtr<gl::ICamera> _camera;
-	utils::SmartPtr<gl::IModel> _menu;
+	utils::SharedPtr<gl::Device> _glDevice;
+	utils::SharedPtr<VideoTrack> _track;
+	utils::SharedPtr<gl::ICamera> _camera;
+	utils::SharedPtr<gl::IModel> _menu;
 	QTimer _timer;
 
 protected:

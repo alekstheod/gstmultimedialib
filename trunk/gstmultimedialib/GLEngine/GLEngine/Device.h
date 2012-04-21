@@ -2,7 +2,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <map>
-#include <Utilities/SmartPtr/SmartPtr.h>
+#include <Utilities/SmartPtr/SharedPtr.h>
 #include <Utilities/AutoLock/LockObject.h>
 #include <GLEngine/GLException.h>
 
@@ -31,22 +31,22 @@ private:
 	bool _windowWasResized;
 	unsigned int _windowWidth;
 	unsigned int _windowHeight;
-	std::map<void*, utils::SmartPtr<IModel> > _glModels;
-	utils::SmartPtr<ICamera> _camera;
-	std::map<void*, utils::SmartPtr<ILight> > _lights;
-	std::map<GLuint, utils::SmartPtr<Texture> > _textures;
+	std::map<void*, utils::SharedPtr<IModel> > _glModels;
+	utils::SharedPtr<ICamera> _camera;
+	std::map<void*, utils::SharedPtr<ILight> > _lights;
+	std::map<GLuint, utils::SharedPtr<Texture> > _textures;
 
 public:
 	Device(const Device::RECT&) throw (GLException);
 	bool drawModels(void);
-	bool setCamera(const utils::SmartPtr<ICamera>& camera);
-	bool addGLModel(const utils::SmartPtr<IModel>& glModel);
-	bool removeGLModel(const utils::SmartPtr<IModel>& glModel);
+	bool setCamera(const utils::SharedPtr<ICamera>& camera);
+	bool addGLModel(const utils::SharedPtr<IModel>& glModel);
+	bool removeGLModel(const utils::SharedPtr<IModel>& glModel);
 	bool setPerspective(unsigned int windowWidth, unsigned int windowHeight);
-	bool removeLight(const utils::SmartPtr<ILight>& light);
-	bool setLight(const utils::SmartPtr<ILight>& light);
-	bool generateTexture(utils::SmartPtr<Texture>& newTexture);
-	bool releaseTexture(const utils::SmartPtr<Texture>& texture);
+	bool removeLight(const utils::SharedPtr<ILight>& light);
+	bool setLight(const utils::SharedPtr<ILight>& light);
+	bool generateTexture(utils::SharedPtr<Texture>& newTexture);
+	bool releaseTexture(const utils::SharedPtr<Texture>& texture);
 	virtual ~Device(void) throw ();
 };
 

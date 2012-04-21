@@ -25,7 +25,7 @@ if (GSTREAMER_FOUND)
 endif (GSTREAMER_FOUND)
 
 include_directories(. ../Utilities ../GLEngine)
-add_library( Multimedia 
+add_library( Multimedia  STATIC
 Multimedia/GstException.cpp
 Multimedia/GstObject.cpp
 Multimedia/Filter/BaseFilter/Callback/ABaseCallbackSinkFilter.cpp

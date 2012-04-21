@@ -36,7 +36,9 @@
 namespace utils {
 
     /// <summary>
-    /// 
+    /// Represent the shared counter 
+    /// needed for internal usage by the
+    /// SharedPtr.
     /// </summary>
     class SharedCounter {
     private:

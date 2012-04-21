@@ -22,8 +22,8 @@ private:
 
 	utils::LLockObject _lockObject;
 
-	utils::SmartPtr<gl::Device> _glDevice;
-	utils::SmartPtr<gl::IModel> _videoFrameGLModel;
+	utils::SharedPtr<gl::Device> _glDevice;
+	utils::SharedPtr<gl::IModel> _videoFrameGLModel;
 
 public:
 	static const float CONST_GL_FRAME_HEIGHT;
@@ -37,7 +37,7 @@ protected:
 	virtual bool onSetCaps(GstPad * pad, GstCaps * caps);
 
 public:
-	CGLVideoSinkFilter(const utils::SmartPtr<gl::Device>& glDevice)
+	CGLVideoSinkFilter(const utils::SharedPtr<gl::Device>& glDevice)
 			throw (GstException);
 	virtual ~CGLVideoSinkFilter(void);
 };

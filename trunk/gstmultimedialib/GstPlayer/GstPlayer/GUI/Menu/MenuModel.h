@@ -7,7 +7,7 @@
 
 #ifndef MENUGLMODEL_H_
 #define MENUGLMODEL_H_
-#include <Utilities/SmartPtr/SmartPtr.h>
+#include <Utilities/SmartPtr/SharedPtr.h>
 #include <GLEngine/Model/IModel.h>
 #include <GstPlayer/GUI/Menu/PlayButton/PlayButtonModel.h>
 #include <GLEngine/GLException.h>
@@ -16,7 +16,7 @@ namespace gstplayer {
 
 class MenuModel: public gl::IModel {
 private:
-	utils::SmartPtr<PlayButtonModel> _playButton;
+	utils::SharedPtr<PlayButtonModel> _playButton;
 
 public:
 	MenuModel() throw (gl::GLException);

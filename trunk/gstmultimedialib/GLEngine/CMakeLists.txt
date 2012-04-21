@@ -13,7 +13,7 @@ endif (GLUT_FOUND)
 
 include_directories(. ../Utilities)
 
-add_library(GLEngine
+add_library(GLEngine STATIC
 	    GLEngine/Camera/ICamera.cpp
 	    GLEngine/Camera/SimpleCamera.cpp
 	    GLEngine/Light/ILight.cpp

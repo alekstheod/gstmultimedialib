@@ -42,13 +42,13 @@ bool Device::drawModels(void) {
 			_camera->applyCamera();
 		}
 
-		std::map<void*, utils::SmartPtr<ILight> >::iterator curLight;
+		std::map<void*, utils::SharedPtr<ILight> >::iterator curLight;
 		for (curLight = _lights.begin(); curLight != _lights.end();
 				curLight++) {
 			curLight->second->applyLight();
 		}
 
-		std::map<void*, utils::SmartPtr<IModel> >::iterator glModel;
+		std::map<void*, utils::SharedPtr<IModel> >::iterator glModel;
 		for (glModel = _glModels.begin(); glModel != _glModels.end();
 				glModel++) {
 			if (glModel->second->drawModel() == false) {
@@ -64,10 +64,10 @@ bool Device::drawModels(void) {
 	return true;
 }
 
-bool Device::addGLModel(const SmartPtr<IModel>& glModel) {
+bool Device::addGLModel(const SharedPtr<IModel>& glModel) {
 	try {
 		AutoLock lock(_lockObject);
-		pair<void*, SmartPtr<IModel> > newEntry(glModel.getPtr(), glModel);
+		pair<void*, SharedPtr<IModel> > newEntry(glModel.getPtr(), glModel);
 		if (_glModels.insert(newEntry).second == false) {
 			return false;
 		}
@@ -78,7 +78,7 @@ bool Device::addGLModel(const SmartPtr<IModel>& glModel) {
 	return true;
 }
 
-bool Device::removeGLModel(const utils::SmartPtr<IModel>& glModel) {
+bool Device::removeGLModel(const utils::SharedPtr<IModel>& glModel) {
 	try {
 		utils::AutoLock lock(_lockObject);
 		if (_glModels.find(glModel.getPtr()) == _glModels.end()) {
@@ -109,7 +109,7 @@ bool Device::setPerspective(unsigned int windowWidth,
 	return true;
 }
 
-bool Device::setCamera(const utils::SmartPtr<ICamera>& camera) {
+bool Device::setCamera(const utils::SharedPtr<ICamera>& camera) {
 	try {
 		AutoLock lock(_lockObject);
 		_camera = camera;
@@ -120,7 +120,7 @@ bool Device::setCamera(const utils::SmartPtr<ICamera>& camera) {
 	return true;
 }
 
-bool Device::removeLight(const utils::SmartPtr<ILight>& light) {
+bool Device::removeLight(const utils::SharedPtr<ILight>& light) {
 	try {
 		utils::AutoLock lock(_lockObject);
 		if (_lights.find(light.getPtr()) == _lights.end()) {
@@ -135,7 +135,7 @@ bool Device::removeLight(const utils::SmartPtr<ILight>& light) {
 	return true;
 }
 
-bool Device::setLight(const utils::SmartPtr<ILight>& light) {
+bool Device::setLight(const utils::SharedPtr<ILight>& light) {
 	try {
 		utils::AutoLock lock(_lockObject);
 		_lights[light.getPtr()] = light;
@@ -146,18 +146,18 @@ bool Device::setLight(const utils::SmartPtr<ILight>& light) {
 	return true;
 }
 
-bool Device::generateTexture(utils::SmartPtr<Texture>& newTexture) {
+bool Device::generateTexture(utils::SharedPtr<Texture>& newTexture) {
 	bool result = false;
 	GLuint texture = CONST_INVALID_TEXTURE;
 	if (_textures.empty()) {
 		texture = 1;
 		newTexture.Attach(new Texture(texture));
-		std::pair<GLuint, utils::SmartPtr<Texture> > newEntry(texture,
+		std::pair<GLuint, utils::SharedPtr<Texture> > newEntry(texture,
 				newTexture);
 		_textures.insert(newEntry);
 	} else {
-		typename std::map<GLuint, utils::SmartPtr<Texture> >::iterator curTexture;
-		typename std::map<GLuint, utils::SmartPtr<Texture> >::iterator prevTexture;
+		typename std::map<GLuint, utils::SharedPtr<Texture> >::iterator curTexture;
+		typename std::map<GLuint, utils::SharedPtr<Texture> >::iterator prevTexture;
 		for (curTexture = _textures.begin();
 				curTexture != _textures.end()
 						&& texture == CONST_INVALID_TEXTURE; curTexture++) {
@@ -174,14 +174,14 @@ bool Device::generateTexture(utils::SmartPtr<Texture>& newTexture) {
 
 		if (texture != CONST_INVALID_TEXTURE) {
 			newTexture.Attach(new Texture(texture));
-			typename std::pair<GLuint, utils::SmartPtr<Texture> > newEntry(
+			typename std::pair<GLuint, utils::SharedPtr<Texture> > newEntry(
 					texture, newTexture);
 			result = _textures.insert(newEntry).second;
 		} else {
 			curTexture = (--_textures.end());
 			texture = curTexture->first + 1;
 			newTexture = new Texture(texture);
-			std::pair<GLuint, utils::SmartPtr<Texture> > newEntry(texture,
+			std::pair<GLuint, utils::SharedPtr<Texture> > newEntry(texture,
 					newTexture);
 			result = _textures.insert(newEntry).second;
 		}
@@ -190,7 +190,7 @@ bool Device::generateTexture(utils::SmartPtr<Texture>& newTexture) {
 	return result;
 }
 
-bool Device::releaseTexture(const utils::SmartPtr<Texture>& texture) {
+bool Device::releaseTexture(const utils::SharedPtr<Texture>& texture) {
 	bool result = false;
 	if (_textures.find(texture->_texture) != _textures.end()) {
 		_textures.erase(texture->_texture);
