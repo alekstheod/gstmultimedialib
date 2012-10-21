@@ -18,8 +18,6 @@ add_library(GLEngine STATIC
 	    GLEngine/Camera/SimpleCamera.cpp
 	    GLEngine/Light/ILight.cpp
 	    GLEngine/Light/WhiteLight.cpp 
-	    GLEngine/Model/Wavefront/Model.cpp
-		GLEngine/Model/Wavefront/Object.cpp
 		GLEngine/Model/ImageTexture.cpp
 		GLEngine/Model/IModelFactory.cpp
 		GLEngine/Model/ITexture.cpp
