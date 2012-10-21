@@ -45,7 +45,6 @@ target_link_libraries(GstPlayer
 			${PROJECT_SOURCE_DIR}/../build/GLEngine/libGLEngine.a;
 			${PROJECT_SOURCE_DIR}/../build/Utilities/libUtilities.a;
 			${OPENGL_LIBRARIES}
-			${GLUT_LIBRARY}
 			${QT_LIBRARIES}
 			${PKG_GLIB_LIBRARIES}  
 			${GSTREAMER_VIDEO_LIBRARY}
