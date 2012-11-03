@@ -5,8 +5,7 @@ include_directories(.)
 
 add_library(Utilities STATIC
 	    Utilities/AException.cpp
-	    Utilities/AutoLock/LLockObject.cpp
-	    Utilities/AutoLock/WinLockObject.cpp
-	    Utilities/AutoLock/LockException.cpp 
-	    Utilities/AutoLock/AutoLock.cpp
+	    Utilities/AutoLock/OS_Specific/LMutex.cpp
+	    Utilities/AutoLock/OS_Specific/WinMutex.cpp
+	    Utilities/AutoLock/LockException.cpp
 	    Utilities/StrUtil/StrUtil.cpp)

@@ -31,6 +31,7 @@
 #ifndef UTILS_SHAREDPTR_H
 #define UTILS_SHAREDPTR_H
 
+#include <Utilities/AutoLock/Mutex.h>
 #include <Utilities/AutoLock/AutoLock.h>
 
 namespace utils {
@@ -56,7 +57,7 @@ private:
      * the shared pointer in the
      * multithreaded environment.
      */
-    LockObject _lockObject;
+    Mutex _lockObject;
 
 private:
     /**
@@ -84,7 +85,7 @@ public:
     unsigned int addRef(void) {
         int refCount = 0;
         try {
-            AutoLock lock(_lockObject);
+            AutoLock<Mutex> lock(_lockObject);
             _refCount++;
             refCount = _refCount;
         } catch (const utils::LockException&) {
@@ -103,7 +104,7 @@ public:
     unsigned int release(void) {
         int refCount;
         try {
-            AutoLock lock(_lockObject);
+            AutoLock<Mutex> lock(_lockObject);
             _refCount--;
             refCount = _refCount;
         } catch (const utils::LockException&) {

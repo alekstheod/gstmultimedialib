@@ -4,21 +4,34 @@
  *  Created on: May 2, 2010
  *      Author: m1cro
  */
-#include "LockObject.h"
 
 #ifndef UTILS_AUTOLOCK_H
 #define UTILS_AUTOLOCK_H
 
+#include <Utilities/AutoLock/LockException.h>
+
 namespace utils {
 
+/**
+ * AutoLock represents the
+ * automatic lock guard.
+ */
+template<class T>
 class AutoLock {
 private:
-	const LockObject& _lockObject;
+    const T& _lockObject;
 
 public:
-	AutoLock(const LockObject& lockObject, unsigned int waitTime =
-			LockObject::CONST_DEFAULT_LOCK_TIMEOUT);
-	~AutoLock(void) throw ();
+    AutoLock( const T& lockObject, unsigned int waitTime = T::CONST_DEFAULT_LOCK_TIMEOUT ):
+        _lockObject(lockObject) {
+        if (!_lockObject.lock(waitTime)) {
+            throw LockException("AutoLock::AutoLock - LockObject::Lock failed");
+        }
+    }
+    
+    ~AutoLock(void) throw (){
+      _lockObject.unlock();
+    }
 };
 
 }

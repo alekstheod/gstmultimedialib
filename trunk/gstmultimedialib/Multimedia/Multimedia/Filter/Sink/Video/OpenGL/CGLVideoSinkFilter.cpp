@@ -38,7 +38,7 @@ CGLVideoSinkFilter::~CGLVideoSinkFilter(void) {
 
 bool CGLVideoSinkFilter::onSetCaps(GstPad * pad, GstCaps * caps) {
     try {
-        utils::AutoLock lock(_lockObject);
+        utils::AutoLock<utils::Mutex> lock(_lockObject);
         GstStructure* gstStructure = gst_caps_get_structure(caps, 0);
         if (gstStructure == NULL) {
             return false;
@@ -94,7 +94,7 @@ bool CGLVideoSinkFilter::onSetCaps(GstPad * pad, GstCaps * caps) {
 bool CGLVideoSinkFilter::onRecieveBuffer(GstBaseSink* sink,
         GstBuffer* gstBuffer) {
     try {
-        utils::AutoLock lock(_lockObject);
+        utils::AutoLock<utils::Mutex> lock(_lockObject);
         VideoFrameModel* videoFrameGLModel =
             static_cast<VideoFrameModel*>(_videoFrameGLModel.getPtr());
         if (videoFrameGLModel != NULL) {

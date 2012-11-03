@@ -34,7 +34,7 @@ Device::~Device(void) throw () {
 
 bool Device::drawModels(void) {
     try {
-        AutoLock lock(_lockObject);
+        AutoLock<Mutex> lock(_lockObject);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
@@ -67,7 +67,7 @@ bool Device::drawModels(void) {
 
 bool Device::addGLModel(const SharedPtr<IModel>& glModel) {
     try {
-        AutoLock lock(_lockObject);
+        AutoLock<Mutex> lock(_lockObject);
         if (_glModels.insert(glModel).second == false) {
             return false;
         }
@@ -80,7 +80,7 @@ bool Device::addGLModel(const SharedPtr<IModel>& glModel) {
 
 bool Device::removeGLModel(const utils::SharedPtr<IModel>& glModel) {
     try {
-        utils::AutoLock lock(_lockObject);
+        utils::AutoLock<Mutex> lock(_lockObject);
         if (_glModels.find(glModel.getPtr()) == _glModels.end()) {
             return false;
         }
@@ -96,7 +96,7 @@ bool Device::removeGLModel(const utils::SharedPtr<IModel>& glModel) {
 bool Device::setPerspective(unsigned int windowWidth,
                             unsigned int windowHeight) {
     try {
-        AutoLock lock(_lockObject);
+        AutoLock<Mutex> lock(_lockObject);
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         gluPerspective(50.0, 1.0, 1.0, 10000.0);
@@ -111,7 +111,7 @@ bool Device::setPerspective(unsigned int windowWidth,
 
 bool Device::setCamera(const utils::SharedPtr<ICamera>& camera) {
     try {
-        AutoLock lock(_lockObject);
+        AutoLock<Mutex> lock(_lockObject);
         _camera = camera;
     } catch (const utils::LockException&) {
         return false;
@@ -122,7 +122,7 @@ bool Device::setCamera(const utils::SharedPtr<ICamera>& camera) {
 
 bool Device::removeLight(const utils::SharedPtr<ILight>& light) {
     try {
-        utils::AutoLock lock(_lockObject);
+        utils::AutoLock<Mutex> lock(_lockObject);
         if (_lights.find(light.getPtr()) == _lights.end()) {
             return false;
         }
@@ -139,7 +139,7 @@ bool Device::setLight(const utils::SharedPtr<ILight>& light) {
     bool result = false;
 
     try {
-        utils::AutoLock lock(_lockObject);
+        utils::AutoLock<Mutex> lock(_lockObject);
         result = _lights.insert(light).second;
     } catch (utils::LockException&) {
         return result;

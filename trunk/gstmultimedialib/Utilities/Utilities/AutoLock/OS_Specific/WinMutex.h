@@ -12,7 +12,7 @@ namespace utils {
 	/// Contain an MUTEX handle that can be used to lock and unlock the section of code with sharing the current object by different threads.
 	/// </summary>
 
-	class WinLockObject {
+	class WinMutex {
 	public:
 		static const unsigned int CONST_DEFAULT_LOCK_TIMEOUT;
 
@@ -26,10 +26,10 @@ namespace utils {
 		/// <summary>
 		/// Default constructor.
 		/// </summary>
-		WinLockObject(void);
+		WinMutex(void);
 		bool lock(unsigned int waitTime = CONST_DEFAULT_LOCK_TIMEOUT)const;
 		bool unlock(void)const;
-		virtual ~WinLockObject(void)throw ();
+		virtual ~WinMutex(void)throw ();
 	};
 
 }
