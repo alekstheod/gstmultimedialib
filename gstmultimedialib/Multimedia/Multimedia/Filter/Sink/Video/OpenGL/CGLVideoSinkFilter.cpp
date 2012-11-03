@@ -12,16 +12,11 @@ const unsigned int CGLVideoSinkFilter::CONST_VIDEOFRAME_GLMODEL_ID = 1;
 CGLVideoSinkFilter::CGLVideoSinkFilter(
     const utils::SharedPtr<gl::Device>& glDevice) throw (GstException) :
     ABaseVideoCallbackSinkFilter("GL Video sink") {
-    if (glDevice != NULL) {
-        throw GstException("GLVideoSink::GLVideoSink");
+    if (glDevice == NULL) {
+        throw GstException("CGLVideoSinkFilter::CGLVideoSinkFilter glDevice == NULL");
     }
 
-    try {
-        _glDevice = glDevice;
-    } catch (const utils::LockException&) {
-        throw GstException("GLVideoSink::GLVideoSink");
-    }
-
+    _glDevice = glDevice;
     float right = CONST_GL_FRAME_WIDTH / 2.0f;
     float left = -right;
     float high = CONST_GL_FRAME_HEIGHT / 2.0f;
@@ -31,12 +26,7 @@ CGLVideoSinkFilter::CGLVideoSinkFilter(
     _lowRight = gl::Vertex(right, low, 0.0f);
     _topLeft = gl::Vertex(left, high, 0.0f);
 
-    _videoFrameGLModel = new VideoFrameModel(_lowLeft, _topLeft, _topRight,
-            _lowRight);
-    if (_videoFrameGLModel != NULL ) {
-        throw GstException("GLVideoSink::GLVideoSink");
-    }
-
+    _videoFrameGLModel = new VideoFrameModel(_lowLeft, _topLeft, _topRight,_lowRight);
     if (!_glDevice->addGLModel(_videoFrameGLModel)) {
         throw GstException("GLVideoSink::GLVideoSink");
     }

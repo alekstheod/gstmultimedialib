@@ -209,8 +209,7 @@ public:
     *
     */
     template<class T2>
-    bool operator ==(const T2* ptr) const {
-        bool result = false;
+    bool operator == (const T2* ptr) const {
         T* second = static_cast< T* > ( ptr );
         return second == _ptr;
     }
@@ -218,7 +217,7 @@ public:
     /**
     *
     */
-    bool operator ==(const T* ptr) const {
+    bool operator == (const T* ptr ) const {
         return ptr == _ptr;
     }
     
@@ -268,6 +267,7 @@ public:
 };
 
 }
+
 
 template<class T, class T2>
 static bool operator == (  const utils::SharedPtr<T> arg1, const utils::SharedPtr< T2 >& arg2 ) {
