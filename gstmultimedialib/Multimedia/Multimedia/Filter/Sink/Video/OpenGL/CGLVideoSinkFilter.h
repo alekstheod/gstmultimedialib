@@ -9,37 +9,37 @@ namespace multimedia {
 
 class CGLVideoSinkFilter: public ABaseVideoCallbackSinkFilter {
 private:
-	gint _frameRate;
-	gint _frameWidth;
-	gint _frameHeight;
-	GLenum _glColor;
-	GLenum _pixelType;
+    gint _frameRate;
+    gint _frameWidth;
+    gint _frameHeight;
+    GLenum _glColor;
+    GLenum _pixelType;
 
-	gl::Vertex _lowLeft;
-	gl::Vertex _lowRight;
-	gl::Vertex _topRight;
-	gl::Vertex _topLeft;
+    gl::Vertex _lowLeft;
+    gl::Vertex _lowRight;
+    gl::Vertex _topRight;
+    gl::Vertex _topLeft;
 
-	utils::LLockObject _lockObject;
+    utils::LLockObject _lockObject;
 
-	utils::SharedPtr<gl::Device> _glDevice;
-	utils::SharedPtr<gl::IModel> _videoFrameGLModel;
+    utils::SharedPtr<gl::Device> _glDevice;
+    utils::SharedPtr<gl::IModel> _videoFrameGLModel;
 
 public:
-	static const float CONST_GL_FRAME_HEIGHT;
-	static const float CONST_GL_FRAME_WIDTH;
-	static const GLuint CONST_INVALID_TEXTURE_ID;
-	static const GLuint CONST_VALID_TEXTURE_ID;
-	static const unsigned int CONST_VIDEOFRAME_GLMODEL_ID;
+    static const float CONST_GL_FRAME_HEIGHT;
+    static const float CONST_GL_FRAME_WIDTH;
+    static const GLuint CONST_INVALID_TEXTURE_ID;
+    static const GLuint CONST_VALID_TEXTURE_ID;
+    static const unsigned int CONST_VIDEOFRAME_GLMODEL_ID;
 
 protected:
-	virtual bool onRecieveBuffer(GstBaseSink* sink, GstBuffer* gstBuffer);
-	virtual bool onSetCaps(GstPad * pad, GstCaps * caps);
+    virtual bool onRecieveBuffer(GstBaseSink* sink, GstBuffer* gstBuffer);
+    virtual bool onSetCaps(GstPad * pad, GstCaps * caps);
 
 public:
-	CGLVideoSinkFilter(const utils::SharedPtr<gl::Device>& glDevice)
-			throw (GstException);
-	virtual ~CGLVideoSinkFilter(void);
+    CGLVideoSinkFilter(const utils::SharedPtr<gl::Device>& glDevice)
+    throw (GstException);
+    virtual ~CGLVideoSinkFilter(void);
 };
 
 }

@@ -45,12 +45,24 @@ namespace utils {
 template<class T>
 class SharedPtr {
 private:
+    /**
+     * Instance of the shared reference
+     * counter. Needed in order to
+     * counter the object's references.
+     */
     SharedCounter* _counter;
+
+    /**
+     * Instance of the object stored
+     * on the curren object.
+     */
     T* _ptr;
 
 public:
     /**
-    *
+    * Empty constructor will initialize the object.
+    * The counter and instance of the stored
+    * object will be initialized as NULL.
     */
     SharedPtr(void) {
         _ptr = NULL;
@@ -170,67 +182,60 @@ public:
     }
 
     /**
-    *
-    */
-    template<class T2>
-    bool operator == (const SharedPtr<T2>& smartPtr) const {
-        T* ptr = static_cast< T* >( smartPtr.getPtr() );
-        return (_ptr == ptr);
-    }
-
-    /**
-    *
-    */
-    template<class T2>
-    bool operator == (const T2* ptr) const {
-        bool result = false;
-        static_cast< T* > ( ptr );
-        if (_ptr == NULL) {
-            result =  (ptr == NULL) ;
-        } else {
-            result =  (_ptr == ptr);
-        }
-
-        return result;
-    }
-
-    /**
      * Overloading of > operator
      * needed for the stl key based containers
      */
-    bool operator > ( const utils::SharedPtr< T >& second ) const{
-	return _ptr > second.getPtr();
-    }
-    
-     /**
-     * Overloading of >= operator
-     * needed for the stl key based containers
-     */
-    bool operator >= ( const utils::SharedPtr< T >& second ) const{
-	return _ptr >= second.getPtr();
-    }
-    
-     /**
-     * Overloading of < operator
-     * needed for the stl key based containers
-     */
-    bool operator < ( const utils::SharedPtr< T >& second ) const{
-	return _ptr < second.getPtr();
-    }
-    
-     /**
-     * Overloading of <= operator
-     * needed for the stl key based containers
-     */
-    bool operator <= ( const utils::SharedPtr< T >& second ) const{
-	return _ptr <= second.getPtr();
+    bool operator > ( const utils::SharedPtr< T >& second ) const {
+        return _ptr > second.getPtr();
     }
 
     /**
-     * 
-     */
-    bool isNull()const{
-      return _counter == NULL;
+    * Overloading of >= operator
+    * needed for the stl key based containers
+    */
+    bool operator >= ( const utils::SharedPtr< T >& second ) const {
+        return _ptr >= second.getPtr();
+    }
+
+    /**
+    * Overloading of < operator
+    * needed for the stl key based containers
+    */
+    bool operator < ( const utils::SharedPtr< T >& second ) const {
+        return _ptr < second.getPtr();
+    }
+
+        /**
+    *
+    */
+    template<class T2>
+    bool operator ==(const T2* ptr) const {
+        bool result = false;
+        T* second = static_cast< T* > ( ptr );
+        return second == _ptr;
+    }
+
+    /**
+    *
+    */
+    bool operator ==(const T* ptr) const {
+        return ptr == _ptr;
+    }
+    
+    /**
+    * Overloading of <= operator
+    * needed for the stl key based containers
+    */
+    bool operator <= ( const utils::SharedPtr< T >& second ) const {
+        return _ptr <= second.getPtr();
+    }
+
+    bool operator != (const T* second)const {
+        return  (_ptr != second ) ;
+    }
+
+    bool operator != (const utils::SharedPtr<T> second)const {
+        return  (second.getPtr() != _ptr ) ;
     }
 
     /**
@@ -254,11 +259,6 @@ public:
         return _ptr;
     }
 
-    template<class Var>
-    bool operator !=(const SharedPtr<Var>& arg) {
-        return  (_ptr != arg.getPtr() ) ;
-    }
-    
     /**
     *
     */
@@ -273,22 +273,6 @@ template<class T, class T2>
 static bool operator == (  const utils::SharedPtr<T> arg1, const utils::SharedPtr< T2 >& arg2 ) {
     const T2* tmp = static_cast< const T2* >( arg1.getPtr() );
     return  ( tmp == arg2.getPtr() );
-}
-
-template<class T, class T2>
-static bool operator == (  const utils::SharedPtr<T> arg1, const T2* arg2 ) {
-    const T2* tmp = static_cast< const T2* > ( arg1.getPtr() );
-    return  ( tmp == arg2 );
-}
-
-template<class T, class T2>
-static bool operator != (const utils::SharedPtr<T>& first, const T2* second) {
-    return  (first.getPtr() != second ) ;
-}
-
-template<class T, class T2>
-static bool operator != (const T* first, const utils::SharedPtr<T2> second) {
-    return  (second.getPtr() != first ) ;
 }
 
 #endif
