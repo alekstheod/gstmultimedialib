@@ -45,7 +45,6 @@ void MenuModel::rightButtonClick(const gl::Vertex& mousePosition) {
 
 void MenuModel::mouseMoved(const gl::Vertex& oldMousePosition,
 		gl::Vertex& newMousePosition) {
-
 }
 
 MenuModel::~MenuModel() {
