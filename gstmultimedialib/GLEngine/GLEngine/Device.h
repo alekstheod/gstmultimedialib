@@ -4,7 +4,7 @@
 #include <map>
 #include <set>
 #include <Utilities/SmartPtr/SharedPtr.h>
-#include <Utilities/AutoLock/LockObject.h>
+#include <Utilities/AutoLock/Mutex.h>
 #include <GLEngine/GLException.h>
 
 namespace gl {
@@ -27,7 +27,7 @@ public:
     static const GLuint CONST_INVALID_TEXTURE;
 
 private:
-    utils::LockObject _lockObject;
+    utils::Mutex _lockObject;
     bool _isOpenGLInitialized;
     bool _windowWasResized;
     unsigned int _windowWidth;

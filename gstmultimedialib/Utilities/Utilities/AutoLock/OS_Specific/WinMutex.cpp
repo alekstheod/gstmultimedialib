@@ -1,24 +1,24 @@
-#include <Utilities/AutoLock/WinLockObject.h>
+#include <Utilities/AutoLock/OS_Specific/WinMutex.h>
 #ifdef _WIN32
 namespace utils {
 
-	const unsigned int WinLockObject::CONST_DEFAULT_LOCK_TIMEOUT = INFINITY;
+	const unsigned int WinMutex::CONST_DEFAULT_LOCK_TIMEOUT = INFINITY;
 
-	WinLockObject::WinLockObject(void) {
+	WinMutex::WinMutex(void) {
 		_mutex = CreateMutex(NULL, FALSE, NULL);
 		if (_mutex != NULL) {
 			ReleaseMutex(_mutex);
 		}
 	}
 
-	WinLockObject::~WinLockObject(void)throw () {
+	WinMutex::~WinMutex(void)throw () {
 		if (_mutex != NULL) {
 			ReleaseMutex(_mutex);
 			CloseHandle(_mutex);
 		}
 	}
 
-	bool WinLockObject::unlock(void)const {
+	bool WinMutex::unlock(void)const {
 		if (_mutex != NULL) {
 			ReleaseMutex(_mutex);
 		} else {
@@ -28,7 +28,7 @@ namespace utils {
 		return true;
 	}
 
-	bool WinLockObject::lock(unsigned int waitTime)const {
+	bool WinMutex::lock(unsigned int waitTime)const {
 		if(mutex==NULL) {
 			return false;
 		}

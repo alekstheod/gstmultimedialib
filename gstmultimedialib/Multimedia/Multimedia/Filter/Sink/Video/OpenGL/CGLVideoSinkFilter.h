@@ -3,7 +3,7 @@
 #include <GLEngine/Device.h>
 #include <GLEngine/Model/Vertex.h>
 #include <Multimedia/Filter/BaseFilter/Callback/ABaseVideoCallbackSinkFilter.h>
-#include <Utilities/AutoLock/LockObject.h>
+#include <Utilities/AutoLock/Mutex.h>
 
 namespace multimedia {
 
@@ -20,7 +20,7 @@ private:
     gl::Vertex _topRight;
     gl::Vertex _topLeft;
 
-    utils::LLockObject _lockObject;
+    utils::Mutex _lockObject;
 
     utils::SharedPtr<gl::Device> _glDevice;
     utils::SharedPtr<gl::IModel> _videoFrameGLModel;
