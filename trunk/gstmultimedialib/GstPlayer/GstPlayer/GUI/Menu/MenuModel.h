@@ -7,7 +7,7 @@
 
 #ifndef MENUGLMODEL_H_
 #define MENUGLMODEL_H_
-#include <Utilities/SmartPtr/SharedPtr.h>
+#include <Utilities/Memory/SmartPtr/SharedPtr.h>
 #include <GLEngine/Model/IModel.h>
 #include <GstPlayer/GUI/Menu/PlayButton/PlayButtonModel.h>
 #include <GLEngine/GLException.h>

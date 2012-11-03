@@ -3,7 +3,7 @@
 #include <GL/glu.h>
 #include <map>
 #include <set>
-#include <Utilities/SmartPtr/SharedPtr.h>
+#include <Utilities/Memory/SmartPtr/SharedPtr.h>
 #include <Utilities/AutoLock/Mutex.h>
 #include <GLEngine/GLException.h>
 

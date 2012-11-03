@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include <vector>
+#include <list>
 #include <queue>
 #include <Utilities/AException.h>
 #include <sstream>
@@ -10,53 +10,116 @@ namespace utils {
 class bad_cast: public AException {
 public:
 
-	bad_cast(const std::string& message) :
-			AException(message) {
-	}
+    bad_cast(const std::string& message) :
+        AException(message) {
+    }
 
-	virtual ~bad_cast(void) throw () {
-	}
+    virtual ~bad_cast(void) throw () {
+    }
 };
 
-class StrUtil {
-private:
-	StrUtil(void);
-	~StrUtil(void);
+namespace StrUtil {
 
-public:
-	static std::wstring trim(const std::wstring& str);
-	static void eatTrim(std::wstring& str, const std::wstring& lex);
-	static std::vector<std::wstring> parse(const std::wstring& source,
-			const std::wstring& delimiter);
-	static std::vector<std::string> parse(const std::string& source,
-			const std::string& delimiter);
-	static void trim(std::queue<wchar_t>& stream);
-	static std::string toString(int inputValue);
-	static std::wstring toWideString(int inputValue);
-	static std::wstring toWideString(float inputValue);
+template<class T>
+void eatTrim(T& str, const T& lex) {
+    if (str.empty()) {
+        return;
+    }
+    unsigned int pos = str.find_first_not_of(lex);
+    if (pos == str.npos) {
+        str.clear();
+    } else {
+        str = str.substr(pos, str.npos);
+    }
+}
 
-	template<class T>
-	static T lexical_cast(const std::wstring& inputValue) throw (bad_cast) {
-		T result;
-		std::stringstream stream(
-				std::string(inputValue.begin(), inputValue.end()));
-		stream >> result;
-		if (stream.fail() || !stream.eof()) {
-			throw bad_cast("Cast failed");
-		}
-		return result;
-	}
+template<class T>
+static std::list<T> split(const T& source,
+                          const T& delimiter) {
+    std::list<T> result;
+    T temp = source;
+    size_t pos = 0;
+    do {
+        pos = temp.find(delimiter);
+        if (pos != temp.npos) {
+            if (pos != 0) {
+                result.push_back(temp.substr(0, pos));
+            }
 
-	template<class T>
-	static T lexical_cast(const std::string& inputValue) throw (bad_cast) {
-		T result;
+            if (pos + delimiter.length() <= temp.length()) {
+                temp = temp.substr(pos + delimiter.length());
+            } else {
+                result.push_back(temp.substr(0, pos));
+                break;
+            }
+        } else if (!temp.empty()) {
+            result.push_back(temp);
+        }
+    } while (pos != temp.npos);
 
-		std::stringstream stream(inputValue);
-		stream >> result;
-		if (stream.fail() || !stream.eof()) {
-			throw bad_cast("Cast failed");
-		}
-		return result;
-	}
-};
+    return result;
+}
+
+template<class T>
+T trim(const T& str) {
+    T result;
+    unsigned int pos = str.find_first_not_of(L" \r\n\t");
+    if (pos != str.npos) {
+        result = str.substr(pos, str.npos);
+    }
+
+    pos = result.find_last_not_of(L" \r\n\t") + 1;
+    if (pos != result.npos) {
+        result = result.erase(pos);
+    }
+
+    return result;
+}
+
+template<class In, class Out>
+static Out lexical_cast(const In& inputValue)
+{
+    Out result;
+
+    std::stringstream stream(std::stringstream::in | std::stringstream::out);
+    stream << inputValue;
+    stream >> result;
+    if (stream.fail() || !stream.eof()) {
+        throw bad_cast("Cast failed");
+    }
+
+    return result;
+}
+
+
+namespace Path {
+
+std::string CONST_PATH_DELIMITERS = std::string("/\\");
+
+template<class T>
+T getFileName( const T& path ) {
+    T result;
+
+    size_t pos = path.find_last_of( T(CONST_PATH_DELIMITERS.begin(), CONST_PATH_DELIMITERS.end()) );
+    if( pos != path.npos ) {
+        result = path.substr( pos + 1, path.npos );
+    }
+
+    return result;
+}
+
+template<class T>
+T getDirectory( const T& path ) {
+    T result;
+
+    size_t pos = path.find_last_of(T(CONST_PATH_DELIMITERS.begin(), CONST_PATH_DELIMITERS.end()));
+    if( pos != path.npos ) {
+        result = path.substr(0, pos + 1 );
+    }
+
+    return result;
+}
+}
+}
+
 }
