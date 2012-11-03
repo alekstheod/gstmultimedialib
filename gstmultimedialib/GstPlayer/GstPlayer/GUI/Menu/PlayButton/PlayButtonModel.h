@@ -11,7 +11,7 @@
 #include <GLEngine/Model/IModel.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include <Utilities/SmartPtr/SharedPtr.h>
+#include <Utilities/Memory/SmartPtr/SharedPtr.h>
 #include <GstPlayer/GUI/Menu/PlayButton/State/PausedPlayButtonState.h>
 #include <GLEngine/GLException.h>
 

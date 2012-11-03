@@ -7,7 +7,7 @@
 
 #ifndef IGLMODELFACTORY_H_
 #define IGLMODELFACTORY_H_
-#include <Utilities/SmartPtr/SharedPtr.h>
+#include <Utilities/Memory/SmartPtr/SharedPtr.h>
 #include <vector>
 #include <GLEngine/Model/IModel.h>
 

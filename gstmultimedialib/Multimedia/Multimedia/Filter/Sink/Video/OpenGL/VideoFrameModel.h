@@ -7,7 +7,7 @@
 #include <Utilities/AutoLock/Mutex.h>
 #include <vector>
 #include <gst/gst.h>
-#include <Utilities/SmartPtr/SharedPtr.h>
+#include <Utilities/Memory/SmartPtr/SharedPtr.h>
 
 namespace multimedia {
 
