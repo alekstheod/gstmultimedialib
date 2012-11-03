@@ -38,7 +38,7 @@ public:
         _buttonState = new PausedPlayButtonState(
             texturesPath + "/"
             + PausedPlayButtonState::CONST_BUTTON_TEXTURE_NAME);
-        if (_buttonState.isNull() ) {
+        if (_buttonState != NULL ) {
             //ToDo throw exception.
         }
 

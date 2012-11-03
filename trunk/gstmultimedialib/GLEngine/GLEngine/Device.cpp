@@ -39,7 +39,7 @@ bool Device::drawModels(void) {
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
         ICamera* null = NULL;
-        if ( !_camera.isNull() ) {
+        if ( _camera != NULL ) {
             _camera->applyCamera();
         }
 
