@@ -35,41 +35,52 @@
 
 namespace utils {
 
-/// <summary>
-/// Represent the shared counter
-/// needed for internal usage by the
-/// SharedPtr.
-/// </summary>
+/**
+* Represent the shared counter
+* needed for internal usage by the
+* SharedPtr.
+*/
 class SharedCounter {
 private:
-    /// <summary>
-    ///
-    /// </summary>
+    /**
+     * The reference counter.
+     * Needed in order to count 
+     * the references to the shared
+     * object.
+     */
     int _refCount;
 
-    /// <summary>
-    ///
-    /// </summary>
+    /**
+     * Instance of the lock object.
+     * Needed in order to implement
+     * the shared pointer in the
+     * multithreaded environment.
+     */
     LockObject _lockObject;
 
 private:
-    /// <summary>
-    /// Destructor.
-    /// </summary>
+    /**
+     * Destructor, need to be 
+     * private since this object
+     * cannot be destroyed by any
+     * external class.
+     */
     ~SharedCounter(void) {
     }
 
 public:
     /**
-     *
+     * Empty constructor will initialize the object.
+     * the _refCount variable will be set to 1.
      */
     SharedCounter() {
         _refCount = 1;
     }
 
-    /// <summary>
-    ///
-    /// </summary>
+    /**
+     * Will add a new reference to the
+     * shared counter.
+     */
     unsigned int addRef(void) {
         int refCount = 0;
         try {

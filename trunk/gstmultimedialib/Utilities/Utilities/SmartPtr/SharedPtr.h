@@ -86,15 +86,19 @@ public:
     }
 
     /**
-    *
+    * Copy constructor. Will set the instance of
+    * the given object and increase the reference 
+    * counter.
+    * @param arg Instance of the @link = 'SharedPtr'
+    * which represent the new object.
     */
-    SharedPtr(const SharedPtr<T>& smartPtr) {
+    SharedPtr(const SharedPtr<T>& arg) {
         _ptr = NULL;
         _counter = NULL;
-        if (smartPtr._counter != NULL) {
-            smartPtr._counter->addRef();
-            _counter = smartPtr._counter;
-            _ptr = smartPtr._ptr;
+        if (arg._counter != NULL) {
+            arg._counter->addRef();
+            _counter = arg._counter;
+            _ptr = arg._ptr;
         }
     }
 
@@ -272,6 +276,12 @@ public:
 template<class T, class T2>
 static bool operator == (  const utils::SharedPtr<T> arg1, const utils::SharedPtr< T2 >& arg2 ) {
     const T2* tmp = static_cast< const T2* >( arg1.getPtr() );
+    return  ( tmp == arg2.getPtr() );
+}
+
+template<class T, class T2>
+static bool operator == (  const T* arg1, const utils::SharedPtr< T2 >& arg2 ) {
+    const T2* tmp = static_cast< const T2* >( arg1 );
     return  ( tmp == arg2.getPtr() );
 }
 
