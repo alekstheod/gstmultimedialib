@@ -29,18 +29,18 @@ bool VideoFrameModel::drawModel(void) {
 
         glBegin(GL_QUADS);
         glTexCoord2f(0.0f, 1.0f);
-        glVertex3f(_lowLeft.getPosX(), _lowLeft.getPosY(), _lowLeft.getPosZ());
+        glVertex3f(_lowLeft.x, _lowLeft.y, _lowLeft.z);
 
         glTexCoord2f(1.0f, 1.0f);
-        glVertex3f(_lowRight.getPosX(), _lowRight.getPosY(),
-                   _lowRight.getPosZ());
+        glVertex3f(_lowRight.x, _lowRight.y,
+                   _lowRight.z);
 
         glTexCoord2f(1.0f, 0.0f);
-        glVertex3f(_topRight.getPosX(), _topRight.getPosY(),
-                   _topRight.getPosZ());
+        glVertex3f(_topRight.x, _topRight.y,
+                   _topRight.z);
 
         glTexCoord2f(0.0f, 0.0f);
-        glVertex3f(_topLeft.getPosX(), _topLeft.getPosY(), _topLeft.getPosZ());
+        glVertex3f(_topLeft.x, _topLeft.y, _topLeft.z);
         glEnd();
     } catch (const utils::LockException&) {
         return false;
