@@ -13,16 +13,6 @@ endif (GLUT_FOUND)
 
 include_directories(. ../Utilities)
 
-add_library(GLEngine STATIC
-	    GLEngine/Camera/ICamera.cpp
-	    GLEngine/Camera/SimpleCamera.cpp
-	    GLEngine/Light/ILight.cpp
-	    GLEngine/Light/WhiteLight.cpp 
-		GLEngine/Model/ImageTexture.cpp
-		GLEngine/Model/IModelFactory.cpp
-		GLEngine/Model/ITexture.cpp
-		GLEngine/Model/Rotation.cpp
-		GLEngine/Model/Texture.cpp
-		GLEngine/Model/Vertex.cpp
-		GLEngine/Device.cpp
-		GLEngine/GLException.cpp)
+file(GLOB_RECURSE GLENGINE_SOURCES GLEngine/*.cpp)
+
+add_library(GLEngine STATIC ${GLENGINE_SOURCES})

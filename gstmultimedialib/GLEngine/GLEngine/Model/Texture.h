@@ -17,7 +17,7 @@ private:
 	friend class Device;
 	GLuint _texture;
 
-protected:
+public:
 	Texture(GLuint texture);
 	virtual bool applyTexture(GLenum target);
 

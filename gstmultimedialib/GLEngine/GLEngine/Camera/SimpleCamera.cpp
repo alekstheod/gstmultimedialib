@@ -32,9 +32,9 @@ void SimpleCamera::lookAt(const Vertex& position) {
 }
 
 void SimpleCamera::applyCamera() {
-	gluLookAt(_cameraPosition.getPosX(), _cameraPosition.getPosY(),
-			_cameraPosition.getPosZ(), _lookAtPosition.getPosX(),
-			_lookAtPosition.getPosY(), _lookAtPosition.getPosZ(), 0.0, 1.0,
+	gluLookAt(_cameraPosition.x, _cameraPosition.y,
+			_cameraPosition.z, _lookAtPosition.x,
+			_lookAtPosition.y, _lookAtPosition.y, 0.0, 1.0,
 			0.0);
 }
 }
