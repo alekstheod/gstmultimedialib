@@ -35,14 +35,6 @@ throw (GstException) :
     g_object_set(G_OBJECT(_pipeline.getPtr()), "uri", _fileName.c_str(),
                  NULL);
 
-    //GstElement* source = gst_element_make_from_uri(GST_URI_SRC, CONST_FILE_NAME.c_str(), NULL);
-    //if( source == NULL ) {
-    //    throw GstException("BasePlaybinFilterGraph::BasePlaybinFilterGraph - element from uri failed");
-    //}
-
-    //g_object_set(G_OBJECT(_pipeline.getPtr()), "source", source, NULL);
-    //gst_object_unref(source);
-
     GstBus* bus = gst_pipeline_get_bus(GST_PIPELINE(_pipeline.getPtr()));
     gst_bus_add_watch(bus, mainLoop, _mainLoop);
     gst_object_unref(bus);
