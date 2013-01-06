@@ -31,14 +31,9 @@ endif (GSTREAMER_FOUND)
 
 include_directories(. ../Utilities ../GLEngine ../Multimedia)
 
-add_executable( GstPlayer main.cpp 
-GstPlayer/VideoTrack.cpp
-GstPlayer/GUI/GstPlayerWidget.cpp
-GstPlayer/GUI/Menu/MenuModel.cpp
-GstPlayer/GUI/Menu/PlayButton/APlayButtonState.cpp
-GstPlayer/GUI/Menu/PlayButton/State/PausedPlayButtonState.cpp
-GstPlayer/GUI/Menu/PlayButton/State/PlayingPlayButtonState.cpp
-)
+file(GLOB_RECURSE GSTPLAYER_SOURCES main.cpp GstPlayer/*.cpp)
+
+add_executable( GstPlayer ${GSTPLAYER_SOURCES})
 
 target_link_libraries(GstPlayer
 			${PROJECT_SOURCE_DIR}/../build/Multimedia/libMultimedia.a;

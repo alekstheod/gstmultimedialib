@@ -25,42 +25,11 @@ if (GSTREAMER_FOUND)
 endif (GSTREAMER_FOUND)
 
 include_directories(. ../Utilities ../GLEngine)
-add_library( Multimedia  STATIC
-Multimedia/GstException.cpp
-Multimedia/GstObject.cpp
-Multimedia/Filter/BaseFilter/Callback/ABaseCallbackSinkFilter.cpp
-Multimedia/Filter/BaseFilter/Callback/ABaseVideoCallbackSinkFilter.cpp
-Multimedia/Filter/BaseFilter/Callback/gstcallbackplugin.c
-Multimedia/Filter/BaseFilter/Callback/gstvideocallbackplugin.c
-Multimedia/Filter/BaseFilter/BaseConverterFilter.cpp
-Multimedia/Filter/BaseFilter/BaseDecoderFilter.cpp
-Multimedia/Filter/BaseFilter/BaseDemuxerFilter.cpp
-Multimedia/Filter/BaseFilter/BaseEncoderFilter.cpp
-Multimedia/Filter/BaseFilter/BaseSinkFilter.cpp
-Multimedia/Filter/BaseFilter/IFilter.cpp
-Multimedia/Filter/Intermediate/Audio/AudioConverterFilter.cpp
-Multimedia/Filter/Intermediate/Audio/FFMp3DecoderFilter.cpp
-Multimedia/Filter/Intermediate/Audio/FFMp3DemuxerFilter.cpp
-Multimedia/Filter/Intermediate/FFAviDemuxerFilter.cpp
-Multimedia/Filter/Sink/Audio/StandardAudioSinkFilter.cpp
-Multimedia/Filter/Sink/Video/OpenGL/VideoFrameModel.cpp
-Multimedia/Filter/Sink/Video/OpenGL/CGLVideoSinkFilter.cpp
-Multimedia/Filter/Sink/Video/OpenGL/GLVideoSinkFilter.cpp
-Multimedia/Filter/Sink/Video/XImageVideoSinkFilter.cpp
-Multimedia/Filter/Sink/Video/XVideoImageSink.cpp
-Multimedia/Filter/Sink/FakeSinkFilter.cpp
-Multimedia/Filter/Sink/SampleGrabberSinkFilter.cpp
-Multimedia/Filter/Source/Audio/AlsaSourceFilter.cpp
-Multimedia/Filter/Source/SourceFilter.cpp
-Multimedia/FilterGraph/Audio/AudioFilterGraph.cpp
-Multimedia/FilterGraph/Audio/Mp3FilterGraph.cpp
-Multimedia/FilterGraph/Video/CGLVideoFilterGraph.cpp
-Multimedia/FilterGraph/Video/GLVideoFilterGraph.cpp
-Multimedia/FilterGraph/Video/XImageVideoFilterGraph.cpp
-Multimedia/FilterGraph/Video/XVideoFilterGraph.cpp
-Multimedia/FilterGraph/BaseFilterGraph.cpp
-Multimedia/FilterGraph/BasePlaybinFilterGraph.cpp
-Multimedia/FilterGraph/BaseStreamingFilterGraph.cpp)
+
+file(GLOB_RECURSE MULTIMEDIA_SOURCES Multimedia/*.cpp)
+file(GLOB_RECURSE MULTIMEDIA_C_SOURCES Multimedia/*.c)
+
+add_library(Multimedia STATIC ${MULTIMEDIA_SOURCES} ${MULTIMEDIA_C_SOURCES})
 
 target_link_libraries(Multimedia
 			${PROJECT_SOURCE_DIR}/../build/Utilities/libUtilities.a;

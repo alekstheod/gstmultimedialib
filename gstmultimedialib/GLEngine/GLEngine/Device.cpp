@@ -81,11 +81,11 @@ bool Device::addGLModel(const SharedPtr<IModel>& glModel) {
 bool Device::removeGLModel(const utils::SharedPtr<IModel>& glModel) {
     try {
         utils::AutoLock<Mutex> lock(_lockObject);
-        if (_glModels.find(glModel.getPtr()) == _glModels.end()) {
+        if (_glModels.find(glModel) == _glModels.end()) {
             return false;
         }
 
-        _glModels.erase(glModel.getPtr());
+        _glModels.erase(glModel);
     } catch (const utils::LockException&) {
         return false;
     }
@@ -123,11 +123,11 @@ bool Device::setCamera(const utils::SharedPtr<ICamera>& camera) {
 bool Device::removeLight(const utils::SharedPtr<ILight>& light) {
     try {
         utils::AutoLock<Mutex> lock(_lockObject);
-        if (_lights.find(light.getPtr()) == _lights.end()) {
+        if (_lights.find(light) == _lights.end()) {
             return false;
         }
 
-        _lights.erase(light.getPtr());
+        _lights.erase(light);
     } catch (const utils::LockException&) {
         return false;
     }

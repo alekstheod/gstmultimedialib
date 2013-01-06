@@ -177,8 +177,8 @@ public:
     * will release the instances of SharedCounter and shared pointer.
     */
     void release(void) {
-        if (_counter != NULL && _counter->release() == 0 ) {
-            delete _ptr;
+        if (_counter != NULL) {
+            _counter->release( _ptr );
         }
 
         _counter = NULL;

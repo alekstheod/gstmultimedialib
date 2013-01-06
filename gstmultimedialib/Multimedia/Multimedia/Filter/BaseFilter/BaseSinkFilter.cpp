@@ -10,7 +10,7 @@
 namespace multimedia {
 
 BaseSinkFilter::BaseSinkFilter(const std::string& pluginName,
-		const std::string& description) throw (GstException) {
+		const std::string& description){
 	_output = gst_element_factory_make(pluginName.c_str(), description.c_str());
 	if (_output == NULL) {
 		throw GstException(
