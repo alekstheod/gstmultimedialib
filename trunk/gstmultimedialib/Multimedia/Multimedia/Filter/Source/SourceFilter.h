@@ -25,7 +25,7 @@ public:
 	static const std::string CONST_PLUGIN_NAME;
 
 public:
-	SourceFilter(const std::string& fileName) throw (GstException);
+	SourceFilter(const std::string& fileName);
 	bool Connect(BaseDemuxerFilter* demuxer);
 	bool Connect(BaseSinkFilter* output);
 	bool addToPipeline(GstElement* pipeline);

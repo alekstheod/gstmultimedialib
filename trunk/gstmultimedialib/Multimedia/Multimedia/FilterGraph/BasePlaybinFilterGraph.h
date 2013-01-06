@@ -12,20 +12,22 @@
 #include <Multimedia/GstException.h>
 #include <Multimedia/Filter/BaseFilter/IFilter.h>
 #include <Multimedia/Utilities/GSmartPtr.h>
-#include <Multimedia/Filter/BaseFilter/BaseSinkFilter.h>
-#include <Multimedia/Filter/BaseFilter/BaseEncoderFilter.h>
 #include <Multimedia/Filter/BaseFilter/Callback/ABaseVideoCallbackSinkFilter.h>
 #include <Multimedia/GstObject.h>
 
 namespace multimedia {
 
+class SourceFilter;
+class BaseSinkFilter;
+class BaseEncoderFilter;
+  
 class BasePlaybinFilterGraph: public GstObject {
 private:
 	GMainLoop* _mainLoop;
 	GSmartPtr<GstElement> _pipeline;
 
 public:
-	const std::string CONST_FILE_NAME;
+	const std::string _fileName;
 	static const std::string CONST_PLAYBIN_PLUGIN_NAME;
 	static const std::string CONST_PLAYBIN_PLUGIN_DESCRIPTION;
 

@@ -6,134 +6,147 @@
  */
 
 #include "BasePlaybinFilterGraph.h"
+#include <Multimedia/Filter/BaseFilter/BaseSinkFilter.h>
+#include <Multimedia/Filter/BaseFilter/BaseEncoderFilter.h>
+#include <Multimedia/Filter/Source/SourceFilter.h>
 
 namespace multimedia {
 
 const std::string BasePlaybinFilterGraph::CONST_PLAYBIN_PLUGIN_NAME = "playbin2";
 const std::string BasePlaybinFilterGraph::CONST_PLAYBIN_PLUGIN_DESCRIPTION =
-		"Player";
+    "Player";
 
 BasePlaybinFilterGraph::BasePlaybinFilterGraph(const std::string& fileName)
-		throw (GstException) :
-		CONST_FILE_NAME(fileName) {
-	_mainLoop = g_main_loop_new(NULL, FALSE);
-	if (_mainLoop == NULL) {
-		throw GstException(
-				"BaseFilterGraph::BaseFilterGraph - Create MainLoop failed");
-	}
+throw (GstException) :
+    _fileName(fileName) {
+    _mainLoop = g_main_loop_new(NULL, FALSE);
+    if (_mainLoop == NULL) {
+        throw GstException(
+            "BaseFilterGraph::BaseFilterGraph - Create MainLoop failed");
+    }
 
-	_pipeline = gst_element_factory_make(CONST_PLAYBIN_PLUGIN_NAME.c_str(),
-			CONST_PLAYBIN_PLUGIN_DESCRIPTION.c_str());
-	if (_pipeline == NULL) {
-		throw GstException(
-				"BasePlaybinFilterGraph::BasePlaybinFilterGraph - Create pipeline failed");
-	}
+    _pipeline = gst_element_factory_make(CONST_PLAYBIN_PLUGIN_NAME.c_str(),
+                                         CONST_PLAYBIN_PLUGIN_DESCRIPTION.c_str());
+    if (_pipeline == NULL) {
+        throw GstException(
+            "BasePlaybinFilterGraph::BasePlaybinFilterGraph - Create pipeline failed");
+    }
 
-	g_object_set(G_OBJECT(_pipeline.getPtr()), "uri", CONST_FILE_NAME.c_str(),
-			NULL);
+    g_object_set(G_OBJECT(_pipeline.getPtr()), "uri", _fileName.c_str(),
+                 NULL);
 
-	GstBus* bus = gst_pipeline_get_bus(GST_PIPELINE(_pipeline.getPtr()));
-	gst_bus_add_watch(bus, mainLoop, _mainLoop);
-	gst_object_unref(bus);
+    //GstElement* source = gst_element_make_from_uri(GST_URI_SRC, CONST_FILE_NAME.c_str(), NULL);
+    //if( source == NULL ) {
+    //    throw GstException("BasePlaybinFilterGraph::BasePlaybinFilterGraph - element from uri failed");
+    //}
+
+    //g_object_set(G_OBJECT(_pipeline.getPtr()), "source", source, NULL);
+    //gst_object_unref(source);
+
+    GstBus* bus = gst_pipeline_get_bus(GST_PIPELINE(_pipeline.getPtr()));
+    gst_bus_add_watch(bus, mainLoop, _mainLoop);
+    gst_object_unref(bus);
 }
 
 gboolean BasePlaybinFilterGraph::mainLoop(GstBus* bus, GstMessage* msg,
-		gpointer data) {
-	GMainLoop* loop = (GMainLoop*) data;
+        gpointer data) {
+    GMainLoop* loop = (GMainLoop*) data;
 
-	switch(GST_MESSAGE_TYPE(msg)) {
+    switch(GST_MESSAGE_TYPE(msg)) {
 
-		case GST_MESSAGE_EOS: {
-			g_print("End of stream\n");
-			g_main_loop_quit(loop);
-		}break;
+    case GST_MESSAGE_EOS: {
+        g_print("End of stream\n");
+        g_main_loop_quit(loop);
+    }
+    break;
 
-		case GST_MESSAGE_ERROR: {
-			gchar* debug;
-			GError* error;
+    case GST_MESSAGE_ERROR: {
+        gchar* debug;
+        GError* error;
 
-			gst_message_parse_error(msg, &error, &debug);
-			g_free(debug);
+        gst_message_parse_error(msg, &error, &debug);
+        g_free(debug);
 
-			g_printerr("Error: %s\n", error->message);
-			g_error_free(error);
+        g_printerr("Error: %s\n", error->message);
+        g_error_free(error);
 
-			g_main_loop_quit(loop);
+        g_main_loop_quit(loop);
 
-		}break;
+    }
+    break;
 
-		default: {
-		}break;
-	}
+    default: {
+    } break;
+    }
 
-	return TRUE;
+    return TRUE;
 }
 
 bool SetEncoder(BaseEncoderFilter* encoder) {
-	return false;
+    return false;
 }
 
 bool BasePlaybinFilterGraph::setAudioSink(BaseSinkFilter* audioSink) {
-	if (audioSink == NULL) {
-		return false;
-	}
+    if (audioSink == NULL) {
+        return false;
+    }
 
-	g_object_set(G_OBJECT(_pipeline.getPtr()), "audio-sink",
-			audioSink->_output.getPtr(), NULL);
-	return true;
+    g_object_set(G_OBJECT(_pipeline.getPtr()), "audio-sink",
+                 audioSink->_output.getPtr(), NULL);
+    return true;
 }
 
 bool BasePlaybinFilterGraph::setVideoSink(BaseSinkFilter* videoSink) {
-	if (videoSink == NULL) {
-		return false;
-	}
+    if (videoSink == NULL) {
+        return false;
+    }
 
-	g_object_set(G_OBJECT(_pipeline.getPtr()), "video-sink",
-			videoSink->_output.getPtr(), NULL);
-	return true;
+    g_object_set(G_OBJECT(_pipeline.getPtr()), "video-sink",
+                 videoSink->_output.getPtr(), NULL);
+    return true;
 }
 
 bool BasePlaybinFilterGraph::setVideoSink(
-		ABaseVideoCallbackSinkFilter* videoSink) {
-	if (videoSink == NULL) {
-		return false;
-	}
+    ABaseVideoCallbackSinkFilter* videoSink) {
+    if (videoSink == NULL) {
+        return false;
+    }
 
-	g_object_set(G_OBJECT(_pipeline.getPtr()), "video-sink",
-			videoSink->_output.getPtr(), NULL);
-	return true;
+    g_object_set(G_OBJECT(_pipeline.getPtr()), "video-sink",
+                 videoSink->_output.getPtr(), NULL);
+    return true;
 }
 
 bool BasePlaybinFilterGraph::play(void) {
-	GstStateChangeReturn ret = gst_element_set_state(_pipeline.getPtr(),
-			GST_STATE_PLAYING);
-	if (ret == GST_STATE_CHANGE_FAILURE) {
-		return false;
-	}
+    GstStateChangeReturn ret = gst_element_set_state(_pipeline.getPtr(),
+                               GST_STATE_PLAYING);
+    if (ret == GST_STATE_CHANGE_FAILURE) {
+        return false;
+    }
 
-	g_main_loop_run(_mainLoop);
-	return true;
+    g_main_loop_run(_mainLoop);
+    return true;
 }
 
 bool BasePlaybinFilterGraph::stop(void) {
-	GstStateChangeReturn ret = gst_element_set_state(_pipeline.getPtr(),
-			GST_STATE_READY);
-	if (ret == GST_STATE_CHANGE_FAILURE) {
-		return false;
-	}
+    GstStateChangeReturn ret = gst_element_set_state(_pipeline.getPtr(),
+                               GST_STATE_READY);
+    if (ret == GST_STATE_CHANGE_FAILURE) {
+        return false;
+    }
 
-	g_main_loop_quit(_mainLoop);
-	return true;
+    g_main_loop_quit(_mainLoop);
+    return true;
 }
 
 bool BasePlaybinFilterGraph::rewind(void) {
-	return false;
+    return false;
 }
 
 BasePlaybinFilterGraph::~BasePlaybinFilterGraph() {
-	if (_mainLoop != NULL) {
-		g_main_loop_unref(_mainLoop);
-	}
+    if (_mainLoop != NULL) {
+        g_main_loop_unref(_mainLoop);
+    }
 }
 
 }

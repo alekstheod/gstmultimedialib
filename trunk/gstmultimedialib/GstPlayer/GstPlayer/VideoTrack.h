@@ -15,15 +15,16 @@ namespace gstplayer {
 
 class VideoTrack: public QThread {
 private:
-	utils::SharedPtr<gl::Device> _glDevice;
-	utils::SharedPtr<multimedia::CGLVideoFilterGraph> _filterGraph;
-	std::string _uri;
+    utils::SharedPtr<gl::Device> _glDevice;
+    utils::SharedPtr<multimedia::CGLVideoFilterGraph> _filterGraph;
+    std::string _uri;
+    
+protected:
+  void run();
 
 public:
-	VideoTrack(const std::string& uri, utils::SharedPtr<gl::Device>& glDevice)
-			throw (multimedia::GstException);
-	void run();
-	virtual ~VideoTrack();
+    VideoTrack(const std::string& uri, utils::SharedPtr<gl::Device>& glDevice);
+    virtual ~VideoTrack();
 };
 
 }

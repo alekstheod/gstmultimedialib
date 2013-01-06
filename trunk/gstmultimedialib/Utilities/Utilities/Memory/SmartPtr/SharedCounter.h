@@ -101,12 +101,17 @@ public:
      * In case if the number of references are equal with 0
      * this method will release the current instance;
      */
-    unsigned int release(void) {
+    template<class T>
+    unsigned int release(T* ptr) {
         int refCount;
         try {
             AutoLock<Mutex> lock(_lockObject);
             _refCount--;
             refCount = _refCount;
+	    if( refCount == 0 ){
+	      delete ptr;
+	    }
+	    
         } catch (const utils::LockException&) {
             return _refCount;
         }

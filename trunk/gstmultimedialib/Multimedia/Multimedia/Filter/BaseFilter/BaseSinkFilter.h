@@ -28,7 +28,7 @@ private:
 
 public:
 	BaseSinkFilter(const std::string& pluginName,
-			const std::string& description) throw (GstException);
+			const std::string& description);
 	bool addToPipeline(GstElement* pipeline);
 	virtual ~BaseSinkFilter(void);
 };
