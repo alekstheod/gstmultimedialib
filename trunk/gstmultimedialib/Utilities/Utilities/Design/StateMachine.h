@@ -72,7 +72,6 @@ private:
     StateHolder m_stateHolder;
 
 public:
-    Executor( std::auto_ptr< TState<RetType, ArgType> > firstState ):m_stateHolder( firstState ) { }
 
     RetType ExecuteStep(ArgType argument) {
         RetType result;
@@ -84,6 +83,7 @@ public:
     }
 
 protected:
+    Executor( std::auto_ptr< TState<RetType, ArgType> > firstState ):m_stateHolder( firstState ) { }
     virtual ~Executor() {}
 };
 
@@ -97,7 +97,6 @@ private:
     StateHolder m_stateHolder;
 
 public:
-    Executor( std::auto_ptr< TState<void, ArgType> > firstState ):m_stateHolder( firstState ) {}
 
     void ExecuteStep(ArgType argument) {
         if(m_stateHolder.m_currentState.get() != NULL ) {
@@ -105,6 +104,8 @@ public:
         }
     }
 
+protected:
+    Executor( std::auto_ptr< TState<void, ArgType> > firstState ):m_stateHolder( firstState ) {}
     virtual ~Executor() {}
 };
 
@@ -118,14 +119,14 @@ private:
     StateHolder m_stateHolder;
 
 public:
-    Executor( std::auto_ptr< TState<void, void> > firstState ):m_stateHolder( firstState ) {}
-
     void ExecuteStep() {
         if(m_stateHolder.m_currentState.get() != NULL ) {
             m_stateHolder.m_currentState->ExecuteStep( &m_stateHolder );
         }
     }
 
+protected:
+    Executor( std::auto_ptr< TState<void, void> > firstState ):m_stateHolder( firstState ) {}
     virtual ~Executor() {}
 };
 
@@ -139,7 +140,6 @@ private:
     StateHolder m_stateHolder;
 
 public:
-    Executor( std::auto_ptr< TState<RetType, void> > firstState ):m_stateHolder( firstState ) {}
 
     RetType ExecuteStep() {
         RetType result;
@@ -150,6 +150,8 @@ public:
         return result;
     }
 
+protected:
+    Executor( std::auto_ptr< TState<RetType, void> > firstState ):m_stateHolder( firstState ) {}
     virtual ~Executor() {}
 };
 
@@ -163,16 +165,16 @@ public:
     /// The base abstract state for the state machine.
     /// Needed in order to implement the states.
     typedef Private::TState< RetType, ArgType> BaseState;
-    
+
     /// The return type of the executeStep method.
     typedef RetType ReturnType;
-    
+
     /// The argument type of the executeStep method.
     typedef ArgType ArgumentType;
-    
+
     /// The state holders type. Needed in order to walk through the states.
     typedef Private::TStateHolder<RetType, ArgType> StateHolder;
-    
+
     /// Type of the state object.
     typedef std::auto_ptr<BaseState> StateObject;
 

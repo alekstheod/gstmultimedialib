@@ -23,7 +23,7 @@ void PlayingPlayButtonState::clickButton(PlayButtonModel* playButton) {
 }
 
 bool PlayingPlayButtonState::drawButton(
-		const APlayButtonState::RECT& buttonRect) {
+		const APlayButtonState::rect& buttonRect) {
 	glBegin(GL_QUADS);
 	glVertex3f(buttonRect._posX, buttonRect._posY, 0.1f);
 	glVertex3f(buttonRect._posX, buttonRect._posY - buttonRect._height, 0.1f);
