@@ -2,7 +2,7 @@
 #define STATEMACHINE_H
 #include <memory>
 
-namespace sm {
+namespace utils {
 
 namespace Private
 {
