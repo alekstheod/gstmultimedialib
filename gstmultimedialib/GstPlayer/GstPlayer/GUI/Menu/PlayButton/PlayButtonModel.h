@@ -29,7 +29,7 @@ private:
     friend class APlayButtonState;
     utils::SharedPtr<APlayButtonState> _buttonState;
     std::string _menuTexturesPath;
-    APlayButtonState::RECT _rect;
+    APlayButtonState::rect _rect;
 
 public:
     inline PlayButtonModel(float posX, float posY, float width, float height,

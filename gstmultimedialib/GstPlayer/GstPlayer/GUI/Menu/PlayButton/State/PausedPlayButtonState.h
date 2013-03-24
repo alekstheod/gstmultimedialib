@@ -26,7 +26,7 @@ public:
 	PausedPlayButtonState(const std::string& texturePath)
 			throw (gl::GLException);
 	void clickButton(PlayButtonModel* playButton);
-	bool drawButton(const APlayButtonState::RECT& buttonRect);
+	bool drawButton(const APlayButtonState::rect& buttonRect);
 	virtual ~PausedPlayButtonState();
 };
 

@@ -15,9 +15,9 @@ class PlayButtonModel;
 
 class APlayButtonState {
 public:
-	class RECT {
+	class rect {
 	public:
-		RECT() {
+		rect() {
 		}
 		friend class PlayButtonModel;
 		float _posX;
@@ -26,7 +26,7 @@ public:
 		float _height;
 
 	public:
-		inline RECT(float posX, float posY, float width, float height) {
+		inline rect(float posX, float posY, float width, float height) {
 			_posX = posX;
 			_posY = posY;
 			_width = width;
@@ -40,7 +40,7 @@ protected:
 public:
 	APlayButtonState();
 	virtual void clickButton(PlayButtonModel* playButton)=0;
-	virtual bool drawButton(const RECT& buttonRect)=0;
+	virtual bool drawButton(const rect& buttonRect)=0;
 	virtual ~APlayButtonState();
 };
 
