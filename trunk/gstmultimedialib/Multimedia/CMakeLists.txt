@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 project(Multimedia)
 
+SET( CMAKE_CXX_COMPILER clang++ )
 find_package (OpenGL REQUIRED)
 if (OPENGL_FOUND)
   include_directories(${OPENGL_INCLUDE_DIRS})

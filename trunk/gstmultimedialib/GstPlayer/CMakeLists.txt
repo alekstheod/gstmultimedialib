@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 project(GstPlayer)
 
+SET( CMAKE_CXX_COMPILER clang++ )
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/../Multimedia/cmake")
 
 find_package (GLIB2 REQUIRED)

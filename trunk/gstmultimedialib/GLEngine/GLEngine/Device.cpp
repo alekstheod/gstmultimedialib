@@ -158,8 +158,8 @@ bool Device::generateTexture(utils::SharedPtr<Texture>& newTexture) {
                 newTexture);
         _textures.insert(newEntry);
     } else {
-        typename std::map<GLuint, utils::SharedPtr<Texture> >::iterator curTexture;
-        typename std::map<GLuint, utils::SharedPtr<Texture> >::iterator prevTexture;
+        std::map<GLuint, utils::SharedPtr<Texture> >::iterator curTexture;
+        std::map<GLuint, utils::SharedPtr<Texture> >::iterator prevTexture;
         for (curTexture = _textures.begin();
                 curTexture != _textures.end()
                 && texture == CONST_INVALID_TEXTURE; curTexture++) {
@@ -176,7 +176,7 @@ bool Device::generateTexture(utils::SharedPtr<Texture>& newTexture) {
 
         if (texture != CONST_INVALID_TEXTURE) {
             newTexture.Attach(new Texture(texture));
-            typename std::pair<GLuint, utils::SharedPtr<Texture> > newEntry(
+            std::pair<GLuint, utils::SharedPtr<Texture> > newEntry(
                 texture, newTexture);
             result = _textures.insert(newEntry).second;
         } else {
