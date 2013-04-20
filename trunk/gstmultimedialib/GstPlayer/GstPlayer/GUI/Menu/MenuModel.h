@@ -17,7 +17,7 @@ namespace gstplayer {
 class MenuModel: public gl::IModel {
 private:
 	utils::SharedPtr<PlayButtonModel> _playButton;
-
+	
 public:
 	MenuModel() throw (gl::GLException);
 	bool drawModel(void);
