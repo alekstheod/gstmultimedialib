@@ -18,14 +18,15 @@ private:
 	/// </summary>
 	std::string _message;
 
-public:
-	/// <summary>
+protected:
+  	/// <summary>
 	/// Basic exception constructor
 	/// </summary>
 	/// <param name="message">The exception message</param>
 	/// <param name="sysMessage">Boolean argument that can allow to append the system message, false as default</sysMessage>
 	AException(const std::string &message, bool sysMessage = false);
-
+	
+public:
 	/// <summary>
 	/// Method that return the pointer to message string.
 	/// </summary>
