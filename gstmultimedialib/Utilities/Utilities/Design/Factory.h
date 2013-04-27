@@ -35,8 +35,7 @@ public:
         m_allocators[key]=SharedPtr<Allocator>(new Functor<AllocatorType>(allocator) );
     }
 
-    template<ObjectType* defValue>
-    ObjectType* create( KeyType key )
+    ObjectType* create( KeyType key, ObjectType* defValue )
     {
         ObjectType* result = defValue;
         if( m_allocators.find(key) != m_allocators.end() )
