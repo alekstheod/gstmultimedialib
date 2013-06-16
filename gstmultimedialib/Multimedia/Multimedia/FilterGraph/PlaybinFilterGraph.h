@@ -96,7 +96,7 @@ namespace multimedia {
             gst_object_unref ( bus );
 
 
-            utils::apply ( std::bind ( &PlaybinFilterGraph::insertFilter,  this, std::placeholders::_1 ), _filters );
+            utils::for_each_t (_filters, std::bind(  &PlaybinFilterGraph::insertFilter,  this, std::placeholders::_1 ) );
         }
 
         bool play ( void ) {
