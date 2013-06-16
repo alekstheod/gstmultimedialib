@@ -24,7 +24,9 @@ private:
 	static gboolean setCapsCallback(GstPad * pad, GstCaps * caps,
 			void* _this);
 	static gboolean gstPluginInitMethod(GstPlugin *plugin);
-	friend class BasePlaybinFilterGraph;
+	
+	template<typename... FilterTypes>
+	friend class PlaybinFilterGraph;
 	friend class BaseFilterGraph;
 	static const GstPluginDesc CONST_PLUGIN_DESC;
 

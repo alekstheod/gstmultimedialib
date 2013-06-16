@@ -2,44 +2,64 @@
 #define GLVIDEOSINK_H
 #include <GLEngine/Device.h>
 #include <GLEngine/Model/Vertex.h>
-#include <Multimedia/Filter/BaseFilter/Callback/ABaseVideoCallbackSinkFilter.h>
+#include <Multimedia/Filter/Sink/Video/ABaseVideoCallbackSinkFilter.h>
 #include <Utilities/AutoLock/Mutex.h>
 
-namespace multimedia {
+namespace multimedia
+{
 
-class CGLVideoSinkFilter: public ABaseVideoCallbackSinkFilter {
+namespace Private
+{
+class CGLVideoSinkCallbackFilter : public ABaseVideoCallbackSinkFilter
+{
 private:
-    gint _frameRate;
-    gint _frameWidth;
-    gint _frameHeight;
-    GLenum _glColor;
-    GLenum _pixelType;
+  gint _frameRate;
+  gint _frameWidth;
+  gint _frameHeight;
+  GLenum _glColor;
+  GLenum _pixelType;
 
-    gl::Vertex _lowLeft;
-    gl::Vertex _lowRight;
-    gl::Vertex _topRight;
-    gl::Vertex _topLeft;
+  gl::Vertex _lowLeft;
+  gl::Vertex _lowRight;
+  gl::Vertex _topRight;
+  gl::Vertex _topLeft;
 
-    utils::Mutex _lockObject;
+  utils::Mutex _lockObject;
 
-    utils::SharedPtr<gl::Device> _glDevice;
-    utils::SharedPtr<gl::IModel> _videoFrameGLModel;
+  utils::SharedPtr<gl::Device> _glDevice;
+  utils::SharedPtr<gl::IModel> _videoFrameGLModel;
 
 public:
-    static const float CONST_GL_FRAME_HEIGHT;
-    static const float CONST_GL_FRAME_WIDTH;
-    static const GLuint CONST_INVALID_TEXTURE_ID;
-    static const GLuint CONST_VALID_TEXTURE_ID;
-    static const unsigned int CONST_VIDEOFRAME_GLMODEL_ID;
+  static const float CONST_GL_FRAME_HEIGHT;
+  static const float CONST_GL_FRAME_WIDTH;
+  static const GLuint CONST_INVALID_TEXTURE_ID;
+  static const GLuint CONST_VALID_TEXTURE_ID;
+  static const unsigned int CONST_VIDEOFRAME_GLMODEL_ID;
 
 protected:
-    virtual bool onRecieveBuffer(GstBaseSink* sink, GstBuffer* gstBuffer);
-    virtual bool onSetCaps(GstPad * pad, GstCaps * caps);
+  bool onRecieveBuffer ( GstBaseSink* sink, GstBuffer* gstBuffer );
+  bool onSetCaps ( GstPad * pad, GstCaps * caps );
+
+private:
+  CGLVideoSinkCallbackFilter ( const CGLVideoSinkCallbackFilter& other );
+  const CGLVideoSinkCallbackFilter& operator = ( const CGLVideoSinkCallbackFilter& other );
 
 public:
-    CGLVideoSinkFilter(const utils::SharedPtr<gl::Device>& glDevice)
-    throw (GstException);
-    virtual ~CGLVideoSinkFilter(void);
+  CGLVideoSinkCallbackFilter ( const utils::SharedPtr<gl::Device>& glDevice ) throw ( GstException );
+  virtual ~CGLVideoSinkCallbackFilter ( void );
+};
+}
+
+
+class CGLVideoSinkFilter : public AFilter
+{
+private:
+  utils::SharedPtr< Private::CGLVideoSinkCallbackFilter > _filter;
+
+public:
+  CGLVideoSinkFilter ( const utils::SharedPtr<gl::Device>& glDevice ) throw ( GstException );
+  bool addToPipeline ( GstElement* pipeline ) ;
+  ~CGLVideoSinkFilter();
 };
 
 }

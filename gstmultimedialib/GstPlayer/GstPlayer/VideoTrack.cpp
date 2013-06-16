@@ -23,13 +23,14 @@ VideoTrack::VideoTrack(const std::string& uri,
 VideoTrack::~VideoTrack() {
     if ( _filterGraph != NULL ) {
         _filterGraph->stop();
-        this->wait(1000);
     }
+    
+    wait();
 }
 
 void VideoTrack::run() {
   try{
-    _filterGraph = new multimedia::CGLVideoFilterGraph(_uri, _glDevice);
+    _filterGraph = new multimedia::PlaybinFilterGraph<multimedia::CGLVideoSinkFilter,  multimedia::StandardAudioSinkFilter>(_uri,  multimedia::CGLVideoSinkFilter(_glDevice), multimedia::StandardAudioSinkFilter("Audio out") );
     _filterGraph->play();
   }catch(...){
   }

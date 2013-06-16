@@ -16,7 +16,7 @@
 
 namespace multimedia {
 
-class BaseDemuxerFilter: public IFilter, GstObject {
+class BaseDemuxerFilter: public AFilter, GstObject {
 private:
 	GSmartPtr<GstElement> _demuxer;
 	GSmartPtr<GstElement> _videoDecoder;
@@ -24,6 +24,8 @@ private:
 
 private:
 	friend class SourceFilter;
+	
+	template<typename... FilterTypes>
 	friend class BasePlaybinFilterGraph;
 
 private:
@@ -36,7 +38,7 @@ public:
 	bool connect(BaseDecoderFilter* decoder);
 	bool dynamicConnectVideo(BaseDecoderFilter* videoDecoder);
 	bool dynamicConnectAudio(BaseDecoderFilter* audioDecoder);
-	bool addToPipeline(GstElement* pipeline);
+	bool addToPipeline(GstElement* pipeline, const std::string& type);
 	virtual ~BaseDemuxerFilter(void);
 };
 

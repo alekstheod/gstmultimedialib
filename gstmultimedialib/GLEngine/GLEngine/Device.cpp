@@ -4,6 +4,7 @@
 #include <GLEngine/Light/ILight.h>
 #include <GLEngine/Model/Vertex.h>
 #include <GLEngine/Model/Texture.h>
+#include <Utilities/AutoLock/Mutex.h>
 
 using namespace std;
 using namespace utils;

@@ -10,14 +10,14 @@
 #include <gst/gst.h>
 #include <Multimedia/GstException.h>
 #include <Multimedia/Filter/BaseFilter/BaseDemuxerFilter.h>
-#include <Multimedia/Filter/BaseFilter/IFilter.h>
-#include <Multimedia/Filter/BaseFilter/IFilter.h>
+#include <Multimedia/Filter/BaseFilter/AFilter.h>
+#include <Multimedia/Filter/BaseFilter/AFilter.h>
 
 namespace multimedia {
 
 class BaseSinkFilter;
 
-class SourceFilter: public IFilter {
+class SourceFilter: public AFilter {
 private:
 	GSmartPtr<GstElement> _source;
 
@@ -28,7 +28,7 @@ public:
 	SourceFilter(const std::string& fileName);
 	bool Connect(BaseDemuxerFilter* demuxer);
 	bool Connect(BaseSinkFilter* output);
-	bool addToPipeline(GstElement* pipeline);
+	bool addToPipeline(GstElement* pipeline, const std::string& type);
 	virtual ~SourceFilter(void);
 };
 

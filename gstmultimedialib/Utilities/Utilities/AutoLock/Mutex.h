@@ -15,7 +15,7 @@ namespace utils {
 
 #ifdef WIN32
 typedef LMutex Mutex;
-#elif linux
+#else
 typedef LMutex Mutex;
 #endif
 

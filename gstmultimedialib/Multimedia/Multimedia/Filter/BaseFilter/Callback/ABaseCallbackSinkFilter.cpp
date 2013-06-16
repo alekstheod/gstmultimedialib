@@ -22,19 +22,19 @@ gboolean ABaseCallbackSinkFilter::gstPluginInitMethod(GstPlugin* plugin) {
 
 ABaseCallbackSinkFilter::ABaseCallbackSinkFilter(const std::string& description) :
 		BaseSinkFilter(CONST_PLUGIN_NAME, description) {
-	g_object_set(G_OBJECT(_output.getPtr()), chain_callback_property,
+	/*g_object_set(G_OBJECT(_output.getPtr()), chain_callback_property,
 			chainCallback, NULL);
 	g_object_set(G_OBJECT(_output.getPtr()), setcaps_callback_property,
 			setCapsCallback, NULL);
 	g_object_set(G_OBJECT(_output.getPtr()), chain_callback_arg_property, this,
-			NULL);
+			NULL);*/
 }
 
 ABaseCallbackSinkFilter::~ABaseCallbackSinkFilter(void) {
-	g_object_set(G_OBJECT(_output.getPtr()), chain_callback_property, NULL,
+	/*g_object_set(G_OBJECT(_output.getPtr()), chain_callback_property, NULL,
 			NULL);
 	g_object_set(G_OBJECT(_output.getPtr()), setcaps_callback_property, NULL,
-			NULL);
+			NULL);*/
 }
 
 gboolean ABaseCallbackSinkFilter::chainCallback(GstPad* gstPad,

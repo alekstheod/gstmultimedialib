@@ -2,6 +2,8 @@
 
 #include <QtGui/QtGui>
 #include <QtGui/QApplication>
+#include <Utilities/Design/Factory.h>
+#include <boost/bind.hpp>
 
 int main(int argc, char *argv[])
 {

@@ -10,7 +10,6 @@ GstPlayerWidget::GstPlayerWidget(QWidget *parent) : QGLWidget(parent) {
 }
 
 GstPlayerWidget::~GstPlayerWidget() {
-  int a = 3;
 }
 
 void GstPlayerWidget::initializeGL() {

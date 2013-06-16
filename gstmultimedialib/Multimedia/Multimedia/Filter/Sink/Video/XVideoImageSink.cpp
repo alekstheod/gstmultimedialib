@@ -21,8 +21,8 @@ XVideoImageSink::XVideoImageSink(const std::string& description)
 XVideoImageSink::XVideoImageSink(const std::string& description,
 		gulong xWindowId) throw (GstException) :
 		BaseSinkFilter(CONST_PLUGIN_NAME, description) {
-	GstXOverlay* gstXOverlay = GST_X_OVERLAY( _output.getPtr());
-	gst_x_overlay_set_xwindow_id(gstXOverlay, xWindowId);
+	//GstXOverlay* gstXOverlay = GST_X_OVERLAY( _output.getPtr());
+	//gst_x_overlay_set_xwindow_id(gstXOverlay, xWindowId);
 }
 
 XVideoImageSink::~XVideoImageSink() {
