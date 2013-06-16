@@ -30,12 +30,17 @@ private:
      */
     const unsigned int m_size;
 
+    void destroy( ValueType value )
+    {
+      
+    }
+    
 public:
     LRUCache(const unsigned int size): m_size( size != 0? size: 1)
     {
     }
 
-    /**
+        /**
      * Algorithm implementation.
      * @param key key needed for the algorithm.
      * @param creator value creator.
@@ -44,12 +49,26 @@ public:
     template<typename CreatorType>
     ValueType Read( KeyType key,  CreatorType creator)
     {
+      return Read(key, creator, std::bind( &LRUCache::destroy, this, std::placeholders::_1) );
+    }
+    
+    /**
+     * Algorithm implementation.
+     * @param key key needed for the algorithm.
+     * @param creator value creator.
+     * @param destroyer the deallocator for the object.
+     * @return cached or the new created value.
+     */
+    template<typename CreatorType, typename Destroyer>
+    ValueType Read( KeyType key,  CreatorType creator, Destroyer destroyer)
+    {
         ValueType result;
         typename std::map< KeyType, std::pair< ValueType, Iterator> >::iterator i = m_cache.find(key);
         if( i == m_cache.end() )
         {
             if( m_lruList.size() >= m_size )
             {
+	        destroyer(m_lruList.back());
                 m_cache.erase( m_lruList.back() );
                 m_lruList.pop_back();
             }
@@ -63,9 +82,7 @@ public:
         {
             std::pair<ValueType, Iterator> value = i->second;
             if ( value.second != m_lruList.begin() ) {
-                Iterator next = value.second;
-                next++;
-                m_lruList.splice( m_lruList.begin(), m_lruList, value.second,  next );
+                m_lruList.splice( m_lruList.begin(), m_lruList, value.second );
             }
 
             result = value.first;

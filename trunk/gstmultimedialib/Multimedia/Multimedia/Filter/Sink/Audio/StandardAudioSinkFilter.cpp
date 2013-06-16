@@ -10,12 +10,18 @@
 namespace multimedia {
 
 const std::string StandardAudioSinkFilter::CONST_PLUGIN_NAME = "autoaudiosink";
+ const std::string StandardAudioSinkFilter::CONST_SINK_TYPE = "audio";
 
 StandardAudioSinkFilter::StandardAudioSinkFilter(const std::string& description)
 		throw (GstException) :
-		BaseSinkFilter(CONST_PLUGIN_NAME, description) {
+		_baseSink(CONST_PLUGIN_NAME, description) {
 	// TODO Auto-generated constructor stub
 
+}
+
+bool StandardAudioSinkFilter::addToPipeline ( GstElement* pipeline )
+{
+  return _baseSink.addToPipeline(pipeline, CONST_SINK_TYPE);
 }
 
 StandardAudioSinkFilter::~StandardAudioSinkFilter(void) {

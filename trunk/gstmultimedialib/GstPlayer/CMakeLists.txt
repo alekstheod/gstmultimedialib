@@ -1,7 +1,12 @@
 cmake_minimum_required(VERSION 2.8)
 project(GstPlayer)
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x" )
 SET( CMAKE_CXX_COMPILER clang++ )
+ADD_DEFINITIONS(-Wall)
+set(-DQT_INCLUDE_DIR /usr/include/qt4)
+set(-DQMAKE_EXECUTABLE /usr/bin/qmake-qt4)
+
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/../Multimedia/cmake")
 
 find_package (GLIB2 REQUIRED)
@@ -19,7 +24,7 @@ find_package (GLUT REQUIRED)
   include_directories(${GLUT_INCLUDE_DIRS})
 #endif (GLUT_FOUND)
 
-find_package(Qt4 4.6.2 COMPONENTS QtOpenGL QtCore QtGui REQUIRED )
+find_package(Qt4 COMPONENTS QtOpenGL QtCore QtGui REQUIRED )
 if (QT_FOUND)
   include(${QT_USE_FILE})
   include_directories(${QT_INCLUDE_DIR})
@@ -36,12 +41,17 @@ file(GLOB_RECURSE GSTPLAYER_SOURCES main.cpp GstPlayer/*.cpp)
 
 add_executable( GstPlayer ${GSTPLAYER_SOURCES})
 
+message("glib2.0 libraries: " ${GLIB2_LIBRARIES})
+
 target_link_libraries(GstPlayer
+			pthread
+			gobject-2.0 #ubuntu 13.04 fix
 			${PROJECT_SOURCE_DIR}/../build/Multimedia/libMultimedia.a;
 			${PROJECT_SOURCE_DIR}/../build/GLEngine/libGLEngine.a;
 			${PROJECT_SOURCE_DIR}/../build/Utilities/libUtilities.a;
 			${OPENGL_LIBRARIES}
 			${QT_LIBRARIES}
+			${GLIB2_LIBRARIES}
 			${PKG_GLIB_LIBRARIES}  
 			${GSTREAMER_VIDEO_LIBRARY}
 			${GSTREAMER_LIBRARIES}

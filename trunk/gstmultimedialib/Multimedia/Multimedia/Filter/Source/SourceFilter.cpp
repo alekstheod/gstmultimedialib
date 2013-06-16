@@ -27,7 +27,7 @@ SourceFilter::SourceFilter(const std::string& fileName) {
                  NULL);
 }
 
-bool SourceFilter::addToPipeline(GstElement* pipeline) {
+bool SourceFilter::addToPipeline(GstElement* pipeline, const std::string& type) {
     if (pipeline == NULL) {
         return false;
     }

@@ -11,17 +11,19 @@
 #include <string>
 #include <Multimedia/Filter/BaseFilter/BaseSinkFilter.h>
 #include <Multimedia/GstException.h>
-#include <Multimedia/Filter/BaseFilter/IFilter.h>
+#include <Multimedia/Filter/BaseFilter/AFilter.h>
 #include <Multimedia/GstObject.h>
 
 namespace multimedia {
 
-class BaseConverterFilter: public IFilter, GstObject {
+class BaseConverterFilter: public AFilter, GstObject {
 private:
 	GSmartPtr<GstElement> _converter;
 
 private:
 	friend class BaseDecoderFilter;
+	
+	template<typename... FilterTypes>
 	friend class BasePlaybinFilterGraph;
 
 public:

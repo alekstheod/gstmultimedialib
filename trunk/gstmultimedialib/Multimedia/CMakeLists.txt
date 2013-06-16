@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 project(Multimedia)
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x" )
 SET( CMAKE_CXX_COMPILER clang++ )
 find_package (OpenGL REQUIRED)
 if (OPENGL_FOUND)
@@ -28,7 +29,7 @@ endif (GSTREAMER_FOUND)
 include_directories(. ../Utilities ../GLEngine)
 
 file(GLOB_RECURSE MULTIMEDIA_SOURCES Multimedia/*.cpp)
-file(GLOB_RECURSE MULTIMEDIA_C_SOURCES Multimedia/*.c)
+file(GLOB_RECURSE MULTIMEDIA_C_SOURCES Multimedia/FilterGraph/IPlaybin.cpp Multimedia/FilterGraph/IPlaybinListener.cpp Multimedia/*.c)
 
 add_library(Multimedia STATIC ${MULTIMEDIA_SOURCES} ${MULTIMEDIA_C_SOURCES})
 

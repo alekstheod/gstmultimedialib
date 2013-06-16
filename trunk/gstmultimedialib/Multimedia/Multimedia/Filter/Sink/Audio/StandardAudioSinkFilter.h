@@ -9,15 +9,21 @@
 #define STANDARDAUDIOOUTPUTFILTER_H_
 
 #include <Multimedia/Filter/BaseFilter/BaseSinkFilter.h>
+#include <Multimedia/Filter/BaseFilter/AFilter.h>
 
 namespace multimedia {
 
-class StandardAudioSinkFilter: public BaseSinkFilter {
+class StandardAudioSinkFilter : public AFilter{
+private:
+  BaseSinkFilter _baseSink;
+  
 public:
 	static const std::string CONST_PLUGIN_NAME;
+	static const std::string CONST_SINK_TYPE;
 
 public:
 	StandardAudioSinkFilter(const std::string& description) throw (GstException);
+	virtual bool addToPipeline ( GstElement* pipeline );
 	virtual ~StandardAudioSinkFilter(void);
 };
 

@@ -10,25 +10,34 @@
 #include <gst/gst.h>
 #include <string>
 #include <Multimedia/GstException.h>
-#include <Multimedia/Filter/BaseFilter/IFilter.h>
+#include <Multimedia/Filter/BaseFilter/AFilter.h>
 #include <Multimedia/Utilities/GSmartPtr.h>
 #include <Multimedia/GstObject.h>
 
 namespace multimedia {
 
-class BaseSinkFilter: public IFilter, GstObject {
-protected:
+class BaseSinkFilter: public AFilter, GstObject {
+private:
 	GSmartPtr<GstElement> _output;
 
 private:
 	friend class BaseConverterFilter;
 	friend class BaseDecoderFilter;
 	friend class SourceFilter;
-	friend class BasePlaybinFilterGraph;
+	
+       template<typename... FilterTypes> 
+       friend class PlaybinFilterGraph;
 
 public:
-	BaseSinkFilter(const std::string& pluginName,
-			const std::string& description);
+	BaseSinkFilter(const std::string& pluginName, const std::string& description);
+	
+	template<typename ObjectType>
+	void	setObject(const gchar *first_property_name, ObjectType obj)
+	{
+	    g_object_set(G_OBJECT(_output.getPtr()), first_property_name, obj, NULL);
+	}
+	
+	bool addToPipeline(GstElement* pipeline, const std::string& type);
 	bool addToPipeline(GstElement* pipeline);
 	virtual ~BaseSinkFilter(void);
 };
