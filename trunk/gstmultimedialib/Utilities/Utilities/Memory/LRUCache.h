@@ -30,13 +30,13 @@ private:
      */
     const unsigned int m_size;
 
-    void destroy( ValueType value )
-    {
-      
-    }
+    /**
+     * Default destoryer function.
+     */
+    void destroy( ValueType value ){}
     
 public:
-    LRUCache(const unsigned int size): m_size( size != 0? size: 1)
+    explicit LRUCache(const unsigned int size): m_size( size != 0? size: 1)
     {
     }
 
@@ -68,8 +68,9 @@ public:
         {
             if( m_lruList.size() >= m_size )
             {
-	        destroyer(m_lruList.back());
-                m_cache.erase( m_lruList.back() );
+	        i = m_cache.find( m_lruList.back() );
+	        destroyer(  i->second.first );
+                m_cache.erase( i );
                 m_lruList.pop_back();
             }
 
