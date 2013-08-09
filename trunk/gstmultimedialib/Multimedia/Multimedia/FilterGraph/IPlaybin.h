@@ -1,5 +1,6 @@
 #ifndef IPLAYBIN_H
 #define IPLAYBIN_H
+#include <Multimedia/FilterGraph/Signal.h>
 
 namespace multimedia
 {
@@ -9,9 +10,7 @@ class IPlaybin
 
 public:
     IPlaybin(){};
-    virtual bool play()=0;
-    virtual bool stop()=0;
-    virtual bool rewind()=0;
+    virtual bool sendSignal( const Signal& signal )=0;
     virtual ~IPlaybin(){};
 };
 
