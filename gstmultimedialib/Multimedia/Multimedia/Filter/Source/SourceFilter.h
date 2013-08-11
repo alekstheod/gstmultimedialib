@@ -11,7 +11,6 @@
 #include <Multimedia/GstException.h>
 #include <Multimedia/Filter/BaseFilter/BaseDemuxerFilter.h>
 #include <Multimedia/Filter/BaseFilter/AFilter.h>
-#include <Multimedia/Filter/BaseFilter/AFilter.h>
 
 namespace multimedia {
 
@@ -28,7 +27,7 @@ public:
 	SourceFilter(const std::string& fileName);
 	bool Connect(BaseDemuxerFilter* demuxer);
 	bool Connect(BaseSinkFilter* output);
-	bool addToPipeline(GstElement* pipeline, const std::string& type);
+	bool addToPipeline(GstElement* pipeline);
 	virtual ~SourceFilter(void);
 };
 

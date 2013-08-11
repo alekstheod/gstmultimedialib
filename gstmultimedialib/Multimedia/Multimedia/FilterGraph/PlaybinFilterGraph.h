@@ -35,7 +35,6 @@ private:
     std::tuple<FilterTypes...> _filters;
 
 public:
-    const std::string _uri;
     static const std::string CONST_PLAYBIN_PLUGIN_NAME;
     static const std::string CONST_PLAYBIN_PLUGIN_DESCRIPTION;
 
@@ -71,7 +70,7 @@ private:
     }
 
 public:
-    PlaybinFilterGraph ( const std::string& uri, const FilterTypes&... filters ) throw ( GstException ) :_filters ( filters... ), _uri ( uri ) {
+    PlaybinFilterGraph(const FilterTypes&... filters ) :_filters ( filters... ){
         _mainLoop = g_main_loop_new ( NULL, FALSE );
         if ( _mainLoop == NULL ) {
             throw GstException (
@@ -84,13 +83,15 @@ public:
                 "BasePlaybinFilterGraph::BasePlaybinFilterGraph - Create pipeline failed" );
         }
 
-        g_object_set ( G_OBJECT ( _pipeline.getPtr() ), "uri", _uri.c_str(), NULL );
-
         GstBus* bus = gst_pipeline_get_bus ( GST_PIPELINE ( _pipeline.getPtr() ) );
         gst_bus_set_sync_handler ( bus, gstBusSyncHandle, this );
         gst_object_unref ( bus );
 
         utils::for_each_t ( _filters, std::bind ( &PlaybinFilterGraph::insertFilter,  this, std::placeholders::_1 ) );
+    }
+    
+    PlaybinFilterGraph ( const std::string& uri, const FilterTypes&... filters ) : PlaybinFilterGraph(filters...){
+        g_object_set ( G_OBJECT ( _pipeline.getPtr() ), "uri", uri.c_str(), NULL );
     }
 
     bool sendSignal( const Signal& signal )
@@ -105,7 +106,6 @@ public:
         }
     }
 };
-
 
 template<typename... FilterTypes>
 const std::string PlaybinFilterGraph<FilterTypes...>::CONST_PLAYBIN_PLUGIN_NAME = "playbin2";

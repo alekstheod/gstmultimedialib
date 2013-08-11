@@ -13,7 +13,7 @@ template<typename KeyType, typename ValueType>
 class LRUCache
 {
 private:
-    typedef typename std::list< KeyType >::iterator Iterator;
+    typedef typename std::list< KeyType >::iterator LruIterator;
 
     /**
      * List of the least recently used keys.

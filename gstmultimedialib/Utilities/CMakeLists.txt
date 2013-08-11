@@ -6,6 +6,6 @@ SET( CMAKE_CXX_COMPILER clang++ )
 set(GST_LICENSE "BSD")
 include_directories(.)
 	    
-file(GLOB_RECURSE UTILITIES_SOURCES Utilities/MPL/Tuple.cpp Utilities/*.cpp)
+file(GLOB_RECURSE UTILITIES_SOURCES Utilities/AutoLock/ExternalLock.cpp Utilities/MPL/Tuple.cpp Utilities/*.cpp)
 
 add_library(Utilities STATIC ${UTILITIES_SOURCES} )

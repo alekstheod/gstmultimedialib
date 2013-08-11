@@ -22,7 +22,7 @@ VideoTrack::VideoTrack(const std::string& uri,
 
 VideoTrack::~VideoTrack() {
     if ( _filterGraph != NULL ) {
-        _filterGraph->stop();
+        _filterGraph->sendSignal( multimedia::StopSignal() );
     }
     
     wait();
@@ -30,8 +30,8 @@ VideoTrack::~VideoTrack() {
 
 void VideoTrack::run() {
   try{
-    _filterGraph = new multimedia::PlaybinFilterGraph<multimedia::CGLVideoSinkFilter,  multimedia::StandardAudioSinkFilter>(_uri,  multimedia::CGLVideoSinkFilter(_glDevice), multimedia::StandardAudioSinkFilter("Audio out") );
-    _filterGraph->play();
+    _filterGraph = new multimedia::PlaybinFilterGraph<multimedia::CGLVideoSinkFilter,  multimedia::StandardAudioSinkFilter>( "v4l2:///dev/video0" , multimedia::CGLVideoSinkFilter(_glDevice), multimedia::StandardAudioSinkFilter("Audio out") );
+    _filterGraph->sendSignal( multimedia::PlaySignal() );
   }catch(...){
   }
 }

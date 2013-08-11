@@ -19,7 +19,7 @@ class VideoTrack: public QThread {
 private:
     utils::SharedPtr<gl::Device> _glDevice;
     
-    utils::SharedPtr< multimedia::PlaybinFilterGraph<multimedia::CGLVideoSinkFilter, multimedia::StandardAudioSinkFilter> > _filterGraph;
+    utils::SharedPtr< multimedia::PlaybinFilterGraph< multimedia::CGLVideoSinkFilter, multimedia::StandardAudioSinkFilter> > _filterGraph;
     std::string _uri;
     
 protected:
