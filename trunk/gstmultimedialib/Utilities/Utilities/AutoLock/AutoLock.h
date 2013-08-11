@@ -21,6 +21,15 @@ class AutoLock {
 private:
     const T& _lockObject;
 
+private:
+  AutoLock(const AutoLock&);
+  AutoLock& operator=(const AutoLock&);
+  void* operator new(std::size_t);
+  void* operator new[](std::size_t);
+  void operator delete(void*);
+  void operator delete[](void*);
+  AutoLock* operator&();
+  
 public:
     AutoLock( const T& lockObject, unsigned int waitTime = T::CONST_DEFAULT_LOCK_TIMEOUT ):
         _lockObject(lockObject) {

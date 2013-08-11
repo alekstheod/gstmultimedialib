@@ -38,7 +38,7 @@ public:
 	bool connect(BaseDecoderFilter* decoder);
 	bool dynamicConnectVideo(BaseDecoderFilter* videoDecoder);
 	bool dynamicConnectAudio(BaseDecoderFilter* audioDecoder);
-	bool addToPipeline(GstElement* pipeline, const std::string& type);
+	bool addToPipeline(GstElement* pipeline);
 	virtual ~BaseDemuxerFilter(void);
 };
 

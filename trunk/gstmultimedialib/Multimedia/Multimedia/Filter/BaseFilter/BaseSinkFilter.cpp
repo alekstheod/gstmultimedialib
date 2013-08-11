@@ -30,7 +30,7 @@ bool BaseSinkFilter::addToPipeline(GstElement* pipeline, const std::string& type
 
 bool BaseSinkFilter::addToPipeline(GstElement* pipeline)
 {
-  return false;
+	return false;
 }
 
 BaseSinkFilter::~BaseSinkFilter(void) {

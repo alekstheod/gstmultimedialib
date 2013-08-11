@@ -11,8 +11,7 @@ namespace multimedia {
 
 const std::string AlsaSourceFilter::CONST_PLUGIN_NAME = "alsasrc";
 
-AlsaSourceFilter::AlsaSourceFilter(const std::string& pluginDescription)
-		throw (GstException) {
+AlsaSourceFilter::AlsaSourceFilter(const std::string& pluginDescription) {
 	_alsaSource = gst_element_factory_make(CONST_PLUGIN_NAME.c_str(),
 			pluginDescription.c_str());
 	if (_alsaSource == NULL) {

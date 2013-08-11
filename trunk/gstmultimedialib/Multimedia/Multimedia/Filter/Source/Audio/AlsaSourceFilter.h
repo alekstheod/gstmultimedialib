@@ -9,10 +9,11 @@
 #define ALSASOURCEFILTER_H_
 #include <Multimedia/GstException.h>
 #include <Multimedia/Utilities/GSmartPtr.h>
+#include <Multimedia/Filter/BaseFilter/AFilter.h>
 
 namespace multimedia {
 
-class AlsaSourceFilter {
+class AlsaSourceFilter : public AFilter  {
 private:
 	GSmartPtr<GstElement> _alsaSource;
 
@@ -24,7 +25,7 @@ public:
 	static const std::string CONST_PLUGIN_NAME;
 
 public:
-	AlsaSourceFilter(const std::string& pluginDescription) throw (GstException);
+	AlsaSourceFilter(const std::string& pluginDescription);
 	virtual ~AlsaSourceFilter(void);
 };
 
