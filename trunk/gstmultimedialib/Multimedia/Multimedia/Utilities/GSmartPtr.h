@@ -26,6 +26,7 @@ public:
 	bool operator !=(GSmartPtr<T> gPtr) const;
 	T* operator->(void);
 	T* getPtr(void);
+	const T* getPtr(void)const;
 	const GSmartPtr<T>& operator =(const GSmartPtr<T>& gPtr);
 	virtual ~GSmartPtr(void);
 };
@@ -82,6 +83,11 @@ T* GSmartPtr<T>::operator->(void) {
 template<class T>
 T* GSmartPtr<T>::getPtr(void) {
 	return _ptr;
+}
+
+template<class T>
+const T* GSmartPtr<T>::getPtr(void)const{
+  return _ptr;
 }
 
 template<class T>
