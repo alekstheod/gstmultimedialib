@@ -6,7 +6,6 @@
 #include <Utilities/Memory/SmartPtr/SharedPtr.h>
 #include <Utilities/AutoLock/Mutex.h>
 #include <GLEngine/GLException.h>
-#include <Utilities/AutoLock/ExternalLock.h>
 
 namespace gl {
 
@@ -33,7 +32,7 @@ private:
     bool _windowWasResized;
     unsigned int _windowWidth;
     unsigned int _windowHeight;
-    utils::ExternalLock< std::set<utils::SharedPtr<IModel> >, utils::Mutex > _glModels;
+    std::set<utils::SharedPtr<IModel> >_glModels;
     utils::SharedPtr<ICamera> _camera;
     std::set< utils::SharedPtr<ILight> > _lights;
     std::map<GLuint, utils::SharedPtr<Texture> > _textures;
