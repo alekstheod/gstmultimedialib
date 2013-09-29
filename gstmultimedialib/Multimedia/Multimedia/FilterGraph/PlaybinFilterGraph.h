@@ -30,9 +30,9 @@ namespace multimedia {
 template<typename... FilterTypes>
 class PlaybinFilterGraph: public GstObject, public IPlaybin {
 private:
-    GMainLoop* _mainLoop;
-    GSmartPtr<GstElement> _pipeline;
-    std::tuple<FilterTypes...> _filters;
+    GMainLoop* m_mainLoop;
+    GSmartPtr<GstElement> m_pipeline;
+    std::tuple<FilterTypes...> m_filters;
 
 public:
     static const std::string CONST_PLAYBIN_PLUGIN_NAME;
@@ -53,7 +53,7 @@ private:
             g_printerr ( "Error: %s\n", error->message );
             g_error_free ( error );
 
-            g_main_loop_quit ( _this->_mainLoop );
+            g_main_loop_quit ( _this->m_mainLoop );
         }
         break;
 
@@ -64,45 +64,42 @@ private:
         return GST_BUS_PASS;
     }
 
-    PlaybinFilterGraph ( const PlaybinFilterGraph& );
-    void insertFilter ( multimedia::AFilter& filter ) {
-        filter.addToPipeline ( _pipeline.getPtr() );
-    }
-
 public:
-    PlaybinFilterGraph(const FilterTypes&... filters ) :_filters ( filters... ){
-        _mainLoop = g_main_loop_new ( NULL, FALSE );
-        if ( _mainLoop == NULL ) {
+    PlaybinFilterGraph(const FilterTypes&... filters ) :m_filters ( filters... ){
+        m_mainLoop = g_main_loop_new ( NULL, FALSE );
+        if ( m_mainLoop == NULL ) {
             throw GstException (
                 "BaseFilterGraph::BaseFilterGraph - Create MainLoop failed" );
         }
 
-        _pipeline = gst_element_factory_make ( CONST_PLAYBIN_PLUGIN_NAME.c_str(),CONST_PLAYBIN_PLUGIN_DESCRIPTION.c_str() );
-        if ( _pipeline == NULL ) {
+        m_pipeline = gst_element_factory_make ( CONST_PLAYBIN_PLUGIN_NAME.c_str(),CONST_PLAYBIN_PLUGIN_DESCRIPTION.c_str() );
+        if ( m_pipeline == NULL ) {
             throw GstException (
                 "BasePlaybinFilterGraph::BasePlaybinFilterGraph - Create pipeline failed" );
         }
 
-        GstBus* bus = gst_pipeline_get_bus ( GST_PIPELINE ( _pipeline.getPtr() ) );
+        GstBus* bus = gst_pipeline_get_bus ( GST_PIPELINE ( m_pipeline.getPtr() ) );
         gst_bus_set_sync_handler ( bus, gstBusSyncHandle, this );
         gst_object_unref ( bus );
 
-        utils::foreach_t ( _filters, std::bind ( &PlaybinFilterGraph::insertFilter,  this, std::placeholders::_1 ) );
+        std::for_each( m_filters, [this](multimedia::AFilter& filter ){
+	  filter.addToPipeline ( this->m_pipeline.getPtr() ); 
+	} );
     }
     
     PlaybinFilterGraph ( const std::string& uri, const FilterTypes&... filters ) : PlaybinFilterGraph(filters...){
-        g_object_set ( G_OBJECT ( _pipeline.getPtr() ), "uri", uri.c_str(), NULL );
+        g_object_set ( G_OBJECT ( m_pipeline.getPtr() ), "uri", uri.c_str(), NULL );
     }
 
     bool sendSignal( const Signal& signal )
     {
-	return signal.apply( _pipeline.getPtr(), _mainLoop  );
+	return signal.apply( m_pipeline.getPtr(), m_mainLoop  );
     }
 
     ~PlaybinFilterGraph() {
-        if ( _mainLoop != NULL ) {
-	    g_main_loop_quit ( _mainLoop );
-            g_main_loop_unref ( _mainLoop );
+        if ( m_mainLoop != NULL ) {
+	    g_main_loop_quit ( m_mainLoop );
+            g_main_loop_unref ( m_mainLoop );
         }
     }
 };
