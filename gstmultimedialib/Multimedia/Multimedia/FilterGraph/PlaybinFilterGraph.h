@@ -11,7 +11,6 @@
 #include <string>
 #include <tuple>
 #include <functional>
-#include <Utilities/MPL/Tuple.h>
 #include <gst/gst.h>
 #include <Multimedia/GstException.h>
 #include <Multimedia/Filter/BaseFilter/AFilter.h>
@@ -24,11 +23,14 @@
 #include <Multimedia/Filter/BaseFilter/BaseEncoderFilter.h>
 #include <Multimedia/Filter/Sink/Video/OpenGL/CGLVideoSinkFilter.h>
 #include <Multimedia/FilterGraph/Signal.h>
+#include <Utilities/MPL/Tuple.h>
 
-namespace multimedia {
-  
+namespace multimedia
+{
+
 template<typename... FilterTypes>
-class PlaybinFilterGraph: public GstObject, public IPlaybin {
+class PlaybinFilterGraph: public GstObject, public IPlaybin
+{
 private:
     GMainLoop* m_mainLoop;
     GSmartPtr<GstElement> m_pipeline;
@@ -65,7 +67,7 @@ private:
     }
 
 public:
-    PlaybinFilterGraph(const FilterTypes&... filters ) :m_filters ( filters... ){
+    PlaybinFilterGraph ( const FilterTypes&... filters ) :m_filters ( filters... ) {
         m_mainLoop = g_main_loop_new ( NULL, FALSE );
         if ( m_mainLoop == NULL ) {
             throw GstException (
@@ -82,23 +84,24 @@ public:
         gst_bus_set_sync_handler ( bus, gstBusSyncHandle, this );
         gst_object_unref ( bus );
 
-        std::for_each( m_filters, [this](multimedia::AFilter& filter ){
-	  filter.addToPipeline ( this->m_pipeline.getPtr() ); 
-	} );
+        std::for_each ( m_filters, [this] ( AFilter& filter ) {
+            filter.addToPipeline ( this->m_pipeline.getPtr() );
+        } );
+	
+	//test(std::get<0>(m_filters));
     }
-    
-    PlaybinFilterGraph ( const std::string& uri, const FilterTypes&... filters ) : PlaybinFilterGraph(filters...){
+
+    PlaybinFilterGraph ( const std::string& uri, const FilterTypes&... filters ) : PlaybinFilterGraph ( filters... ) {
         g_object_set ( G_OBJECT ( m_pipeline.getPtr() ), "uri", uri.c_str(), NULL );
     }
 
-    bool sendSignal( const Signal& signal )
-    {
-	return signal.apply( m_pipeline.getPtr(), m_mainLoop  );
+    bool sendSignal ( const Signal& signal ) {
+        return signal.apply ( m_pipeline.getPtr(), m_mainLoop );
     }
 
     ~PlaybinFilterGraph() {
         if ( m_mainLoop != NULL ) {
-	    g_main_loop_quit ( m_mainLoop );
+            g_main_loop_quit ( m_mainLoop );
             g_main_loop_unref ( m_mainLoop );
         }
     }
