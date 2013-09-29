@@ -17,16 +17,19 @@ namespace gl {
 
 class ImageTexture: public gl::Texture {
 private:
-	GLsizei _width;
-	GLsizei _height;
-	GLenum _glColor;
-	GLenum _pixelType;
-
+	GLsizei m_width;
+	GLsizei m_height;
+	GLenum m_glColor;
+	GLenum m_pixelType;
+	const std::vector<unsigned char>& m_imageBuffer;
+	
+private: 
+  bool applyImpl( GLenum target );
+	
 public:
 	ImageTexture(GLuint textureId, GLsizei imageWidth, GLsizei imageHeight,
-			GLenum glColor, GLenum pixelType);
-	bool applyTexture(GLenum target,
-			const std::vector<unsigned char>& imageBuffer);
+			GLenum glColor, GLenum pixelType, const std::vector<unsigned char>& imageBuffer);
+
 	virtual ~ImageTexture();
 };
 

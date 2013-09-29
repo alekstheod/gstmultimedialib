@@ -53,7 +53,7 @@ bool Device::drawModels(void) {
         std::set< utils::SharedPtr<IModel> >::iterator glModel;
         for (glModel = _glModels.begin(); glModel != _glModels.end();
                 glModel++) {
-            if ((*glModel)->drawModel() == false) {
+            if ((*glModel)->draw() == false) {
                 return false;
             }
         }
@@ -195,8 +195,8 @@ bool Device::generateTexture(utils::SharedPtr<Texture>& newTexture) {
 
 bool Device::releaseTexture(const utils::SharedPtr<Texture>& texture) {
     bool result = false;
-    if (_textures.find(texture->_texture) != _textures.end()) {
-        _textures.erase(texture->_texture);
+    if (_textures.find(texture->m_texture) != _textures.end()) {
+        _textures.erase(texture->m_texture);
         result = true;
     }
 

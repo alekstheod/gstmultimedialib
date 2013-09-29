@@ -7,15 +7,23 @@
 
 #include "ITexture.h"
 
-namespace gl {
+namespace gl
+{
 
-ITexture::ITexture() {
-	// TODO Auto-generated constructor stub
+ITexture::ITexture()
+{
+    // TODO Auto-generated constructor stub
 
 }
 
-ITexture::~ITexture() {
-	// TODO Auto-generated destructor stub
+bool ITexture::apply ( GLenum target )
+{
+    return applyImpl ( target );
+}
+
+ITexture::~ITexture()
+{
+    // TODO Auto-generated destructor stub
 }
 
 }

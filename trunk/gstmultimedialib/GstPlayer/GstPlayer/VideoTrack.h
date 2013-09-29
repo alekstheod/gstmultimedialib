@@ -17,12 +17,16 @@ namespace gstplayer {
 
 class VideoTrack: public QThread {
 private:
-    utils::SharedPtr<gl::Device> _glDevice;
+    /// @brief Rendering device.
+    utils::SharedPtr<gl::Device> m_glDevice;
     
-    utils::SharedPtr< multimedia::PlaybinFilterGraph< multimedia::CGLVideoSinkFilter, multimedia::StandardAudioSinkFilter> > _filterGraph;
-    std::string _uri;
+    /// @brief the pipeline
+    utils::SharedPtr< multimedia::PlaybinFilterGraph< multimedia::CGLVideoSinkFilter, multimedia::StandardAudioSinkFilter> > m_filterGraph;
     
-protected:
+    /// @brief the uri to the stream.
+    std::string m_uri;
+    
+private:
   void run();
 
 public:

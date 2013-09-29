@@ -13,10 +13,13 @@
 namespace gl {
 
 class ITexture {
+private:
+  virtual bool applyImpl( GLenum target )=0;
+  
 public:
-	ITexture();
-	virtual bool applyTexture( GLenum target )=0;
-	virtual ~ITexture();
+  ITexture();
+  bool apply ( GLenum target );
+  virtual ~ITexture();
 };
 
 }

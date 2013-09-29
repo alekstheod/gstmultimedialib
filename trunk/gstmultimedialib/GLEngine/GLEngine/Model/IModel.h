@@ -5,14 +5,14 @@
 namespace gl {
 
 class IModel {
-public:
+private:
+    /// @brief model draw method implementation.
+    virtual bool drawImpl(void) = 0;
 
-    IModel(void) {}
-    virtual bool drawModel(void) = 0;
-    virtual bool addRotationX(unsigned int rotationId, float angle)=0;
-    virtual bool addRotationY(unsigned int rotationId, float angle)=0;
-    virtual bool addRotationZ(unsigned int rotationId, float angle)=0;
-    virtual bool removeAllRotations()=0;
+public:
+    /// @brief will draw the model.
+    /// @return true if succeed, false otherwise.
+    bool draw();
     virtual ~IModel(void) {}
 };
 

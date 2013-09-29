@@ -10,19 +10,22 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
-namespace gl {
+namespace gl
+{
 
-class Texture {
+class Texture
+{
 private:
-	friend class Device;
-	GLuint _texture;
+    friend class Device;
+    GLuint m_texture;
 
+private:
+    virtual bool applyImpl ( GLenum target);
+    
 public:
-	Texture(GLuint texture);
-	virtual bool applyTexture(GLenum target);
-
-public:
-	virtual ~Texture();
+    Texture ( GLuint texture );
+    bool apply( GLenum target );
+    virtual ~Texture();
 };
 
 }

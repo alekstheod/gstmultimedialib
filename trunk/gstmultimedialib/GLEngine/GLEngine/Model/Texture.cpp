@@ -7,23 +7,31 @@
 
 #include "Texture.h"
 
-namespace gl {
+namespace gl
+{
 
-Texture::Texture(GLuint texture) {
-	_texture = texture;
-	glGenTextures(1, &_texture);
+Texture::Texture ( GLuint texture )
+{
+    m_texture = texture;
+    glGenTextures ( 1, &m_texture );
 }
 
-Texture::~Texture() {
-	glDeleteTextures(1, &_texture);
+Texture::~Texture()
+{
+    glDeleteTextures ( 1, &m_texture );
 }
 
-bool Texture::applyTexture(GLenum target) {
-	glEnable(target);
-	glBindTexture(target, _texture);
-	glTexParameteri(target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	return true;
+bool Texture::applyImpl ( GLenum target){
+  return true;
+}
+
+bool Texture::apply ( GLenum target )
+{
+  glEnable ( target );
+  glBindTexture ( target, m_texture );
+  glTexParameteri ( target, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+  glTexParameteri ( target, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+  return applyImpl(target);
 }
 
 }

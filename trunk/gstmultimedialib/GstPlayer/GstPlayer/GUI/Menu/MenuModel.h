@@ -12,24 +12,23 @@
 #include <GstPlayer/GUI/Menu/PlayButton/PlayButtonModel.h>
 #include <GLEngine/GLException.h>
 
-namespace gstplayer {
+namespace gstplayer
+{
 
-class MenuModel: public gl::IModel {
+class MenuModel: public gl::IModel
+{
 private:
-	utils::SharedPtr<PlayButtonModel> _playButton;
-	
+    utils::SharedPtr<PlayButtonModel> _playButton;
+
+private:
+    bool drawImpl ();
 public:
-	MenuModel() throw (gl::GLException);
-	bool drawModel(void);
-	bool addRotationX(unsigned int rotationId, float angle);
-	bool addRotationY(unsigned int rotationId, float angle);
-	bool addRotationZ(unsigned int rotationId, float angle);
-	bool removeAllRotations();
-	void leftButtonClick(const gl::Vertex& mousePosition);
-	void rightButtonClick(const gl::Vertex& mousePosition);
-	void mouseMoved(const gl::Vertex& oldMousePosition,
-			gl::Vertex& newMousePosition);
-	virtual ~MenuModel();
+    MenuModel() throw ( gl::GLException );
+    void leftButtonClick ( const gl::Vertex& mousePosition );
+    void rightButtonClick ( const gl::Vertex& mousePosition );
+    void mouseMoved ( const gl::Vertex& oldMousePosition,
+                      gl::Vertex& newMousePosition );
+    virtual ~MenuModel();
 };
 
 }
