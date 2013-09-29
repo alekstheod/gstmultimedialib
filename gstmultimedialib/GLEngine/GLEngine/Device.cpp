@@ -51,7 +51,7 @@ bool Device::drawModels(void) {
         }
 
         std::set< utils::SharedPtr<IModel> >::iterator glModel;
-        for (glModel = _glModels.get(lock).begin(); glModel != _glModels.get(lock).end();
+        for (glModel = _glModels.begin(); glModel != _glModels.end();
                 glModel++) {
             if ((*glModel)->drawModel() == false) {
                 return false;
@@ -69,7 +69,7 @@ bool Device::drawModels(void) {
 bool Device::addGLModel(const SharedPtr<IModel>& glModel) {
     try {
         AutoLock<Mutex> lock(_lockObject);
-        if (_glModels.get(lock).insert(glModel).second == false) {
+        if (_glModels.insert(glModel).second == false) {
             return false;
         }
     } catch (const LockException&) {
@@ -82,11 +82,11 @@ bool Device::addGLModel(const SharedPtr<IModel>& glModel) {
 bool Device::removeGLModel(const utils::SharedPtr<IModel>& glModel) {
     try {
         utils::AutoLock<Mutex> lock(_lockObject);
-        if (_glModels.get(lock).find(glModel) == _glModels.get(lock).end()) {
+        if (_glModels.find(glModel) == _glModels.end()) {
             return false;
         }
 
-        _glModels.get(lock).erase(glModel);
+        _glModels.erase(glModel);
     } catch (const utils::LockException&) {
         return false;
     }

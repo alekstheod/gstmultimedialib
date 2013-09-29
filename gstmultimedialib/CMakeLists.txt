@@ -4,8 +4,8 @@ project(gstmultimedialib)
 
 add_subdirectory(Utilities)
 add_subdirectory(GLEngine)
-add_subdirectory(gmock-1.6.0)
+#add_subdirectory(gmock-1.6.0)
 
 add_subdirectory(Multimedia)
-#add_subdirectory(TestMultimedia)
+add_subdirectory(TestMultimedia)
 add_subdirectory(GstPlayer)

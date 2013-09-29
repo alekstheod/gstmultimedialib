@@ -87,7 +87,7 @@ public:
         gst_bus_set_sync_handler ( bus, gstBusSyncHandle, this );
         gst_object_unref ( bus );
 
-        utils::for_each_t ( _filters, std::bind ( &PlaybinFilterGraph::insertFilter,  this, std::placeholders::_1 ) );
+        utils::foreach_t ( _filters, std::bind ( &PlaybinFilterGraph::insertFilter,  this, std::placeholders::_1 ) );
     }
     
     PlaybinFilterGraph ( const std::string& uri, const FilterTypes&... filters ) : PlaybinFilterGraph(filters...){
