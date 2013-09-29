@@ -17,7 +17,6 @@
 #include <Multimedia/Utilities/GSmartPtr.h>
 #include <Multimedia/GstObject.h>
 #include <Utilities/Design/Factory.h>
-#include <Multimedia/FilterGraph/IPlaybin.h>
 #include <Multimedia/Filter/Source/SourceFilter.h>
 #include <Multimedia/Filter/BaseFilter/BaseSinkFilter.h>
 #include <Multimedia/Filter/BaseFilter/BaseEncoderFilter.h>
@@ -29,7 +28,7 @@ namespace multimedia
 {
 
 template<typename... FilterTypes>
-class PlaybinFilterGraph: public GstObject, public IPlaybin
+class PlaybinFilterGraph: public GstObject
 {
 private:
     GMainLoop* m_mainLoop;
@@ -70,14 +69,12 @@ public:
     PlaybinFilterGraph ( const FilterTypes&... filters ) :m_filters ( filters... ) {
         m_mainLoop = g_main_loop_new ( NULL, FALSE );
         if ( m_mainLoop == NULL ) {
-            throw GstException (
-                "BaseFilterGraph::BaseFilterGraph - Create MainLoop failed" );
+            throw GstException ("BaseFilterGraph::BaseFilterGraph - Create MainLoop failed" );
         }
 
         m_pipeline = gst_element_factory_make ( CONST_PLAYBIN_PLUGIN_NAME.c_str(),CONST_PLAYBIN_PLUGIN_DESCRIPTION.c_str() );
         if ( m_pipeline == NULL ) {
-            throw GstException (
-                "BasePlaybinFilterGraph::BasePlaybinFilterGraph - Create pipeline failed" );
+            throw GstException ("BasePlaybinFilterGraph::BasePlaybinFilterGraph - Create pipeline failed" );
         }
 
         GstBus* bus = gst_pipeline_get_bus ( GST_PIPELINE ( m_pipeline.getPtr() ) );
@@ -87,8 +84,6 @@ public:
         std::for_each ( m_filters, [this] ( AFilter& filter ) {
             filter.addToPipeline ( this->m_pipeline.getPtr() );
         } );
-	
-	//test(std::get<0>(m_filters));
     }
 
     PlaybinFilterGraph ( const std::string& uri, const FilterTypes&... filters ) : PlaybinFilterGraph ( filters... ) {

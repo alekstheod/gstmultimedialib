@@ -109,11 +109,11 @@ public:
     SharedPtr(const SharedPtr<T2>& smartPtr) {
         _ptr = NULL;
         _counter = NULL;
-        T* ptr = static_cast< T* > (smartPtr._ptr );
-        if (smartPtr._counter != NULL) {
-            smartPtr._counter->addRef();
+        T* ptr = static_cast< T* > (smartPtr.getPtr() );
+        if (smartPtr.getCounter() != NULL) {
+            smartPtr.getCounter()->addRef();
             _ptr = ptr;
-            _counter = smartPtr._counter;
+            _counter = smartPtr.getCounter();
         }
     }
 

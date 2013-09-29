@@ -16,13 +16,13 @@ VideoTrack::VideoTrack(const std::string& uri,
             "GstPlayer::GstPlayer - Wrong argument glDevice==NULL");
     }
 
-    _uri = uri;
-    _glDevice = glDevice;
+    m_uri = uri;
+    m_glDevice = glDevice;
 }
 
 VideoTrack::~VideoTrack() {
-    if ( _filterGraph != NULL ) {
-        _filterGraph->sendSignal( multimedia::StopSignal() );
+    if ( m_filterGraph != NULL ) {
+        m_filterGraph->sendSignal( multimedia::StopSignal() );
     }
     
     wait();
@@ -30,8 +30,11 @@ VideoTrack::~VideoTrack() {
 
 void VideoTrack::run() {
   try{
-    _filterGraph = new multimedia::PlaybinFilterGraph<multimedia::CGLVideoSinkFilter,  multimedia::StandardAudioSinkFilter>( "v4l2:///dev/video0" , multimedia::CGLVideoSinkFilter(_glDevice), multimedia::StandardAudioSinkFilter("Audio out") );
-    _filterGraph->sendSignal( multimedia::PlaySignal() );
+    m_filterGraph = new multimedia::PlaybinFilterGraph<multimedia::CGLVideoSinkFilter,  multimedia::StandardAudioSinkFilter>( "v4l2:///dev/video0" , 
+					  multimedia::CGLVideoSinkFilter(m_glDevice), 
+					  multimedia::StandardAudioSinkFilter("Audio out") );
+					  
+    m_filterGraph->sendSignal( multimedia::PlaySignal() );
   }catch(...){
   }
 }

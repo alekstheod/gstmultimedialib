@@ -3,6 +3,7 @@
 #include <GLEngine/Device.h>
 #include <GLEngine/Model/Vertex.h>
 #include <Multimedia/Filter/Sink/Video/ABaseVideoCallbackSinkFilter.h>
+#include <Multimedia/Filter/Sink/Video/OpenGL/VideoFrameModel.h>
 #include <Utilities/AutoLock/Mutex.h>
 
 namespace multimedia
@@ -27,7 +28,7 @@ private:
   utils::Mutex _lockObject;
 
   utils::SharedPtr<gl::Device> _glDevice;
-  utils::SharedPtr<gl::IModel> _videoFrameGLModel;
+  utils::SharedPtr<multimedia::VideoFrameModel> _videoFrameGLModel;
 
 public:
   static const float CONST_GL_FRAME_HEIGHT;
@@ -36,7 +37,7 @@ public:
   static const GLuint CONST_VALID_TEXTURE_ID;
   static const unsigned int CONST_VIDEOFRAME_GLMODEL_ID;
 
-protected:
+private:
   bool onRecieveBuffer ( GstBaseSink* sink, GstBuffer* gstBuffer );
   bool onSetCaps ( GstPad * pad, GstCaps * caps );
 

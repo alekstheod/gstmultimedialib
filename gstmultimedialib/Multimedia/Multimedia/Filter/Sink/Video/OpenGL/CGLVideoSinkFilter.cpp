@@ -31,7 +31,8 @@ CGLVideoSinkCallbackFilter::CGLVideoSinkCallbackFilter (
   _topLeft = gl::Vertex ( left, high, 0.0f );
 
   _videoFrameGLModel = new VideoFrameModel ( _lowLeft, _topLeft, _topRight,_lowRight );
-  if ( !_glDevice->addGLModel ( _videoFrameGLModel ) )
+  utils::SharedPtr< gl::IModel > glModel = _videoFrameGLModel;
+  if ( !_glDevice->addGLModel ( glModel ) )
     {
       throw GstException ( "GLVideoSink::GLVideoSink" );
     }
@@ -122,11 +123,9 @@ bool CGLVideoSinkCallbackFilter::onRecieveBuffer ( GstBaseSink* sink,
   try
     {
       utils::AutoLock<utils::Mutex> lock ( _lockObject );
-      VideoFrameModel* videoFrameGLModel =
-        static_cast<VideoFrameModel*> ( _videoFrameGLModel.getPtr() );
-      if ( videoFrameGLModel != NULL )
+      if ( _videoFrameGLModel != NULL )
         {
-          videoFrameGLModel->UpdateFrame ( _frameWidth, _frameHeight, _glColor,
+          _videoFrameGLModel->UpdateFrame ( _frameWidth, _frameHeight, _glColor,
                                            _pixelType, gstBuffer );
         }
 

@@ -31,9 +31,14 @@ private:
     std::string _menuTexturesPath;
     APlayButtonState::rect _rect;
 
+private:
+  bool drawImpl(){
+     return _buttonState->drawButton(_rect);
+  }
+  
 public:
     inline PlayButtonModel(float posX, float posY, float width, float height,
-                           const std::string& texturesPath) throw (gl::GLException) :
+                           const std::string& texturesPath) :
         _rect(posX, posY, width, height) {
         _buttonState = new PausedPlayButtonState(
             texturesPath + "/"
@@ -45,32 +50,11 @@ public:
         _menuTexturesPath = texturesPath;
     }
 
-    inline bool leftButtonClicked(const gl::Vertex& mousePosition) {
+    bool leftButtonClicked(const gl::Vertex& mousePosition) {
         return true;
     }
 
-    inline virtual ~PlayButtonModel() {
-
-    }
-
-    inline bool drawModel(void) {
-        return _buttonState->drawButton(_rect);
-    }
-
-    inline bool addRotationX(unsigned int rotationId, float angle) {
-        return true;
-    }
-
-    inline bool addRotationY(unsigned int rotationId, float angle) {
-        return true;
-    }
-
-    inline bool addRotationZ(unsigned int rotationId, float angle) {
-        return true;
-    }
-
-    inline bool removeAllRotations() {
-        return true;
+    virtual ~PlayButtonModel() {
     }
 };
 
