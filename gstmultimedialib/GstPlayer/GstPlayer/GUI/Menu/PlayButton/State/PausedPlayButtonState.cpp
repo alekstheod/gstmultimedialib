@@ -20,7 +20,7 @@ const std::string PausedPlayButtonState::CONST_BUTTON_TEXTURE_NAME =
 
 // load a 256x256 RGB .RAW file as a texture
 GLuint LoadTextureRAW(const char * filename, int wrap) {
-    GLuint texture;
+    GLuint texture = 0;
 
     try {
         std::ifstream fileStream(filename);
