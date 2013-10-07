@@ -1,190 +1,147 @@
 #ifndef STATEMACHINE_H
 #define STATEMACHINE_H
 #include <memory>
+#include <cstddef>
 
-namespace utils {
-
-namespace Private
+namespace utils
 {
-template<typename RetType, typename ArgType>
-class TStateHolder;
 
+namespace priv
+{
 
-template<typename RetType, typename ArgType>
+template<typename RetType, typename EventType, template<class,EventType> class Transitions>
+class StateHolder;
+
+template<typename RetType, typename EventType, template<class,EventType> class Transitions>
 class StateMachine;
 
-/// \brief state interface
-template<typename RetType, typename ArgType >
-class TState {
+
+/// @brief the state interface.
+template<typename RetType, typename EventType, template<class,EventType> class Transitions>
+class IState
+{
+private:
+    StateHolder<RetType, EventType, Transitions>& m_owner;
+
+private:
+    virtual RetType ExecuteStepImpl ( StateHolder<RetType, EventType, Transitions>& stateMachine ) = 0;
+
+protected:
+    IState ( StateHolder<RetType, EventType, Transitions>& stateHolder ) : m_owner ( stateHolder ) {};
+
 public:
-    virtual RetType ExecuteStep(TStateHolder<RetType, ArgType>* stateMachine, ArgType argument ) = 0;
-    virtual ~TState() {}
+    RetType ExecuteStep ( StateHolder<RetType, EventType, Transitions>& stateMachine ) {
+        return ExecuteStepImpl ( stateMachine );
+    }
+
+    virtual ~IState() {}
 };
 
-/// \brief specialization of the state interface without arguments
-template<typename RetType>
-class TState< RetType, void > {
-public:
-    virtual RetType ExecuteStep(TStateHolder<RetType, void>* stateMachine) = 0;
-    virtual ~TState() {}
-};
 
 /// @brief the state holder class which keeps the current state of the state machine.
-template< class RetType, class ArgType >
-class TStateHolder {
+template<typename RetType, typename EventType, template<class,EventType> class Transitions >
+class StateHolder
+{
 private:
     /// @brief the type of the state.
-    typedef TState< RetType, ArgType> State;
+    typedef IState<RetType, EventType, Transitions> State;
+    typedef RetType ReturnType;
 
 private:
-    /// The executor is a friend of the StateHolder becuase he need the access to the state variable.
-    template<class A, class B> friend class Executor;
-    std::auto_ptr< State > m_currentState;
+    template<class, bool> friend class Executor;
+    std::unique_ptr< State > m_currentState;
 
 public:
+    template< typename StateCreator >
+    StateHolder( StateCreator creator){
+      m_currentState.reset( creator( *this ) );
+    }
+
+    ~StateHolder() {}
+
     /// @brief will set a new state to the state machine.
     /// @param newState instance of the new state.
     /// @return bool true is the given state is not NULL, false otherwise.
-    bool SetNewState( std::auto_ptr<State> newState ) {
-        bool result = false;
-        if( newState.get() != NULL ) {
-            m_currentState =  newState;
-            result = true;
-        }
-
-        return result;
+    template< class StateType, EventType event, typename... Args>
+    void SendEvent ( Args... args ) {
+        typedef typename Transitions<StateType, event>::NextState NextState;
+        m_currentState.reset ( new NextState ( *this, args... ) );
     }
-
-private:
-    TStateHolder(std::auto_ptr<State> firstState) : m_currentState( firstState ) {}
-    ~TStateHolder() {}
 };
 
 
-/// @brief the executor. Is a state execution algorithm.
-/// @brief this class is needed in order to define different template specializations.
-template<class RetType, class ArgType>
-class Executor {
-private:
-    typedef TStateHolder<RetType, ArgType> StateHolder;
+template<typename StateHolder, bool includeExecutor>
+class Executor {};
 
-private:
+template<typename StateHolder>
+class Executor<StateHolder, false >
+{
+protected:
     StateHolder m_stateHolder;
-
-public:
-
-    RetType ExecuteStep(ArgType argument) {
-        RetType result;
-        if(m_stateHolder.m_currentState.get() != NULL ) {
-            result =  m_stateHolder.m_currentState->ExecuteStep(&m_stateHolder, argument );
-        }
-
-        return result;
-    }
 
 protected:
-    Executor( std::auto_ptr< TState<RetType, ArgType> > firstState ):m_stateHolder( firstState ) { }
-    virtual ~Executor() {}
+    ~Executor() {}
+
+public:
+    template< typename StateCreator>
+    Executor( StateCreator creator) : m_stateHolder( creator) {
+    }
 };
 
 
-template<class ArgType>
-class Executor<void, ArgType> {
-private:
-    typedef TStateHolder<void, ArgType> StateHolder;
-
-private:
-    StateHolder m_stateHolder;
-
-public:
-
-    void ExecuteStep(ArgType argument) {
-        if(m_stateHolder.m_currentState.get() != NULL ) {
-            m_stateHolder.m_currentState->ExecuteStep( &m_stateHolder, argument );
-        }
-    }
+template<typename StateHolder>
+class Executor<StateHolder, true> : public Executor<StateHolder, false>
+{
+protected:
+    typedef typename StateHolder::ReturnType RetType;
+    typedef Executor<StateHolder, false> NullExecutor;
 
 protected:
-    Executor( std::auto_ptr< TState<void, ArgType> > firstState ):m_stateHolder( firstState ) {}
-    virtual ~Executor() {}
-};
-
-
-template<>
-class Executor<void, void> {
-private:
-    typedef TStateHolder<void, void> StateHolder;
-
-private:
-    StateHolder m_stateHolder;
+    ~Executor() {}
 
 public:
-    void ExecuteStep() {
-        if(m_stateHolder.m_currentState.get() != NULL ) {
-            m_stateHolder.m_currentState->ExecuteStep( &m_stateHolder );
-        }
+    template< typename StateCreator >
+    Executor( StateCreator creator) : NullExecutor( creator) {
     }
-
-protected:
-    Executor( std::auto_ptr< TState<void, void> > firstState ):m_stateHolder( firstState ) {}
-    virtual ~Executor() {}
-};
-
-
-template<class RetType>
-class Executor<RetType, void> {
-private:
-    typedef TStateHolder<RetType, void> StateHolder;
-
-private:
-    StateHolder m_stateHolder;
-
-public:
 
     RetType ExecuteStep() {
-        RetType result;
-        if(m_stateHolder.m_currentState.get() != NULL ) {
-            result =  m_stateHolder.m_currentState->ExecuteStep( &m_stateHolder );
-        }
-
-        return result;
+        return Executor<StateHolder, false>::m_stateHolder.m_currentState->ExecuteStep ( NullExecutor::m_stateHolder );
     }
-
-protected:
-    Executor( std::auto_ptr< TState<RetType, void> > firstState ):m_stateHolder( firstState ) {}
-    virtual ~Executor() {}
 };
 
 }
 
+
 /// @brief Generic state machine implementation.
-template< class RetType, class ArgType >
-class StateMachine : public Private::Executor<RetType, ArgType>
+template<typename EventType, template<class,EventType> class Transitions, typename RetType = void, bool includeExecutor = false>
+class StateMachine : public priv::Executor< priv::StateHolder<RetType, EventType, Transitions>, includeExecutor >
 {
+private:
+    typedef priv::Executor< priv::StateHolder<RetType, EventType, Transitions>, includeExecutor > Executor;
+
 public:
-    /// The base abstract state for the state machine.
-    /// Needed in order to implement the states.
-    typedef Private::TState< RetType, ArgType> BaseState;
-
-    /// The return type of the executeStep method.
+    typedef priv::IState<RetType, EventType, Transitions> State;
+    typedef priv::StateHolder<RetType, EventType, Transitions> StateHolder;
     typedef RetType ReturnType;
-
-    /// The argument type of the executeStep method.
-    typedef ArgType ArgumentType;
-
-    /// The state holders type. Needed in order to walk through the states.
-    typedef Private::TStateHolder<RetType, ArgType> StateHolder;
-
-    /// Type of the state object.
-    typedef std::auto_ptr<BaseState> StateObject;
 
 public:
     /// @brief Constructor will initialize the object.
-    /// @param firstState the initial state of the statemachine.
-    StateMachine( StateObject firstState ) : Private::Executor<RetType, ArgType>( firstState ) {}
-    virtual ~StateMachine() { }
+    /// @param creator the creator function for the first state.
+    template< typename StateCreator>
+    StateMachine(StateCreator creator) : Executor(creator) {}
+    ~StateMachine() { }
 };
 
 }
+
+#define DEFINE_TRANSITION( TRANSITION, EVENT )\
+struct InvalidState{};\
+template<class CurState, EVENT event>\
+struct TRANSITION { typedef InvalidState NextState; };\
+ 
+#define REGISTER_TRANSITION( TRANSITION, STATE, EVENT, NEXT_STATE)\
+template<> struct TRANSITION<STATE, EVENT>{ typedef NEXT_STATE NextState; };\
+ 
 #endif // STATEMACHINE_H
+
 
