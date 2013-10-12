@@ -1,7 +1,7 @@
 #ifndef FACTORY_H
 #define FACTORY_H
 #include <map>
-#include <Utilities/Memory/SmartPtr/SharedPtr.h>
+#include <memory>
 
 namespace utils
 {
@@ -32,7 +32,7 @@ private:
 public:
     template<typename AllocatorType>
     void registerAllocator( KeyType key, AllocatorType allocator ) {
-        m_allocators[key]=SharedPtr<Allocator>(new Functor<AllocatorType>(allocator) );
+        m_allocators[key]=std::unique_ptr<Allocator>(new Functor<AllocatorType>(allocator) );
     }
 
     ObjectType* create( KeyType key, ObjectType* defValue )
@@ -47,7 +47,7 @@ public:
     }
 
 private:
-    std::map< KeyType, SharedPtr< Allocator > > m_allocators;
+    std::map< KeyType, std::unique_ptr< Allocator > > m_allocators;
 };
 
 }
