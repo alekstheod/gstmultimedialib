@@ -49,7 +49,7 @@ public:
      * @return cached or the new created value.
      */
     template<typename CreatorType>
-    ValueType Read( KeyType key,  CreatorType creator)
+    ValueType read( KeyType key,  CreatorType creator)
     {
       return Read(key, creator, std::bind( &LRUCache::destroy, this, std::placeholders::_1) );
     }
@@ -62,7 +62,7 @@ public:
      * @return cached or the new created value.
      */
     template<typename CreatorType, typename Destroyer>
-    ValueType Read( KeyType key,  CreatorType creator, Destroyer destroyer)
+    ValueType read( KeyType key,  CreatorType creator, Destroyer destroyer)
     {
         ValueType result;
         typename std::map< KeyType, std::pair< ValueType, Iterator> >::iterator i = m_cache.find(key);
