@@ -2,6 +2,7 @@
 #define LRUCACHE_H
 #include <map>
 #include <list>
+#include <algorithm>
 
 namespace utils
 {
@@ -23,7 +24,8 @@ private:
     /**
      * A mapping of the keys and the cached data.
      */
-    std::map< KeyType, std::pair< ValueType, Iterator> > m_cache;
+    typedef std::map< KeyType, std::pair< ValueType, Iterator> > Cache;
+    Cache m_cache;
 
     /**
      * A maximum size of the cache.
@@ -92,8 +94,17 @@ public:
         return result;
     }
 
-    void clear()
+    void clear(){
+      clear(destroy);
+    }
+    
+    template<typename Destroyer>
+    void clear(Destroyer destroyer)
     {
+	for( auto i = m_cache.begin(); i != m_cache.end(); i++ ){
+	  destroyer(i->second.first);
+	}
+	
         m_cache.clear();
         m_lruList.clear();
     }

@@ -57,9 +57,11 @@ class CGLVideoSinkFilter : public AFilter
 private:
   utils::SharedPtr< Private::CGLVideoSinkCallbackFilter > _filter;
 
+private:
+    bool addToPipelineImpl ( GstElement* pipeline ) ;
+    
 public:
   CGLVideoSinkFilter ( const utils::SharedPtr<gl::Device>& glDevice ) throw ( GstException );
-  bool addToPipeline ( GstElement* pipeline ) ;
   ~CGLVideoSinkFilter();
 };
 

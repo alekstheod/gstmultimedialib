@@ -52,7 +52,7 @@ bool BaseDemuxerFilter::dynamicConnectAudio(BaseDecoderFilter* audioDecoder) {
 	return true;
 }
 
-bool BaseDemuxerFilter::addToPipeline(GstElement* pipeline) {
+bool BaseDemuxerFilter::addToPipelineImpl(GstElement* pipeline) {
 	if (pipeline == NULL) {
 		return false;
 	}

@@ -7,13 +7,13 @@ namespace gl {
 class IModel {
 private:
     /// @brief model draw method implementation.
-    virtual bool drawImpl(void) = 0;
+    virtual bool drawImpl() = 0;
 
 public:
     /// @brief will draw the model.
     /// @return true if succeed, false otherwise.
     bool draw();
-    virtual ~IModel(void) {}
+    virtual ~IModel() {}
 };
 
 }

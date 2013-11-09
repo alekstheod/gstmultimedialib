@@ -22,7 +22,7 @@ class ABaseVideoCallbackSinkFilter : public AFilter
 {
 public:
   static const char* CONST_FILTER_TYPE;
-  BaseSinkFilter _baseSinkFilter;
+  BaseSinkFilter m_baseSinkFilter;
 
 protected:
   virtual bool onRecieveBuffer ( GstBaseSink* sink, GstBuffer* gstBuffer ) =0;
@@ -40,9 +40,11 @@ private:
   
   static const GstPluginDesc CONST_PLUGIN_DESC;
 
+private:
+  bool addToPipelineImpl ( GstElement* pipeline ) ;
+  
 public:
   ABaseVideoCallbackSinkFilter ( const std::string& description );
-  bool addToPipeline ( GstElement* pipeline ) ;
   virtual ~ABaseVideoCallbackSinkFilter ( );
 };
 

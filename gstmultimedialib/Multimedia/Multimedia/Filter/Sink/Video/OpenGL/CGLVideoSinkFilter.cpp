@@ -144,7 +144,7 @@ CGLVideoSinkFilter::CGLVideoSinkFilter ( const utils::SharedPtr<gl::Device>& glD
 {
 }
 
-bool CGLVideoSinkFilter::addToPipeline ( GstElement* pipeline )
+bool CGLVideoSinkFilter::addToPipelineImpl ( GstElement* pipeline )
 {
   return _filter->addToPipeline ( pipeline );
 }

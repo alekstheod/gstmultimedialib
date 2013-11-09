@@ -28,7 +28,7 @@ bool BaseSinkFilter::addToPipeline(GstElement* pipeline, const std::string& type
 	return result;
 }
 
-bool BaseSinkFilter::addToPipeline(GstElement* pipeline)
+bool BaseSinkFilter::addToPipelineImpl(GstElement* pipeline)
 {
 	return false;
 }

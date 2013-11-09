@@ -13,24 +13,26 @@
 #include <GL/glu.h>
 #include <vector>
 
-namespace gl {
+namespace gl
+{
 
-class ImageTexture: public gl::Texture {
+class ImageTexture: public gl::Texture
+{
 private:
-	GLsizei m_width;
-	GLsizei m_height;
-	GLenum m_glColor;
-	GLenum m_pixelType;
-	const std::vector<unsigned char>& m_imageBuffer;
-	
-private: 
-  bool applyImpl( GLenum target );
-	
-public:
-	ImageTexture(GLuint textureId, GLsizei imageWidth, GLsizei imageHeight,
-			GLenum glColor, GLenum pixelType, const std::vector<unsigned char>& imageBuffer);
+    GLsizei m_width;
+    GLsizei m_height;
+    GLenum m_glColor;
+    GLenum m_pixelType;
+    const std::vector<unsigned char>& m_imageBuffer;
 
-	virtual ~ImageTexture();
+private:
+    bool applyImpl ( GLenum target );
+
+public:
+    ImageTexture ( GLuint textureId, GLsizei imageWidth, GLsizei imageHeight,
+                   GLenum glColor, GLenum pixelType, const std::vector<unsigned char>& imageBuffer );
+
+    virtual ~ImageTexture();
 };
 
 }

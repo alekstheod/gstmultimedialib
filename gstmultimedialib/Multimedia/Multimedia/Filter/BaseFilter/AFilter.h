@@ -19,10 +19,13 @@ namespace multimedia
  */
 class AFilter
 {
+private:
+    virtual bool addToPipelineImpl ( GstElement* pipeline ) = 0;
+    
 public:
-  AFilter() {}
-  virtual bool addToPipeline ( GstElement* pipeline ) = 0;
-  virtual ~AFilter() {}
+  AFilter();
+  bool addToPipeline( GstElement* pipeline );
+  virtual ~AFilter();
 };
 
 }

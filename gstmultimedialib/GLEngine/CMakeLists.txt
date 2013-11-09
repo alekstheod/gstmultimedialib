@@ -13,8 +13,8 @@ if (GLUT_FOUND)
   include_directories(${GLUT_INCLUDE_DIRS})
 endif (GLUT_FOUND)
 
-include_directories(. ../Utilities)
+include_directories(. ../Utilities ../assimp/include)
 
-file(GLOB_RECURSE GLENGINE_SOURCES GLEngine/*.cpp)
+file(GLOB_RECURSE GLENGINE_SOURCES GLEngine/Model/AssimpModel.cpp GLEngine/*.cpp)
 
 add_library(GLEngine STATIC ${GLENGINE_SOURCES})
