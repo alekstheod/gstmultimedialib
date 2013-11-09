@@ -7,15 +7,23 @@
 
 #include "IModelFactory.h"
 
-namespace gl {
+namespace gl
+{
 
-IModelFactory::IModelFactory() {
-	// TODO Auto-generated constructor stub
+IModelFactory::IModelFactory()
+{
+    // TODO Auto-generated constructor stub
 
 }
 
-IModelFactory::~IModelFactory() {
-	// TODO Auto-generated destructor stub
+IModelFactory::~IModelFactory()
+{
+    // TODO Auto-generated destructor stub
+}
+
+utils::SharedPtr<IModel> IModelFactory::createModel ( std::istream& modelData )
+{
+  return createModelImpl(modelData);
 }
 
 }

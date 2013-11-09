@@ -19,7 +19,7 @@ StandardAudioSinkFilter::StandardAudioSinkFilter(const std::string& description)
 
 }
 
-bool StandardAudioSinkFilter::addToPipeline ( GstElement* pipeline )
+bool StandardAudioSinkFilter::addToPipelineImpl ( GstElement* pipeline )
 {
   return _baseSink.addToPipeline(pipeline, CONST_SINK_TYPE);
 }

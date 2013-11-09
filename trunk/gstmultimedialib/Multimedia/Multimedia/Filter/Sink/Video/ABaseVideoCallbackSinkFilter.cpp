@@ -31,23 +31,23 @@ gboolean ABaseVideoCallbackSinkFilter::gstPluginInitMethod ( GstPlugin* plugin )
 }
 
 ABaseVideoCallbackSinkFilter::ABaseVideoCallbackSinkFilter (const std::string& description) :
-  _baseSinkFilter ( CONST_PLUGIN_NAME, description )
+  m_baseSinkFilter ( CONST_PLUGIN_NAME, description )
 {
-  _baseSinkFilter.setObject ( render_video_callback_property, renderCallback );
-  _baseSinkFilter.setObject ( setcaps_video_callback_property, setCapsCallback );
-  _baseSinkFilter.setObject ( chain_video_callback_arg_property, this );
+  m_baseSinkFilter.setObject ( render_video_callback_property, renderCallback );
+  m_baseSinkFilter.setObject ( setcaps_video_callback_property, setCapsCallback );
+  m_baseSinkFilter.setObject ( chain_video_callback_arg_property, this );
 }
 
 ABaseVideoCallbackSinkFilter::~ABaseVideoCallbackSinkFilter ( )
 {
-  _baseSinkFilter.setObject ( render_video_callback_property, NULL );
-  _baseSinkFilter.setObject ( setcaps_video_callback_property, NULL );
-  _baseSinkFilter.setObject ( chain_video_callback_arg_property, NULL );
+  m_baseSinkFilter.setObject ( render_video_callback_property, NULL );
+  m_baseSinkFilter.setObject ( setcaps_video_callback_property, NULL );
+  m_baseSinkFilter.setObject ( chain_video_callback_arg_property, NULL );
 }
 
-bool ABaseVideoCallbackSinkFilter::addToPipeline ( GstElement* pipeline )
+bool ABaseVideoCallbackSinkFilter::addToPipelineImpl ( GstElement* pipeline )
 {
-  return _baseSinkFilter.addToPipeline ( pipeline, CONST_FILTER_TYPE );
+  return m_baseSinkFilter.addToPipeline ( pipeline, CONST_FILTER_TYPE );
 }
 
 gboolean ABaseVideoCallbackSinkFilter::renderCallback ( GstBaseSink* sink,

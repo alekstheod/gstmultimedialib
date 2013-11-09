@@ -10,15 +10,21 @@
 #include <Utilities/Memory/SmartPtr/SharedPtr.h>
 #include <vector>
 #include <GLEngine/Model/IModel.h>
+#include <istream>
 
-namespace gl {
+namespace gl
+{
 
-class IModelFactory {
+class IModelFactory
+{
+private:
+    virtual utils::SharedPtr<IModel> createModelImpl ( std::istream& modelData ) =0;
+
 public:
-	IModelFactory();
-	virtual ~IModelFactory();
-	virtual utils::SharedPtr<IModel> getInstance(
-			const std::vector<unsigned char>& modelData)=0;
+    IModelFactory();
+    utils::SharedPtr<IModel> createModel (std::istream& modelData );
+    virtual ~IModelFactory();
+
 };
 
 }

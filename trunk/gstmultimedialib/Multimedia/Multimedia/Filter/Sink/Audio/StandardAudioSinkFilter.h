@@ -11,20 +11,24 @@
 #include <Multimedia/Filter/BaseFilter/BaseSinkFilter.h>
 #include <Multimedia/Filter/BaseFilter/AFilter.h>
 
-namespace multimedia {
+namespace multimedia
+{
 
-class StandardAudioSinkFilter : public AFilter{
+class StandardAudioSinkFilter : public AFilter
+{
 private:
-  BaseSinkFilter _baseSink;
-  
-public:
-	static const std::string CONST_PLUGIN_NAME;
-	static const std::string CONST_SINK_TYPE;
+    BaseSinkFilter _baseSink;
 
 public:
-	StandardAudioSinkFilter(const std::string& description) throw (GstException);
-	virtual bool addToPipeline ( GstElement* pipeline );
-	virtual ~StandardAudioSinkFilter(void);
+    static const std::string CONST_PLUGIN_NAME;
+    static const std::string CONST_SINK_TYPE;
+
+private:
+    bool addToPipelineImpl ( GstElement* pipeline )final;
+
+public:
+    StandardAudioSinkFilter ( const std::string& description ) throw ( GstException );
+    virtual ~StandardAudioSinkFilter ( void );
 };
 
 }
