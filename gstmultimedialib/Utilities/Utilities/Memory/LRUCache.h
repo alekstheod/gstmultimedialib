@@ -51,7 +51,7 @@ public:
     template<typename CreatorType>
     ValueType read( KeyType key,  CreatorType creator)
     {
-      return Read(key, creator, std::bind( &LRUCache::destroy, this, std::placeholders::_1) );
+      return read(key, creator, std::bind( &LRUCache::destroy, this, std::placeholders::_1) );
     }
     
     /**
