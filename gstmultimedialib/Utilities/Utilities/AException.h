@@ -18,7 +18,7 @@ private:
     /// <summary>
     /// Exception message
     /// </summary>
-    std::string _message;
+    std::string m_message;
 
 protected:
     /// <summary>

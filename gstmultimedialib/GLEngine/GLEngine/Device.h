@@ -27,15 +27,15 @@ public:
     static const GLuint CONST_INVALID_TEXTURE;
 
 private:
-    utils::Mutex _lockObject;
-    bool _isOpenGLInitialized;
-    bool _windowWasResized;
-    unsigned int _windowWidth;
-    unsigned int _windowHeight;
-    std::set<utils::SharedPtr<IModel> >_glModels;
-    utils::SharedPtr<ICamera> _camera;
-    std::set< utils::SharedPtr<ILight> > _lights;
-    std::map<GLuint, utils::SharedPtr<Texture> > _textures;
+    utils::Mutex m_lockObject;
+    bool m_isOpenGLInitialized;
+    bool m_windowWasResized;
+    unsigned int m_windowWidth;
+    unsigned int m_windowHeight;
+    std::set<utils::SharedPtr<IModel> >m_glModels;
+    utils::SharedPtr<ICamera> m_camera;
+    std::set< utils::SharedPtr<ILight> > m_lights;
+    std::map<GLuint, utils::SharedPtr<Texture> > m_textures;
 
 public:
     Device(const Device::RECT&) throw (GLException);
