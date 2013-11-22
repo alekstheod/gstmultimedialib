@@ -5,18 +5,18 @@ namespace utils {
 using namespace std;
 
 AException::AException(const string &message, bool sysMessage) {
-	_message = message;
+	m_message = message;
 	if (sysMessage) {
-		_message.append(" : ");
-		_message.append("System error");
+		m_message.append(" : ");
+		m_message.append("System error");
 	}
 }
 
-AException::~AException(void) throw () {
+AException::~AException(void) {
 }
 
 const char* AException::what(void) const throw () {
-	return _message.c_str();
+	return m_message.c_str();
 }
 
 }
