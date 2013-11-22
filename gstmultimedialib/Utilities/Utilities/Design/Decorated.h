@@ -1,8 +1,6 @@
 #ifndef DECORATED_H
 #define DECORATED_H
-#include <tuple>
-#include <memory>
-#include "StateMachine.h"
+#include <Utilities/MPL/TypeTraits.h>
 
 namespace utils
 {
@@ -16,7 +14,10 @@ private:
     InternalType m_internal;
 
 public:
-    Decorated ( Arguments args ) :m_args ( args ) {}
+    Decorated ( Arguments args ) :m_args ( args ) 
+    {
+      static_assert( hasArrowOperator< Decoration<InternalType> >::value, "Wrong decoration (operator -> is not found)");
+    }
 
     Decoration<InternalType> operator ->() {
         Decoration<InternalType> decoration ( m_internal, m_args );
