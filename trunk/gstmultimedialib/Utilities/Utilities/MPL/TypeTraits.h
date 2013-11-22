@@ -60,17 +60,17 @@ void apply( Functor func, std::tuple<ArgsT...> const& t )
 }
 
 template<typename T>
-struct hasArrowOperator{
+struct hasArrowOperator
+{
   template<typename C>
-  char hasArrow(C T::operator->);
+  static char hasArrow( decltype(&C::operator->) );
   
   template<typename C>
-  double hasArrow(...);
+  static double hasArrow(...);
   
-  T t;
-  enum {value = sizeof(hasArrowOperator<T>(t) ) == sizeof(char) };
+  //T t;
+  enum {value = sizeof(hasArrow<T>(0) ) == sizeof(char) };
 };
-
 }
 
 #endif
