@@ -5,22 +5,26 @@
 namespace utils
 {
 
-template<typename InternalType, template< class> class Decoration>
+template<typename InternalType, template< class> class DecorationType>
 class Decorated {
 private:
-  typedef typename Decoration<InternalType>::Arguments Arguments;
+  typedef DecorationType<InternalType> Decoration;
+  typedef typename Decoration::Arguments Arguments;
+
 private:
     Arguments m_args;
     InternalType m_internal;
 
 public:
-    Decorated ( Arguments args ) :m_args ( args ) 
+    Decorated ( Arguments args ) :m_args ( args )
     {
-      static_assert( hasArrowOperator< Decoration<InternalType> >::value, "Wrong decoration (operator -> is not found)");
+      static_assert( hasArrowOperator< Decoration >::value, "Wrong decoration (operator -> has not been found)");
+      typedef decltype( ((Decoration*)nullptr)->operator->() ) ReturnType;
+      static_assert( IsSameType<InternalType*, ReturnType>::Result::value, "Invalid return type in decoration" );
     }
 
-    Decoration<InternalType> operator ->() {
-        Decoration<InternalType> decoration ( m_internal, m_args );
+    Decoration operator ->() {
+        Decoration decoration ( m_internal, m_args );
         return decoration;
     }
 
