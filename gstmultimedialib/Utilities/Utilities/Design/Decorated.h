@@ -16,11 +16,12 @@ private:
     InternalType m_internal;
 
 public:
+    Decorated () : Decorated( Arguments() ){}
     Decorated ( Arguments args ) :m_args ( args )
     {
-      static_assert( hasArrowOperator< Decoration >::value, "Wrong decoration (operator -> has not been found)");
+      static_assert( utils::hasArrowOperator< Decoration >::value, "Wrong decoration (operator -> has not been found)");
       typedef decltype( ((Decoration*)nullptr)->operator->() ) ReturnType;
-      static_assert( IsSameType<InternalType*, ReturnType>::Result::value, "Invalid return type in decoration" );
+      static_assert( utils::IsSameType<InternalType*, ReturnType>::Result::value, "Invalid return type in decoration" );
     }
 
     Decoration operator ->() {
