@@ -16,7 +16,7 @@ template<class T>
 class GSmartPtr
 {
 private:
-    T* _ptr;
+    T* m_ptr;
 
 public:
     GSmartPtr ( void );
@@ -36,7 +36,7 @@ public:
 template<class T>
 GSmartPtr<T>::GSmartPtr ( void )
 {
-    _ptr = NULL;
+    m_ptr = NULL;
 }
 
 template<class T>
@@ -46,92 +46,92 @@ GSmartPtr<T>::GSmartPtr ( T* ptr )
         gst_object_ref ( ptr );
     }
 
-    _ptr = ptr;
+    m_ptr = ptr;
 }
 
 template<class T>
 GSmartPtr<T>::GSmartPtr ( const GSmartPtr<T>& gPtr )
 {
-    if ( gPtr._ptr != NULL ) {
-        gst_object_ref ( gPtr._ptr );
+    if ( gPtr.m_ptr != NULL ) {
+        gst_object_ref ( gPtr.m_ptr );
     }
 
-    _ptr = gPtr._ptr;
+    m_ptr = gPtr.m_ptr;
 }
 
 template<class T>
 void GSmartPtr<T>::attach ( T* ptr )
 {
-    if ( _ptr != NULL ) {
-        gst_object_unref ( _ptr );
+    if ( m_ptr != NULL ) {
+        gst_object_unref ( m_ptr );
     }
 
     if ( ptr != NULL ) {
         gst_object_ref ( ptr );
     }
-    _ptr = ptr;
+    m_ptr = ptr;
 }
 
 template<class T>
 void GSmartPtr<T>::release ( void )
 {
-    if ( _ptr != NULL ) {
-        gst_object_unref ( _ptr );
+    if ( m_ptr != NULL ) {
+        gst_object_unref ( m_ptr );
     }
 
-    _ptr = NULL;
+    m_ptr = NULL;
 }
 
 template<class T>
 T* GSmartPtr<T>::operator-> ( void )
 {
-    return _ptr;
+    return m_ptr;
 }
 
 template<class T>
 T* GSmartPtr<T>::getPtr ( void )
 {
-    return _ptr;
+    return m_ptr;
 }
 
 template<class T>
 const T* GSmartPtr<T>::getPtr ( void ) const
 {
-    return _ptr;
+    return m_ptr;
 }
 
 template<class T>
 bool GSmartPtr<T>::operator == ( GSmartPtr<T> gPtr ) const
 {
-    return _ptr == gPtr._ptr;
+    return m_ptr == gPtr.m_ptr;
 }
 
 template<class T>
 bool GSmartPtr<T>::operator != ( GSmartPtr<T> gPtr ) const
 {
-    return _ptr != gPtr._ptr;
+    return m_ptr != gPtr.m_ptr;
 }
 
 template<class T>
 const GSmartPtr<T>& GSmartPtr<T>::operator = ( const GSmartPtr<T>& gPtr )
 {
-    if ( _ptr != NULL ) {
-        gst_object_unref ( _ptr );
+    if ( m_ptr != NULL ) {
+        gst_object_unref ( m_ptr );
     }
 
-    if ( gPtr._ptr != NULL ) {
-        gst_object_ref ( gPtr._ptr );
+    if ( gPtr.m_ptr != NULL ) {
+        gst_object_ref ( gPtr.m_ptr );
     }
 
-    _ptr = gPtr._ptr;
+    m_ptr = gPtr.m_ptr;
     return *this;
 }
 
 template<class T>
 GSmartPtr<T>::~GSmartPtr ( void )
 {
-    if ( _ptr != NULL ) {
-        gst_object_unref ( _ptr );
+    if ( m_ptr != NULL ) {
+        gst_object_unref ( m_ptr );
     }
 }
 
