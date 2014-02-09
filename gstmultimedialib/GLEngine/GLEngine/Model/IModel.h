@@ -12,7 +12,10 @@ private:
 public:
     /// @brief will draw the model.
     /// @return true if succeed, false otherwise.
-    bool draw();
+    bool draw(){
+      return drawImpl();
+    }
+    
     virtual ~IModel() {}
 };
 

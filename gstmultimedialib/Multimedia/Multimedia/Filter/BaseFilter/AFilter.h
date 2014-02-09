@@ -23,9 +23,12 @@ private:
     virtual bool addToPipelineImpl ( GstElement* pipeline ) = 0;
     
 public:
-  AFilter();
-  bool addToPipeline( GstElement* pipeline );
-  virtual ~AFilter();
+  AFilter(){}
+  bool addToPipeline( GstElement* pipeline ){
+    return addToPipelineImpl(pipeline);
+  }
+  
+  virtual ~AFilter(){}
 };
 
 }
