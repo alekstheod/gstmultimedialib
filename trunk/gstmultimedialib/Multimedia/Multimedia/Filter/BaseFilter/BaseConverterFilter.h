@@ -18,7 +18,7 @@ namespace multimedia {
 
 class BaseConverterFilter: public AFilter, GstObject {
 private:
-	GSmartPtr<GstElement> _converter;
+	GSmartPtr<GstElement> m_converter;
 
 private:
 	friend class BaseDecoderFilter;
