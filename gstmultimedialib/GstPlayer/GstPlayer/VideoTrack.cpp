@@ -11,15 +11,12 @@ namespace gstplayer
 {
 
 VideoTrack::VideoTrack ( const std::string& uri,
-                         utils::SharedPtr<gl::Device>& glDevice )
+                         utils::SharedPtr<gl::Device>& glDevice ): m_uri(uri), m_glDevice(glDevice)
 {
     if ( glDevice == NULL ) {
         throw multimedia::GstException (
             "GstPlayer::GstPlayer - Wrong argument glDevice==NULL" );
     }
-
-    m_uri = uri;
-    m_glDevice = glDevice;
 }
 
 VideoTrack::~VideoTrack()

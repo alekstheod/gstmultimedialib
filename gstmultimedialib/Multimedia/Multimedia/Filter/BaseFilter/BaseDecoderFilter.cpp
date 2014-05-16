@@ -25,7 +25,7 @@ bool BaseDecoderFilter::connect(BaseConverterFilter* converter) {
 		return false;
 	}
 
-	return gst_element_link(_decoder.getPtr(), converter->_converter.getPtr());
+	return gst_element_link(_decoder.getPtr(), converter->m_converter.getPtr());
 }
 
 bool BaseDecoderFilter::connect(BaseSinkFilter* outputFilter) {
