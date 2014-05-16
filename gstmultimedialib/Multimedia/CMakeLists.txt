@@ -33,10 +33,10 @@ file(GLOB_RECURSE MULTIMEDIA_C_SOURCES Multimedia/*.c)
 
 add_library(Multimedia STATIC ${MULTIMEDIA_SOURCES} ${MULTIMEDIA_C_SOURCES})
 
-target_link_libraries(Multimedia
-			${PROJECT_SOURCE_DIR}/../build/Utilities/libUtilities.a;
-			${PROJECT_SOURCE_DIR}/../build/GLEngine/libGLEngine.a;
-			${PROJECT_SOURCE_DIR}/../build/Multimedia/libMultimedia.a;
+target_link_libraries(	Multimedia
+		    PUBLIC
+			Utilities
+			GLEngine
 			${OPENGL_LIBRARIES}
 			${GLUT_LIBRARY}
 			${QT_LIBRARIES}
