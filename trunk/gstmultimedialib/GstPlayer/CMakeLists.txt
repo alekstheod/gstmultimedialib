@@ -46,9 +46,7 @@ message("glib2.0 libraries: " ${GLIB2_LIBRARIES})
 target_link_libraries(GstPlayer
 			pthread
 			gobject-2.0 #ubuntu 13.04 fix
-			${PROJECT_SOURCE_DIR}/../build/Multimedia/libMultimedia.a;
-			${PROJECT_SOURCE_DIR}/../build/GLEngine/libGLEngine.a;
-			${PROJECT_SOURCE_DIR}/../build/Utilities/libUtilities.a;
+			Multimedia
 			${OPENGL_LIBRARIES}
 			${QT_LIBRARIES}
 			${GLIB2_LIBRARIES}
