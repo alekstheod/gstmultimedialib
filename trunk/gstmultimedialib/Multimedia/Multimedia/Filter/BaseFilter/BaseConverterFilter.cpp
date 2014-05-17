@@ -23,7 +23,7 @@ bool BaseConverterFilter::connect(BaseSinkFilter* outputFilter) {
         return false;
     }
 
-    return gst_element_link(m_converter.getPtr(), outputFilter->_output.getPtr());
+    return gst_element_link(m_converter.getPtr(), outputFilter->m_output.getPtr());
 }
 
 bool BaseConverterFilter::addToPipeline(GstElement* pipeline) {

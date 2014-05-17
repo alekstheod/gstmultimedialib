@@ -16,7 +16,7 @@ namespace multimedia {
 
 class BaseEncoderFilter: public AFilter, GstObject {
 private:
-	GSmartPtr<GstElement> _encoder;
+	GSmartPtr<GstElement> m_encoder;
 
 private:
         template<typename... FilterTypes>

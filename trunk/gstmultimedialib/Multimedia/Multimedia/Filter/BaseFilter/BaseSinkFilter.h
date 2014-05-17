@@ -20,7 +20,7 @@ namespace multimedia
 class BaseSinkFilter: public AFilter, GstObject
 {
 private:
-    GSmartPtr<GstElement> _output;
+    GSmartPtr<GstElement> m_output;
 
 private:
     friend class BaseConverterFilter;
@@ -37,8 +37,8 @@ public:
     BaseSinkFilter ( const std::string& pluginName, const std::string& description );
 
     template<typename ObjectType>
-    void	setObject ( const gchar *first_property_name, ObjectType obj ) {
-        g_object_set ( G_OBJECT ( _output.getPtr() ), first_property_name, obj, NULL );
+    void setObject ( const gchar *first_property_name, ObjectType obj ) {
+        g_object_set ( G_OBJECT ( m_output.getPtr() ), first_property_name, obj, NULL );
     }
 
     bool addToPipeline ( GstElement* pipeline, const std::string& type );

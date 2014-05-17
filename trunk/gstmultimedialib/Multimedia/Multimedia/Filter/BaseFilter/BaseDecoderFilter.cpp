@@ -11,9 +11,9 @@ namespace multimedia {
 
 BaseDecoderFilter::BaseDecoderFilter(const std::string& pluginName,
 		const std::string& description) throw (GstException) {
-	_decoder = gst_element_factory_make(pluginName.c_str(),
+	m_decoder = gst_element_factory_make(pluginName.c_str(),
 			description.c_str());
-	if (_decoder == NULL) {
+	if (m_decoder == NULL) {
 		throw GstException(
 				"BaseDecoderFilter::BaseDecoderFilter - create decoder filter named '"
 						+ pluginName + "' failed");
@@ -25,7 +25,7 @@ bool BaseDecoderFilter::connect(BaseConverterFilter* converter) {
 		return false;
 	}
 
-	return gst_element_link(_decoder.getPtr(), converter->m_converter.getPtr());
+	return gst_element_link(m_decoder.getPtr(), converter->m_converter.getPtr());
 }
 
 bool BaseDecoderFilter::connect(BaseSinkFilter* outputFilter) {
@@ -33,7 +33,7 @@ bool BaseDecoderFilter::connect(BaseSinkFilter* outputFilter) {
 		return false;
 	}
 
-	return gst_element_link(_decoder.getPtr(), outputFilter->_output.getPtr());
+	return gst_element_link(m_decoder.getPtr(), outputFilter->m_output.getPtr());
 }
 
 bool BaseDecoderFilter::connect(BaseEncoderFilter* encoderFilter) {
@@ -41,7 +41,7 @@ bool BaseDecoderFilter::connect(BaseEncoderFilter* encoderFilter) {
 		return false;
 	}
 
-	return gst_element_link(_decoder.getPtr(), encoderFilter->_encoder.getPtr());
+	return gst_element_link(m_decoder.getPtr(), encoderFilter->m_encoder.getPtr());
 }
 
 bool BaseDecoderFilter::addToPipeline(GstElement* pipeline) {
@@ -49,7 +49,7 @@ bool BaseDecoderFilter::addToPipeline(GstElement* pipeline) {
 		return false;
 	}
 
-	return gst_bin_add(GST_BIN(pipeline), _decoder.getPtr());
+	return gst_bin_add(GST_BIN(pipeline), m_decoder.getPtr());
 }
 
 BaseDecoderFilter::~BaseDecoderFilter(void) {

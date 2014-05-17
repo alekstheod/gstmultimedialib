@@ -1,53 +1,30 @@
 #ifndef FACTORY_H
 #define FACTORY_H
 #include <map>
-#include <memory>
+#include <functional>
 
 namespace utils
 {
 
 template<typename KeyType, typename ObjectType>
 class Factory {
-private:
-
-    class Allocator {
-    public:
-        virtual ObjectType* allocate()=0;
-        virtual ~Allocator() {}
-    };
-
-    template<typename T>
-    class Functor : public Allocator {
-    public:
-        Functor( T functor ):m_functor( functor ) {}
-        ObjectType* allocate()
-        {
-            return m_functor();
-        }
-
-    private:
-        T m_functor;
-    };
-
 public:
-    template<typename AllocatorType>
-    void registerAllocator( KeyType key, AllocatorType allocator ) {
-        m_allocators[key]=std::unique_ptr<Allocator>(new Functor<AllocatorType>(allocator) );
+    void registerAllocator( KeyType key, std::function<ObjectType* ()> allocator ) {
+        m_allocators[key]=allocator;
     }
 
-    ObjectType* create( KeyType key, ObjectType* defValue )
+    ObjectType* create( KeyType key )
     {
-        ObjectType* result = defValue;
-        if( m_allocators.find(key) != m_allocators.end() )
-        {
-            result = m_allocators[key]->allocate();
+        ObjectType* result = nullptr;
+        if( m_allocators.find(key) != m_allocators.end() ){
+            result = m_allocators[key]();
         }
 
         return result;
     }
 
 private:
-    std::map< KeyType, std::unique_ptr< Allocator > > m_allocators;
+    std::map< KeyType, std::function<ObjectType* ()> > m_allocators;
 };
 
 }
