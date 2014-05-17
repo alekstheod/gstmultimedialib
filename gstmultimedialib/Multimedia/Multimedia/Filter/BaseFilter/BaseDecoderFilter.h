@@ -25,7 +25,7 @@ private:
 	friend class BasePlaybinFilterGraph;
 
 private:
-	GSmartPtr<GstElement> _decoder;
+	GSmartPtr<GstElement> m_decoder;
 
 public:
 	BaseDecoderFilter(const std::string& pluginName,

@@ -41,7 +41,7 @@ bool SourceFilter::Connect(BaseDemuxerFilter* demuxer) {
     }
 
     gst_object_ref(static_cast<GstElement*>(_source.getPtr()));
-    return gst_element_link(_source.getPtr(), demuxer->_demuxer.getPtr());
+    return gst_element_link(_source.getPtr(), demuxer->m_demuxer.getPtr());
 }
 
 bool SourceFilter::Connect(BaseSinkFilter* output) {
@@ -50,7 +50,7 @@ bool SourceFilter::Connect(BaseSinkFilter* output) {
     }
 
     gst_object_ref(static_cast<GstElement*>(_source.getPtr()));
-    return gst_element_link(_source.getPtr(), output->_output.getPtr());
+    return gst_element_link(_source.getPtr(), output->m_output.getPtr());
 }
 
 SourceFilter::~SourceFilter(void) {

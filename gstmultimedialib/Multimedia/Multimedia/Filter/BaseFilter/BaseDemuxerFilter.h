@@ -18,9 +18,9 @@ namespace multimedia {
 
 class BaseDemuxerFilter: public AFilter, GstObject {
 private:
-	GSmartPtr<GstElement> _demuxer;
-	GSmartPtr<GstElement> _videoDecoder;
-	GSmartPtr<GstElement> _audioDecoder;
+	GSmartPtr<GstElement> m_demuxer;
+	GSmartPtr<GstElement> m_videoDecoder;
+	GSmartPtr<GstElement> m_audioDecoder;
 
 private:
 	friend class SourceFilter;
