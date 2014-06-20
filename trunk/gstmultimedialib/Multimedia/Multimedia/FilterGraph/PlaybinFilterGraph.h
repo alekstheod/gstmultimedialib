@@ -81,7 +81,7 @@ public:
         gst_bus_set_sync_handler ( bus, gstBusSyncHandle, this );
         gst_object_unref ( bus );
 
-        std::for_each ( m_filters, [this] ( AFilter& filter ) {
+        utils::for_each ( m_filters, [this] ( AFilter& filter ) {
             filter.addToPipeline ( this->m_pipeline.getPtr() );
         } );
     }
