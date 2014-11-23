@@ -15,10 +15,10 @@ class Scene : public IModel {
 public:
     template<typename T>
     struct RECT {
-        T left;
-        T top;
-        T right;
-        T bottom;
+        const T left;
+        const T top;
+        const T right;
+        const T bottom;
 
         RECT(int l, int t, int r, int b) : left(l), top(t), right(r), bottom(b) {
             if ( left >= right ) {
