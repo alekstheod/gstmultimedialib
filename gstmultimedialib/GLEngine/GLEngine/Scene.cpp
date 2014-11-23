@@ -50,7 +50,6 @@ void Scene::drawImpl ()
 void Scene::add( IModel& glModel )
 {
     m_glModels.insert( std::upper_bound(m_glModels.begin(), m_glModels.end(), glModel ), glModel );
-    m_glModels.push_back ( glModel );
 }
 
 bool Scene::remove( IModel& glModel )
