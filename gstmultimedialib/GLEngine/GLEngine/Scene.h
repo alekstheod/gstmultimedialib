@@ -21,11 +21,7 @@ public:
         const T bottom;
 
         RECT(int l, int t, int r, int b) : left(l), top(t), right(r), bottom(b) {
-            if ( left >= right ) {
-                throw GLException ( "GLDevice::GLDevice - Wrong window rect" );
-            }
-
-            if ( top >= bottom ) {
+            if ( left >= right || top >= bottom  ) {
                 throw GLException ( "GLDevice::GLDevice - Wrong window rect" );
             }
         }
