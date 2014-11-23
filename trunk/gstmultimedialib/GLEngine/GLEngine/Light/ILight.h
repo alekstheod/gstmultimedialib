@@ -12,9 +12,9 @@ namespace gl {
 
 class ILight {
 public:
-	ILight();
-	virtual bool applyLight()=0;
-	virtual ~ILight();
+    ILight();
+    virtual bool applyLight()=0;
+    virtual ~ILight();
 };
 
 }

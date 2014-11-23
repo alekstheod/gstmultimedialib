@@ -1,15 +1,15 @@
 #ifndef GLVIDEOSINK_H
 #define GLVIDEOSINK_H
-#include <GLEngine/Device.h>
+#include <GLEngine/Scene.h>
 #include <GLEngine/Model/Vertex.h>
 #include <Multimedia/Filter/Sink/Video/ABaseVideoCallbackSinkFilter.h>
 #include <Multimedia/Filter/Sink/Video/OpenGL/VideoFrameModel.h>
-#include <Utilities/AutoLock/Mutex.h>
+#include <memory>
 
 namespace multimedia
 {
 
-namespace Private
+namespace detail
 {
 class CGLVideoSinkCallbackFilter : public ABaseVideoCallbackSinkFilter
 {
@@ -20,15 +20,10 @@ private:
   GLenum _glColor;
   GLenum _pixelType;
 
-  gl::Vertex _lowLeft;
-  gl::Vertex _lowRight;
-  gl::Vertex _topRight;
-  gl::Vertex _topLeft;
-
   utils::Mutex _lockObject;
 
-  utils::SharedPtr<gl::Device> _glDevice;
-  utils::SharedPtr<multimedia::VideoFrameModel> _videoFrameGLModel;
+  gl::Scene& m_glDevice;
+  multimedia::VideoFrameModel m_videoFrameGLModel;
 
 public:
   static const float CONST_GL_FRAME_HEIGHT;
@@ -41,12 +36,8 @@ private:
   bool onRecieveBuffer ( GstBaseSink* sink, GstBuffer* gstBuffer );
   bool onSetCaps ( GstPad * pad, GstCaps * caps );
 
-private:
-  CGLVideoSinkCallbackFilter ( const CGLVideoSinkCallbackFilter& other );
-  const CGLVideoSinkCallbackFilter& operator = ( const CGLVideoSinkCallbackFilter& other );
-
 public:
-  CGLVideoSinkCallbackFilter ( const utils::SharedPtr<gl::Device>& glDevice ) throw ( GstException );
+  CGLVideoSinkCallbackFilter ( gl::Scene& glDevice );
   virtual ~CGLVideoSinkCallbackFilter ( void );
 };
 }
@@ -55,13 +46,13 @@ public:
 class CGLVideoSinkFilter : public AFilter
 {
 private:
-  utils::SharedPtr< Private::CGLVideoSinkCallbackFilter > _filter;
+  std::shared_ptr<detail::CGLVideoSinkCallbackFilter> m_filter;
 
 private:
     bool addToPipelineImpl ( GstElement* pipeline ) ;
     
 public:
-  CGLVideoSinkFilter ( const utils::SharedPtr<gl::Device>& glDevice ) throw ( GstException );
+  CGLVideoSinkFilter ( gl::Scene& glDevice );
   ~CGLVideoSinkFilter();
 };
 

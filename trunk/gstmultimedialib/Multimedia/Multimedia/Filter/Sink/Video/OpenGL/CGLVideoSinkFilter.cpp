@@ -5,42 +5,33 @@
 namespace multimedia
 {
 
-namespace Private
+namespace detail
 {
-const float CGLVideoSinkCallbackFilter::CONST_GL_FRAME_HEIGHT = 1.16;
-const float CGLVideoSinkCallbackFilter::CONST_GL_FRAME_WIDTH = 2;
+const float CGLVideoSinkCallbackFilter::CONST_GL_FRAME_HEIGHT = 1.16f;
+const float CGLVideoSinkCallbackFilter::CONST_GL_FRAME_WIDTH = 2.f;
 const GLuint CGLVideoSinkCallbackFilter::CONST_INVALID_TEXTURE_ID = 0;
 const unsigned int CGLVideoSinkCallbackFilter::CONST_VIDEOFRAME_GLMODEL_ID = 1;
 
-CGLVideoSinkCallbackFilter::CGLVideoSinkCallbackFilter (
-  const utils::SharedPtr<gl::Device>& glDevice ) throw ( GstException ) :  ABaseVideoCallbackSinkFilter ( "GL Video sink" )
+float right = 1.f;
+float left = -right;
+float high = 1.16f / 2.0f;
+float low = -high;
+
+gl::Vertex lowLeft( left, low, 0.0f );
+gl::Vertex lowRight( right, low, 0.0f );
+gl::Vertex topRight( right, high, 0.0f );
+gl::Vertex topLeft( left, high, 0.0f );
+
+CGLVideoSinkCallbackFilter::CGLVideoSinkCallbackFilter (gl::Scene& glDevice ):ABaseVideoCallbackSinkFilter ( "GL Video sink" ), 
+										m_glDevice(glDevice),
+										m_videoFrameGLModel(lowLeft, topLeft, topRight, lowRight)
 {
-  if ( glDevice == NULL )
-    {
-      throw GstException ( "CGLVideoSinkFilter::CGLVideoSinkFilter glDevice == NULL" );
-    }
-
-  _glDevice = glDevice;
-  float right = CONST_GL_FRAME_WIDTH / 2.0f;
-  float left = -right;
-  float high = CONST_GL_FRAME_HEIGHT / 2.0f;
-  float low = -high;
-  _lowLeft = gl::Vertex ( left, low, 0.0f );
-  _topRight = gl::Vertex ( right, high, 0.0f );
-  _lowRight = gl::Vertex ( right, low, 0.0f );
-  _topLeft = gl::Vertex ( left, high, 0.0f );
-
-  _videoFrameGLModel = new VideoFrameModel ( _lowLeft, _topLeft, _topRight,_lowRight );
-  utils::SharedPtr< gl::IModel > glModel = _videoFrameGLModel;
-  if ( !_glDevice->addGLModel ( glModel ) )
-    {
-      throw GstException ( "GLVideoSink::GLVideoSink" );
-    }
+  m_glDevice.addGLModel ( m_videoFrameGLModel );
 }
 
 CGLVideoSinkCallbackFilter::~CGLVideoSinkCallbackFilter ( void )
 {
-  _glDevice->removeGLModel(_videoFrameGLModel);
+  m_glDevice.removeGLModel(m_videoFrameGLModel);
 }
 
 bool CGLVideoSinkCallbackFilter::onSetCaps ( GstPad * pad, GstCaps * caps )
@@ -123,11 +114,8 @@ bool CGLVideoSinkCallbackFilter::onRecieveBuffer ( GstBaseSink* sink,
   try
     {
       utils::AutoLock<utils::Mutex> lock ( _lockObject );
-      if ( _videoFrameGLModel != NULL )
-        {
-          _videoFrameGLModel->UpdateFrame ( _frameWidth, _frameHeight, _glColor,
-                                           _pixelType, gstBuffer );
-        }
+      m_videoFrameGLModel.UpdateFrame ( _frameWidth, _frameHeight, _glColor,
+					_pixelType, gstBuffer );
 
     }
   catch ( const utils::LockException& )
@@ -140,13 +128,13 @@ bool CGLVideoSinkCallbackFilter::onRecieveBuffer ( GstBaseSink* sink,
 
 }
 
-CGLVideoSinkFilter::CGLVideoSinkFilter ( const utils::SharedPtr<gl::Device>& glDevice ) throw ( GstException ) : _filter ( new Private::CGLVideoSinkCallbackFilter ( glDevice ) )
+CGLVideoSinkFilter::CGLVideoSinkFilter ( gl::Scene& glDevice ): m_filter ( new detail::CGLVideoSinkCallbackFilter(glDevice) )
 {
 }
 
 bool CGLVideoSinkFilter::addToPipelineImpl ( GstElement* pipeline )
 {
-  return _filter->addToPipeline ( pipeline );
+  return m_filter->addToPipeline ( pipeline );
 }
 
 CGLVideoSinkFilter::~CGLVideoSinkFilter()

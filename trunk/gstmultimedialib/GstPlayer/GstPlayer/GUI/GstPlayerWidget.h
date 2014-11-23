@@ -2,16 +2,17 @@
 #define GSTPLAYERWIDGET_H
 
 #include <QtOpenGL/QGLWidget>
-#include <GLEngine/Device.h>
+#include <GLEngine/Scene.h>
 #include <GstPlayer/VideoTrack.h>
 #include <qtimer.h>
+#include <memory>
 
 namespace gstplayer {
 
 class GstPlayerWidget: public QGLWidget {
 private:
-	utils::SharedPtr<gl::Device> _glDevice;
-	utils::SharedPtr<VideoTrack> _track;
+	std::unique_ptr<gl::Scene> m_glDevice;
+	std::unique_ptr<VideoTrack> _track;
 	utils::SharedPtr<gl::ICamera> _camera;
 	utils::SharedPtr<gl::IModel> _menu;
 	QTimer _timer;

@@ -10,12 +10,12 @@
 namespace gl {
 
 ILight::ILight() {
-	// TODO Auto-generated constructor stub
+    // TODO Auto-generated constructor stub
 
 }
 
 ILight::~ILight() {
-	// TODO Auto-generated destructor stub
+    // TODO Auto-generated destructor stub
 }
 
 }

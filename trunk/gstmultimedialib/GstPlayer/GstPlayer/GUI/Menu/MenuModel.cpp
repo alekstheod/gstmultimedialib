@@ -16,9 +16,9 @@ MenuModel::MenuModel() throw ( gl::GLException )
                                         "/home/alekstheod" );
 }
 
-bool MenuModel::drawImpl()
+void MenuModel::drawImpl()
 {
-    return _playButton->draw();
+    _playButton->draw();
 }
 
 void MenuModel::leftButtonClick ( const gl::Vertex& mousePosition )

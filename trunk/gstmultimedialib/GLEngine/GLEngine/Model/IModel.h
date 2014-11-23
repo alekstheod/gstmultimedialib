@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <functional>
 #include <GLEngine/Model/Vertex.h>
 
 namespace gl {
@@ -7,17 +8,16 @@ namespace gl {
 class IModel {
 private:
     /// @brief model draw method implementation.
-    virtual bool drawImpl() = 0;
+    virtual void drawImpl() = 0;
 
 public:
     /// @brief will draw the model.
     /// @return true if succeed, false otherwise.
-    bool draw(){
-      return drawImpl();
+    void draw(){
+      drawImpl();
     }
     
     virtual ~IModel() {}
 };
 
 }
-
