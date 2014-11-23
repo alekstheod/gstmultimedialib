@@ -32,8 +32,8 @@ private:
     APlayButtonState::rect _rect;
 
 private:
-  bool drawImpl(){
-     return _buttonState->drawButton(_rect);
+  void drawImpl(){
+     _buttonState->drawButton(_rect);
   }
   
 public:

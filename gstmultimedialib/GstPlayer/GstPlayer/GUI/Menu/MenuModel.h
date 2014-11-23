@@ -21,7 +21,8 @@ private:
     utils::SharedPtr<PlayButtonModel> _playButton;
 
 private:
-    bool drawImpl ();
+    void drawImpl ();
+    
 public:
     MenuModel() throw ( gl::GLException );
     void leftButtonClick ( const gl::Vertex& mousePosition );

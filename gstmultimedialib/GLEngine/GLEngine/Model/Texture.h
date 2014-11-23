@@ -16,7 +16,7 @@ namespace gl
 class Texture
 {
 private:
-    friend class Device;
+    friend class Scene;
     GLuint m_texture;
 
 private:
