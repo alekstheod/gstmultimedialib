@@ -11,16 +11,24 @@
 namespace gl {
 
 class ICamera;
-class ILight;
-class Texture;
-
 class Scene : public IModel {
 public:
+    template<typename T>
     struct RECT {
-        int left;
-        int top;
-        int right;
-        int bottom;
+        T left;
+        T top;
+        T right;
+        T bottom;
+
+        RECT(int l, int t, int r, int b) : left(l), top(t), right(r), bottom(b) {
+            if ( left >= right ) {
+                throw GLException ( "GLDevice::GLDevice - Wrong window rect" );
+            }
+
+            if ( top >= bottom ) {
+                throw GLException ( "GLDevice::GLDevice - Wrong window rect" );
+            }
+        }
     };
 
 private:
@@ -29,20 +37,17 @@ private:
     unsigned int m_windowWidth;
     unsigned int m_windowHeight;
     std::vector< std::reference_wrapper<IModel> > m_glModels;
-    std::vector< std::reference_wrapper<ILight> > m_lights;
-    utils::SharedPtr<ICamera> m_camera;
+    ICamera& m_camera;
 
 private:
     void drawImpl();
 
 public:
-    Scene(const Scene::RECT&) throw (GLException);
-
-    void setCamera(const utils::SharedPtr<ICamera>& camera);
-    void addGLModel(IModel& glModel);
-    bool removeGLModel(IModel& glModel);
+    Scene(const Scene::RECT<int>&, ICamera& camera);
+    void add(IModel& glModel);
+    bool remove(IModel& glModel);
     void setPerspective(unsigned int windowWidth, unsigned int windowHeight);
-    virtual ~Scene() throw ();
+    virtual ~Scene();
 };
 
 }

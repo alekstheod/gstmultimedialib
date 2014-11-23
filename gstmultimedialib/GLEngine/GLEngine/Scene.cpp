@@ -1,7 +1,6 @@
 #include "Scene.h"
 #include <GLEngine/Model/IModel.h>
 #include <GLEngine/Camera/ICamera.h>
-#include <GLEngine/Light/ILight.h>
 #include <GLEngine/Model/Vertex.h>
 #include <GLEngine/Model/Texture.h>
 #include <Utilities/AutoLock/Mutex.h>
@@ -23,16 +22,8 @@ bool operator < (const gl::IModel& first, const std::reference_wrapper<gl::IMode
 namespace gl
 {
 
-Scene::Scene ( const Scene::RECT& windowRect ) throw ( GLException )
+Scene::Scene ( const Scene::RECT<int>& windowRect, ICamera& camera ) : m_camera(camera)
 {
-    if ( windowRect.left >= windowRect.right ) {
-        throw GLException ( "GLDevice::GLDevice - Wrong window rect" );
-    }
-
-    if ( windowRect.top >= windowRect.bottom ) {
-        throw GLException ( "GLDevice::GLDevice - Wrong window rect" );
-    }
-
     glEnable ( GL_DEPTH_TEST );
     glClearColor ( 0.0f, 0.0f, 0.0f, 1.0f );
     glMatrixMode ( GL_PROJECTION );
@@ -41,7 +32,7 @@ Scene::Scene ( const Scene::RECT& windowRect ) throw ( GLException )
     glMatrixMode ( GL_MODELVIEW );
 }
 
-Scene::~Scene () throw ()
+Scene::~Scene ()
 {
 }
 
@@ -50,22 +41,19 @@ void Scene::drawImpl ()
     glClear ( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     glMatrixMode ( GL_MODELVIEW );
     glLoadIdentity();
-    if ( m_camera != NULL ) {
-        m_camera->applyCamera();
-    }
-
+    m_camera.applyCamera();
     using namespace std::placeholders;
     std::for_each(m_glModels.begin(), m_glModels.end(), std::bind( &IModel::draw, _1 ));
     glFlush();
 }
 
-void Scene::addGLModel ( IModel& glModel )
+void Scene::add( IModel& glModel )
 {
     m_glModels.insert( std::upper_bound(m_glModels.begin(), m_glModels.end(), glModel ), glModel );
     m_glModels.push_back ( glModel );
 }
 
-bool Scene::removeGLModel ( IModel& glModel )
+bool Scene::remove( IModel& glModel )
 {
     bool result = false;
     auto i = std::lower_bound(m_glModels.begin(), m_glModels.end(), glModel);
@@ -78,18 +66,13 @@ bool Scene::removeGLModel ( IModel& glModel )
 }
 
 void Scene::setPerspective ( unsigned int windowWidth,
-                              unsigned int windowHeight )
+                             unsigned int windowHeight )
 {
     glMatrixMode ( GL_PROJECTION );
     glLoadIdentity();
     gluPerspective ( 50.0, 1.0, 1.0, 10000.0 );
     glViewport ( 0, 0, windowWidth, windowHeight );
     glMatrixMode ( GL_MODELVIEW );
-}
-
-void Scene::setCamera ( const utils::SharedPtr<ICamera>& camera )
-{
-    m_camera = camera;
 }
 
 }

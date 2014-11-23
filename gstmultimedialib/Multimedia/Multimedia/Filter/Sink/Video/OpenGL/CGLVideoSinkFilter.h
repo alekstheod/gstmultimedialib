@@ -25,13 +25,6 @@ private:
   gl::Scene& m_glDevice;
   multimedia::VideoFrameModel m_videoFrameGLModel;
 
-public:
-  static const float CONST_GL_FRAME_HEIGHT;
-  static const float CONST_GL_FRAME_WIDTH;
-  static const GLuint CONST_INVALID_TEXTURE_ID;
-  static const GLuint CONST_VALID_TEXTURE_ID;
-  static const unsigned int CONST_VIDEOFRAME_GLMODEL_ID;
-
 private:
   bool onRecieveBuffer ( GstBaseSink* sink, GstBuffer* gstBuffer );
   bool onSetCaps ( GstPad * pad, GstCaps * caps );
