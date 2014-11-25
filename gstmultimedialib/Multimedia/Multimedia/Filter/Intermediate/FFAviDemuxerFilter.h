@@ -14,12 +14,12 @@ namespace multimedia {
 
 class FFAviDemuxerFilter: public BaseDemuxerFilter {
 public:
-	static const std::string CONST_PLUGIN_NAME;
-	static const std::string CONST_PLUGIN_DESCRIPTION;
+    static const std::string CONST_PLUGIN_NAME;
+    static const std::string CONST_PLUGIN_DESCRIPTION;
 
 public:
-	FFAviDemuxerFilter() throw (GstException);
-	virtual ~FFAviDemuxerFilter();
+    FFAviDemuxerFilter() throw (GstException);
+    virtual ~FFAviDemuxerFilter();
 };
 
 }

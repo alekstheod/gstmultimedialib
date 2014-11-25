@@ -14,12 +14,12 @@ namespace multimedia {
 
 class AudioConverterFilter: public BaseConverterFilter {
 public:
-	static const std::string CONST_PLUGIN_NAME;
-	static const std::string CONST_PLUGIN_DESCRIPTION;
+    static const std::string CONST_PLUGIN_NAME;
+    static const std::string CONST_PLUGIN_DESCRIPTION;
 
 public:
-	AudioConverterFilter(void) throw (GstException);
-	virtual ~AudioConverterFilter(void);
+    AudioConverterFilter();
+    virtual ~AudioConverterFilter();
 };
 
 }
