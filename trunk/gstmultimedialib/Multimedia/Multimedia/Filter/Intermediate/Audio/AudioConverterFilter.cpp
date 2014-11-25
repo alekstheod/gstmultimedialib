@@ -13,13 +13,13 @@ const std::string AudioConverterFilter::CONST_PLUGIN_NAME = "audioconvert";
 const std::string AudioConverterFilter::CONST_PLUGIN_DESCRIPTION =
 		"AudioConverter";
 
-AudioConverterFilter::AudioConverterFilter(void) throw (GstException) :
+AudioConverterFilter::AudioConverterFilter():
 		BaseConverterFilter(CONST_PLUGIN_NAME, CONST_PLUGIN_DESCRIPTION) {
 	// TODO Auto-generated constructor stub
 
 }
 
-AudioConverterFilter::~AudioConverterFilter(void) {
+AudioConverterFilter::~AudioConverterFilter() {
 	// TODO Auto-generated destructor stub
 }
 

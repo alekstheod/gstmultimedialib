@@ -3,14 +3,13 @@
 namespace gl {
 class Vertex {
 public:
-	float x;
-	float y;
-	float z;
+    float x;
+    float y;
+    float z;
 
 public:
-	Vertex(void);
-	Vertex(float posX, float posY, float posZ);
-	~Vertex(void);
+    Vertex(float posX  = 0.f, float posY = 0.f, float posZ = 0.f);
+    ~Vertex();
 };
 }
 

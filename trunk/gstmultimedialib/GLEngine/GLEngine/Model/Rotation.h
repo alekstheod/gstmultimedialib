@@ -12,14 +12,12 @@ namespace gl
 {
 
 struct Rotation {
-    float angle;
-    float x;
-    float y;
-    float z;
-
-    Rotation();
-    Rotation ( float angle, float xAxis, float yAxis, float zAxis );
-    virtual ~Rotation();
+    const float angle;
+    const float x;
+    const float y;
+    const float z;
+    Rotation ( float angle = 0.f, float xAxis = 0.f, float yAxis = 0.f, float zAxis = 0.f );
+    ~Rotation();
 };
 
 }
