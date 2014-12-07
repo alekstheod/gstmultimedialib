@@ -17,6 +17,7 @@ struct Rotation {
     const float y;
     const float z;
     Rotation ( float angle = 0.f, float xAxis = 0.f, float yAxis = 0.f, float zAxis = 0.f );
+    Rotation& operator = ( const Rotation& other );
     ~Rotation();
 };
 

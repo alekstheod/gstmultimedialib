@@ -1,5 +1,5 @@
 #include "Scene.h"
-#include <GLEngine/Model/IModel.h>
+#include <GLEngine/Model/Model.h>
 #include <GLEngine/Camera/ICamera.h>
 #include <GLEngine/Model/Vertex.h>
 #include <GLEngine/Model/Texture.h>
@@ -10,11 +10,11 @@ using namespace std;
 using namespace utils;
 
 namespace std {
-bool operator < (const std::reference_wrapper<gl::IModel> first, const gl::IModel& second) {
+bool operator < (const std::reference_wrapper<gl::Model> first, const gl::Model& second) {
     return &first.get() < &second;
 }
 
-bool operator < (const gl::IModel& first, const std::reference_wrapper<gl::IModel> second) {
+bool operator < (const gl::Model& first, const std::reference_wrapper<gl::Model> second) {
     return &first < &second.get();
 }
 }
@@ -41,18 +41,18 @@ void Scene::drawImpl ()
     glClear ( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     glMatrixMode ( GL_MODELVIEW );
     glLoadIdentity();
-    m_camera.applyCamera();
+    m_camera.apply();
     using namespace std::placeholders;
-    std::for_each(m_glModels.begin(), m_glModels.end(), std::bind( &IModel::draw, _1 ));
+    std::for_each(m_glModels.begin(), m_glModels.end(), std::bind( &Model::draw, _1 ));
     glFlush();
 }
 
-void Scene::add( IModel& glModel )
+void Scene::add( Model& glModel )
 {
     m_glModels.insert( std::upper_bound(m_glModels.begin(), m_glModels.end(), glModel ), glModel );
 }
 
-bool Scene::remove( IModel& glModel )
+bool Scene::remove( Model& glModel )
 {
     bool result = false;
     auto i = std::lower_bound(m_glModels.begin(), m_glModels.end(), glModel);

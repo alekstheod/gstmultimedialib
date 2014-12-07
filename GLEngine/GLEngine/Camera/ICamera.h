@@ -13,11 +13,11 @@ namespace gl {
 
 class ICamera {
 public:
-	ICamera();
-	virtual void setPosition(const Vertex& position)=0;
-	virtual void lookAt(const Vertex& position)=0;
-	virtual void applyCamera()=0;
-	virtual ~ICamera();
+    ICamera();
+    virtual void setPosition(const Vertex& position)=0;
+    virtual void lookAt(const Vertex& position)=0;
+    virtual void apply()=0;
+    virtual ~ICamera();
 };
 
 }

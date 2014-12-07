@@ -29,7 +29,7 @@ private:
     bool applyImpl ( GLenum target );
 
 public:
-    ImageTexture ( GLuint textureId, GLsizei imageWidth, GLsizei imageHeight,
+    ImageTexture ( GLsizei imageWidth, GLsizei imageHeight,
                    GLenum glColor, GLenum pixelType, const std::vector<unsigned char>& imageBuffer );
 
     virtual ~ImageTexture();

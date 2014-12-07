@@ -16,7 +16,6 @@ const std::string AudioConverterFilter::CONST_PLUGIN_DESCRIPTION =
 AudioConverterFilter::AudioConverterFilter():
 		BaseConverterFilter(CONST_PLUGIN_NAME, CONST_PLUGIN_DESCRIPTION) {
 	// TODO Auto-generated constructor stub
-
 }
 
 AudioConverterFilter::~AudioConverterFilter() {

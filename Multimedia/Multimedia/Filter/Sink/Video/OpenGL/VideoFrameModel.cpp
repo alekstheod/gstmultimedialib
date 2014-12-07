@@ -8,12 +8,13 @@ namespace multimedia {
 const unsigned int VideoFrameModel::CONST_FRAME_LOCK_TIMEOUT = 10000;
 
 VideoFrameModel::VideoFrameModel(const gl::Vertex& lowLeft,
-                                 const gl::Vertex& topLeft, const gl::Vertex& topRight,
-                                 const gl::Vertex& lowRight) {
-    m_lowLeft = lowLeft;
-    m_topLeft = topLeft;
-    m_lowRight = lowRight;
-    m_topRight = topRight;
+                                 const gl::Vertex& topLeft, 
+				 const gl::Vertex& topRight,
+                                 const gl::Vertex& lowRight): m_lowLeft(lowLeft),
+							      m_topLeft(topLeft),
+							      m_lowRight(lowRight),
+							      m_topRight(topRight)
+{
 }
 
 VideoFrameModel::~VideoFrameModel(void) {
@@ -21,7 +22,7 @@ VideoFrameModel::~VideoFrameModel(void) {
 
 void VideoFrameModel::drawImpl(void) {
     std::lock_guard<std::mutex> lock(m_mutex);
-    gl::ImageTexture texture(1000, m_width, m_height, m_glColor, m_pixelType, m_frameBuffer);
+    gl::ImageTexture texture(m_width, m_height, m_glColor, m_pixelType, m_frameBuffer);
     texture.apply(GL_TEXTURE_2D);
 
     glBegin(GL_QUADS);

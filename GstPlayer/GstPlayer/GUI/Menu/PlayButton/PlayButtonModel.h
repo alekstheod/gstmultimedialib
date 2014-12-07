@@ -8,7 +8,7 @@
 #ifndef PLAYBUTTONGLMODULE_H_
 #define PLAYBUTTONGLMODULE_H_
 
-#include <GLEngine/Model/IModel.h>
+#include <GLEngine/Model/Model.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <Utilities/Memory/SmartPtr/SharedPtr.h>
@@ -24,7 +24,7 @@ class APlayButtonState;
  * This class contain inline methods in order to prevent linker errors
  * in case of SharedPtr<T> using with the T = APlayButtonState.
  */
-class PlayButtonModel: public gl::IModel {
+class PlayButtonModel: public gl::Model {
 private:
     friend class APlayButtonState;
     utils::SharedPtr<APlayButtonState> _buttonState;
