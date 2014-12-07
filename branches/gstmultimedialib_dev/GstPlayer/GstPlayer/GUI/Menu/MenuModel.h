@@ -8,14 +8,14 @@
 #ifndef MENUGLMODEL_H_
 #define MENUGLMODEL_H_
 #include <Utilities/Memory/SmartPtr/SharedPtr.h>
-#include <GLEngine/Model/IModel.h>
+#include <GLEngine/Model/Model.h>
 #include <GstPlayer/GUI/Menu/PlayButton/PlayButtonModel.h>
 #include <GLEngine/GLException.h>
 
 namespace gstplayer
 {
 
-class MenuModel: public gl::IModel
+class MenuModel: public gl::Model
 {
 private:
     utils::SharedPtr<PlayButtonModel> _playButton;

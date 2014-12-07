@@ -10,7 +10,7 @@
 namespace gl
 {
 
-Texture::Texture ( GLuint texture ) : m_texture(texture)
+Texture::Texture () : m_texture(0)
 {
     glGenTextures ( 1, &m_texture );
 }

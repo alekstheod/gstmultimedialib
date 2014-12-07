@@ -23,7 +23,7 @@ private:
     virtual bool applyImpl ( GLenum target);
     
 public:
-    Texture ( GLuint texture );
+    Texture ();
     bool apply( GLenum target );
     virtual ~Texture();
 };

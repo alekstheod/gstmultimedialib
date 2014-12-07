@@ -10,14 +10,16 @@
 namespace gl
 {
 
-ImageTexture::ImageTexture ( GLuint textureId, GLsizei imageWidth,
-                             GLsizei imageHeight, GLenum glColor, GLenum pixelType, const std::vector<unsigned char>& imageBuffer ) :
-    Texture ( textureId ),m_width ( imageWidth ), m_height ( imageHeight ), m_glColor ( glColor ), m_pixelType ( pixelType ), m_imageBuffer ( imageBuffer )
+ImageTexture::ImageTexture ( GLsizei imageWidth,
+                             GLsizei imageHeight, 
+			     GLenum glColor, 
+			     GLenum pixelType, 
+			     const std::vector<unsigned char>& imageBuffer ) : m_width ( imageWidth ), 
+									       m_height ( imageHeight ), 
+									       m_glColor ( glColor ), 
+									       m_pixelType ( pixelType ), 
+									       m_imageBuffer ( imageBuffer )
 {
-    m_width = imageWidth;
-    m_height = imageHeight;
-    m_glColor = glColor;
-    m_pixelType = pixelType;
 }
 
 bool ImageTexture::applyImpl ( GLenum target )

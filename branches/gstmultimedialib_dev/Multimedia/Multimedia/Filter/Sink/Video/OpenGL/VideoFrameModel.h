@@ -1,7 +1,7 @@
 #pragma once
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include <GLEngine/Model/IModel.h>
+#include <GLEngine/Model/Model.h>
 #include <GLEngine/GLException.h>
 #include <GLEngine/Model/Vertex.h>
 #include <mutex>
@@ -11,7 +11,7 @@
 
 namespace multimedia {
 
-class VideoFrameModel: public gl::IModel {
+class VideoFrameModel: public gl::Model {
 public:
     static const unsigned int CONST_FRAME_LOCK_TIMEOUT;
 
