@@ -1,5 +1,7 @@
 #include "GstPlayerWidget.h"
 #include <GLEngine/Camera/SimpleCamera.h>
+#include <chrono>
+#include <thread>
 
 namespace gstplayer {
 
@@ -28,6 +30,8 @@ void GstPlayerWidget::resizeGL(int width, int height) {
 
 void GstPlayerWidget::paintGL() {
     m_scene->draw();
+    std::chrono::milliseconds dura( 20 );
+    std::this_thread::sleep_for( dura );
     this->update();
 }
 
