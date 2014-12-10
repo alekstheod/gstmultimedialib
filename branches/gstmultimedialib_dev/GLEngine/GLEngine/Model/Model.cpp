@@ -21,7 +21,10 @@ void Model::move( const Vertex& offset ){
 }
 
 void Model::rotate( const Rotation& rotation ){
-  m_rotation = Rotation( m_rotation.angle + rotation.angle, 
+  float angle = m_rotation.angle + rotation.angle;
+  angle = angle < 360.f ? angle : angle - 360;
+  angle = angle < -360.f ? angle + 360.f: angle;
+  m_rotation = Rotation( angle,  
 			 m_rotation.x + rotation.x, 
 			 m_rotation.y + rotation.y, 
 			 m_rotation.z + rotation.z );
