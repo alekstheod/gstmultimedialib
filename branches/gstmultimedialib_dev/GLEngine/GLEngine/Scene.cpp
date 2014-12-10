@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include <GLEngine/Rect.h>
 #include <GLEngine/Model/Model.h>
 #include <GLEngine/Camera/ICamera.h>
 #include <GLEngine/Model/Vertex.h>
@@ -22,7 +23,7 @@ bool operator < (const gl::Model& first, const std::reference_wrapper<gl::Model>
 namespace gl
 {
 
-Scene::Scene ( const Scene::RECT<int>& windowRect, ICamera& camera ) : m_camera(camera)
+Scene::Scene ( const Rect<int>& windowRect, ICamera& camera ) : m_camera(camera)
 {
     glEnable ( GL_DEPTH_TEST );
     glClearColor ( 0.0f, 0.0f, 0.0f, 1.0f );
@@ -36,6 +37,12 @@ Scene::~Scene ()
 {
 }
 
+void Scene::drawModel( Model& model){
+  glPushMatrix();
+  model.draw();
+  glPopMatrix();
+}
+
 void Scene::drawImpl ()
 {
     glClear ( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
@@ -43,7 +50,7 @@ void Scene::drawImpl ()
     glLoadIdentity();
     m_camera.apply();
     using namespace std::placeholders;
-    std::for_each(m_glModels.begin(), m_glModels.end(), std::bind( &Model::draw, _1 ));
+    std::for_each(m_glModels.begin(), m_glModels.end(), std::bind( &Scene::drawModel, this, _1 ));
     glFlush();
 }
 
@@ -64,13 +71,13 @@ bool Scene::remove( Model& glModel )
     return result;
 }
 
-void Scene::setPerspective ( unsigned int windowWidth,
-                             unsigned int windowHeight )
+void Scene::setPerspective ( unsigned int width,
+                             unsigned int height )
 {
     glMatrixMode ( GL_PROJECTION );
     glLoadIdentity();
     gluPerspective ( 50.0, 1.0, 1.0, 10000.0 );
-    glViewport ( 0, 0, windowWidth, windowHeight );
+    glViewport ( 0, 0, width, height );
     glMatrixMode ( GL_MODELVIEW );
 }
 

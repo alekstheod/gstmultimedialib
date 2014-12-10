@@ -30,8 +30,10 @@
 #define ASSIMPMODEL_H
 #include <GLEngine/Model/Model.h>
 #include <vector>
+#include <assimp/Importer.hpp>
 
 struct aiScene;
+struct aiNode;
 
 namespace gl
 {
@@ -39,15 +41,15 @@ namespace gl
 class AssimpModel : public Model
 {
 private:
-  std::vector<float> m_vertices; 
-  std::vector<float> m_textureVertices;
-  std::vector<float> m_normals;
-  
   const aiScene* m_scene;
+  Assimp::Importer m_importer;
   
 private:
     void drawImpl();
-
+    void drawInternal(const aiNode* nd);
+    AssimpModel( const AssimpModel& )=delete;
+    AssimpModel& operator = (const AssimpModel& other ) = delete;
+    
 public:
     AssimpModel( const std::string& fileName );
     ~AssimpModel();

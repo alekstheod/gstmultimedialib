@@ -5,8 +5,9 @@
 #include <GLEngine/Scene.h>
 #include <GLEngine/Camera/SimpleCamera.h>
 #include <GstPlayer/VideoTrack.h>
-#include <GstPlayer/GUI/Menu/MenuModel.h>
 #include <qtimer.h>
+#include <GLEngine/Model/Assimp/AssimpModel.h>
+#include <GLEngine/Model/WhiteLightModel.h>
 #include <memory>
 
 namespace gstplayer {
@@ -15,8 +16,9 @@ class GstPlayerWidget: public QGLWidget {
 private:
     std::unique_ptr<gl::Scene> m_scene;
     std::unique_ptr<VideoTrack> m_track;
+    gl::AssimpModel m_assimp;
+    gl::WhiteLightModel m_light;
     gl::SimpleCamera m_camera;
-    MenuModel m_menu;
     QTimer m_timer;
 
 protected:
