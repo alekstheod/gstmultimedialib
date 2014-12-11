@@ -147,17 +147,15 @@ void apply_material(const struct aiMaterial *mtl)
 
 void AssimpModel::drawInternal(const aiNode* nd)
 {
-    unsigned int i;
-    unsigned int n = 0, t;
-    aiMatrix4x4 m = nd->mTransformation;
+    aiMatrix4x4 matrix = nd->mTransformation;
 
     // update transform
-    aiTransposeMatrix4(&m);
+    aiTransposeMatrix4(&matrix);
     glPushMatrix();
-    glMultMatrixf((float*)&m);
+    glMultMatrixf((float*)&matrix);
 
     // draw all meshes assigned to this node
-    for (; n < nd->mNumMeshes; ++n) {
+    for (unsigned int n = 0; n < nd->mNumMeshes; ++n) {
         const struct aiMesh* mesh = m_scene->mMeshes[nd->mMeshes[n]];
 
         apply_material(m_scene->mMaterials[mesh->mMaterialIndex]);
@@ -168,33 +166,21 @@ void AssimpModel::drawInternal(const aiNode* nd)
             glEnable(GL_LIGHTING);
         }
 
-        for (t = 0; t < mesh->mNumFaces; ++t) {
+        for (unsigned int t = 0; t < mesh->mNumFaces; ++t) {
             const struct aiFace* face = &mesh->mFaces[t];
-            GLenum face_mode;
+	    unsigned int modes[4] = {GL_POINTS, GL_LINES, GL_TRIANGLES, GL_POLYGON};
+            glBegin(modes[face->mNumIndices - 1]);
 
-            switch(face->mNumIndices) {
-            case 1:
-                face_mode = GL_POINTS;
-                break;
-            case 2:
-                face_mode = GL_LINES;
-                break;
-            case 3:
-                face_mode = GL_TRIANGLES;
-                break;
-            default:
-                face_mode = GL_POLYGON;
-                break;
-            }
-
-            glBegin(face_mode);
-
-            for(i = 0; i < face->mNumIndices; i++) {
+            for(unsigned int i = 0; i < face->mNumIndices; i++) {
                 int index = face->mIndices[i];
-                if(mesh->mColors[0] != NULL)
+                if(mesh->mColors[0] != NULL){
                     glColor4fv((GLfloat*)&mesh->mColors[0][index]);
-                if(mesh->mNormals != NULL)
+		}
+		
+                if(mesh->mNormals != NULL){
                     glNormal3fv(&mesh->mNormals[index].x);
+		}
+		
                 glVertex3fv(&mesh->mVertices[index].x);
             }
 
@@ -204,8 +190,8 @@ void AssimpModel::drawInternal(const aiNode* nd)
     }
 
     // draw all children
-    for (n = 0; n < nd->mNumChildren; ++n) {
-        drawInternal(nd->mChildren[n]);
+    for (unsigned int child = 0; child < nd->mNumChildren; ++child) {
+        drawInternal(nd->mChildren[child]);
     }
 
     glPopMatrix();

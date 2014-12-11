@@ -23,7 +23,7 @@ void GstPlayerWidget::initializeGL() {
     m_scene.reset(new gl::Scene(rect, m_camera));
     m_camera.setPosition(gl::Vertex(0.0f, 0.0f, 2.3f));
     m_track.reset( new VideoTrack( "file:///run/media/alekstheod/D/Multimedia//test.divx", *m_scene) );;
-    m_assimp.move(gl::Vertex(0.f, 0.f, -95.f));
+    m_assimp.move(gl::Vertex(0.f, 0.f, -100.f));
     m_scene->add(m_assimp);
     m_scene->add(m_light);
     m_track->start(QThread::NormalPriority);
