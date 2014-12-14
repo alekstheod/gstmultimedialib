@@ -31,9 +31,12 @@
 #include <GLEngine/Model/Model.h>
 #include <vector>
 #include <assimp/Importer.hpp>
+#include <GL/gl.h>
+#include <map>
 
 struct aiScene;
 struct aiNode;
+struct aiMaterial;
 
 namespace gl
 {
@@ -43,10 +46,13 @@ class AssimpModel : public Model
 private:
   const aiScene* m_scene;
   Assimp::Importer m_importer;
+  std::map<std::string, GLuint> m_textures;
   
 private:
     void drawImpl();
     void drawInternal(const aiNode* nd);
+    void loadTextures(const std::string& model);
+    void applyMaterial(const aiMaterial *mtl);
     AssimpModel( const AssimpModel& )=delete;
     AssimpModel& operator = (const AssimpModel& other ) = delete;
     
