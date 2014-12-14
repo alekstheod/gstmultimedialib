@@ -16,7 +16,7 @@ class GstPlayerWidget: public QGLWidget {
 private:
     std::unique_ptr<gl::Scene> m_scene;
     std::unique_ptr<VideoTrack> m_track;
-    gl::AssimpModel m_assimp;
+    std::unique_ptr<gl::AssimpModel> m_assimp;
     gl::WhiteLightModel m_light;
     gl::SimpleCamera m_camera;
     QTimer m_timer;
