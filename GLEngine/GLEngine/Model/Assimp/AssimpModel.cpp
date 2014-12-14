@@ -54,6 +54,10 @@ AssimpModel::AssimpModel ( const std::string& fileName )
         throw GLException("Load model failed");
     }
 
+    if (m_scene->HasTextures()) {
+        throw GLException("AssimpModel::LoadGLTextures failed");
+    }
+    
     loadTextures(fileName);
 }
 
@@ -154,10 +158,6 @@ void AssimpModel::applyMaterial(const aiMaterial *mtl)
 
 void AssimpModel::loadTextures(const std::string& model)
 {
-    if (m_scene->HasTextures()) {
-        throw GLException("AssimpModel::LoadGLTextures failed");
-    }
-
     for (unsigned int material = 0 ; material < m_scene->mNumMaterials; material++) {
         aiString path;
         unsigned int index = 0;
