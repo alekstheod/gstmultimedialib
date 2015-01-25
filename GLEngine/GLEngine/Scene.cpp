@@ -26,6 +26,7 @@ namespace gl
 Scene::Scene ( const Rect<int>& windowRect, ICamera& camera ) : m_camera(camera)
 {
     glEnable ( GL_DEPTH_TEST );
+    glEnable(GL_TEXTURE_2D);
     glClearColor ( 0.0f, 0.0f, 0.0f, 1.0f );
     glMatrixMode ( GL_PROJECTION );
     glViewport ( 0, 0, windowRect.right - windowRect.left,
