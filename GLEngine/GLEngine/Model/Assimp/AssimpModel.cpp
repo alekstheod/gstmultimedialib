@@ -39,10 +39,10 @@
 #include <GL/glext.h>
 #include <GLEngine/GLException.h>
 #include <assimp/scene.h>
-#include <IL/il.h>
 #include <boost/range/irange.hpp>
 #include <boost/filesystem.hpp>
 #include <iostream>
+#include <GLEngine/Model/Assimp/CImg/CImg.h>
 
 namespace gl
 {
@@ -57,7 +57,7 @@ AssimpModel::AssimpModel ( const std::string& fileName )
     if (m_scene->HasTextures()) {
         throw GLException("AssimpModel::LoadGLTextures failed");
     }
-    
+
     loadTextures(fileName);
 }
 
@@ -166,30 +166,25 @@ void AssimpModel::loadTextures(const std::string& model)
             glGenTextures(1, &texture );
             boost::filesystem::path modelPath(model);
             std::string basepath =  modelPath.remove_leaf().string();
-            std::string fileloc = basepath + path.C_Str();
-            ILboolean result = ilLoadImage(fileloc.c_str());
-            ILuint imageId;
-            ilGenImages(1, &imageId);
-            ilBindImage(imageId);
-            if (result == AI_SUCCESS) {
-                ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
-		
-                glBindTexture(GL_TEXTURE_2D, texture);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-                glTexImage2D(GL_TEXTURE_2D,
-                             0,
-                             ilGetInteger(IL_IMAGE_BPP),
-                             ilGetInteger(IL_IMAGE_WIDTH),
-                             ilGetInteger(IL_IMAGE_HEIGHT),
-                             0,
-                             ilGetInteger(IL_IMAGE_FORMAT),
-                             GL_UNSIGNED_BYTE,
-                             ilGetData()
-			    );
-            }
+            std::string fileloc = basepath + "/" + path.C_Str();
 
-            ilDeleteImages(1, &imageId);
+            using namespace cimg_library;
+            CImg<unsigned char> img(fileloc.c_str());
+            glEnable ( GL_TEXTURE_2D );
+            glBindTexture(GL_TEXTURE_2D, texture);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexImage2D(GL_TEXTURE_2D,
+                         0,
+                         GL_RGB,
+                         img.width(),
+                         img.height(),
+                         0,
+                         GL_RGB,
+                         GL_BYTE,
+                         img.data()
+                        );
+
             index++;
         }
     }
@@ -203,7 +198,7 @@ void AssimpModel::drawInternal(const aiNode* nd)
     aiTransposeMatrix4(&matrix);
     glPushMatrix();
     glMultMatrixf((float*)&matrix);
-    
+
     // draw all meshes assigned to this node
     for (unsigned int n = 0; n < nd->mNumMeshes; ++n) {
         const aiMesh* mesh = m_scene->mMeshes[nd->mMeshes[n]];
@@ -218,8 +213,8 @@ void AssimpModel::drawInternal(const aiNode* nd)
         for (unsigned int t = 0; t < mesh->mNumFaces; ++t) {
             const struct aiFace* face = &mesh->mFaces[t];
             unsigned int modes[4] = {GL_POLYGON, GL_POINTS, GL_LINES, GL_TRIANGLES};
-	    unsigned int index = face->mNumIndices > 3? 0: face->mNumIndices;
-            glBegin(modes[face->mNumIndices]);
+            unsigned int mode = face->mNumIndices > 3? 0: face->mNumIndices;
+            glBegin(modes[mode]);
             for(unsigned int i = 0; i < face->mNumIndices; i++) {
                 int index = face->mIndices[i];
                 if(mesh->mColors[0] != NULL) {
@@ -231,10 +226,9 @@ void AssimpModel::drawInternal(const aiNode* nd)
                 }
 
                 if(mesh->HasTextureCoords(0)) {
-                    glTexCoord3f(mesh->mTextureCoords[0][index].x, mesh->mTextureCoords[0][index].y, mesh->mTextureCoords[0][index].z);
+                    glTexCoord3f(mesh->mTextureCoords[0][index].x, mesh->mTextureCoords[0][index].y,mesh->mTextureCoords[0][index].z);
                 }
 
-                glNormal3fv(&mesh->mNormals[index].x);
                 glVertex3fv(&mesh->mVertices[index].x);
             }
 
