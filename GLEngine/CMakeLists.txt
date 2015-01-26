@@ -1,6 +1,12 @@
 cmake_minimum_required(VERSION 2.8)
 project(GLEngine)
 
+list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
+find_package( SOIL REQUIRED)
+if(SOIL_FOUND)
+  include_directories(${SOIL_INCLUDE_DIRS})
+endif(SOIL_FOUND)
+
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x" )
 SET( CMAKE_CXX_COMPILER clang++ )
 find_package (OpenGL REQUIRED)
@@ -31,6 +37,7 @@ target_link_libraries(	GLEngine
 		        ${ILU_LIBRARIES}
 		        ${ILUT_LIBRARIES}
 		        ${Boost_LIBRARIES}
+		        ${SOIL_LIBRARIES}
 			Utilities
 			assimp
 			GL
