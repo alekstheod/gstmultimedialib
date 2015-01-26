@@ -42,7 +42,7 @@
 #include <boost/range/irange.hpp>
 #include <boost/filesystem.hpp>
 #include <iostream>
-#include <GLEngine/Model/Assimp/CImg/CImg.h>
+#include <SOIL/SOIL.h>
 
 namespace gl
 {
@@ -168,21 +168,13 @@ void AssimpModel::loadTextures(const std::string& model)
             std::string basepath =  modelPath.remove_leaf().string();
             std::string fileloc = basepath + "/" + path.C_Str();
 
-            using namespace cimg_library;
-            CImg<unsigned char> img(fileloc.c_str());
-            glBindTexture(GL_TEXTURE_2D, texture);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexImage2D(GL_TEXTURE_2D,
-                         0,
-                         GL_RGB,
-                         img.width(),
-                         img.height(),
-                         0,
-                         GL_RGB,
-                         GL_BYTE,
-                         img.data()
-                        );
+            texture = SOIL_load_OGL_texture
+                      (
+                          fileloc.c_str(),
+                          SOIL_LOAD_AUTO,
+                          SOIL_CREATE_NEW_ID,
+                          SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+                      );
 
             index++;
         }
@@ -203,12 +195,8 @@ void AssimpModel::drawInternal(const aiNode* nd)
         const aiMesh* mesh = m_scene->mMeshes[nd->mMeshes[n]];
         applyMaterial(m_scene->mMaterials[mesh->mMaterialIndex]);
 
-        if(mesh->mNormals == NULL) {
-            glDisable(GL_LIGHTING);
-        } else {
-            glEnable(GL_LIGHTING);
-        }
-
+        mesh->mNormals == NULL ? glDisable(GL_LIGHTING) :  glEnable(GL_LIGHTING);
+        mesh->mColors[0] != NULL?  glEnable(GL_COLOR_MATERIAL) : glDisable(GL_COLOR_MATERIAL);
         for (unsigned int t = 0; t < mesh->mNumFaces; ++t) {
             const struct aiFace* face = &mesh->mFaces[t];
             unsigned int modes[4] = {GL_POLYGON, GL_POINTS, GL_LINES, GL_TRIANGLES};
@@ -220,12 +208,12 @@ void AssimpModel::drawInternal(const aiNode* nd)
                     glColor4fv((GLfloat*)&mesh->mColors[0][index]);
                 }
 
-                if(mesh->mNormals != NULL) {
-                    glNormal3fv(&mesh->mNormals[index].x);
+                if(mesh->HasTextureCoords(0)) {
+                    glTexCoord2f(mesh->mTextureCoords[0][index].x,  mesh->mTextureCoords[0][index].y);
                 }
 
-                if(mesh->HasTextureCoords(0)) {
-                    glTexCoord3f(mesh->mTextureCoords[0][index].x, mesh->mTextureCoords[0][index].y,mesh->mTextureCoords[0][index].z);
+                if(mesh->mNormals != NULL) {
+                    glNormal3fv(&mesh->mNormals[index].x);
                 }
 
                 glVertex3fv(&mesh->mVertices[index].x);
