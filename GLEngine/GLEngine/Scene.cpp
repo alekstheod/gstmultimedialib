@@ -3,7 +3,6 @@
 #include <GLEngine/Model/Model.h>
 #include <GLEngine/Camera/ICamera.h>
 #include <GLEngine/Model/Vertex.h>
-#include <GLEngine/Model/Texture.h>
 #include <Utilities/AutoLock/Mutex.h>
 #include <algorithm>
 
