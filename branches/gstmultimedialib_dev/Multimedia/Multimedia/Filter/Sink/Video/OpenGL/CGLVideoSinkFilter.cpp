@@ -1,6 +1,7 @@
 #include <Multimedia/Filter/Sink/Video/OpenGL/CGLVideoSinkFilter.h>
 #include <string.h>
 #include "VideoFrameModel.h"
+#include <mutex>
 
 namespace multimedia
 {
@@ -34,19 +35,12 @@ bool CGLVideoSinkCallbackFilter::onSetCaps ( GstPad * pad, GstCaps * caps )
 {
     try
     {
-        utils::AutoLock<utils::Mutex> lock ( _lockObject );
+        std::lock_guard<std::mutex> lock( _lockObject );
         GstStructure* gstStructure = gst_caps_get_structure ( caps, 0 );
-        if ( gstStructure == NULL )
-        {
-            return false;
-        }
-
-        if ( !gst_structure_get_int ( gstStructure, "width", &_frameWidth ) )
-        {
-            return false;
-        }
-
-        if ( !gst_structure_get_int ( gstStructure, "height", &_frameHeight ) )
+        if ( gstStructure == NULL ||
+                !gst_structure_get_int ( gstStructure, "width", &_frameWidth ) ||
+                !gst_structure_get_int ( gstStructure, "height", &_frameHeight )
+           )
         {
             return false;
         }
@@ -96,7 +90,7 @@ bool CGLVideoSinkCallbackFilter::onSetCaps ( GstPad * pad, GstCaps * caps )
         }
 
     }
-    catch ( const utils::LockException& )
+    catch ( const std::exception& )
     {
         return false;
     }
@@ -109,12 +103,12 @@ bool CGLVideoSinkCallbackFilter::onRecieveBuffer ( GstBaseSink* sink,
 {
     try
     {
-        utils::AutoLock<utils::Mutex> lock ( _lockObject );
+        std::lock_guard<std::mutex> lock( _lockObject );
         m_videoFrameGLModel.UpdateFrame ( _frameWidth, _frameHeight, _glColor,
                                           _pixelType, gstBuffer );
 
     }
-    catch ( const utils::LockException& )
+    catch ( const std::exception& )
     {
         return false;
     }

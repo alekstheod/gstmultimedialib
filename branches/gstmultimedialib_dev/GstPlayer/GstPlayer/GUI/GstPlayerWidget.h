@@ -17,6 +17,7 @@ private:
     std::unique_ptr<gl::Scene> m_scene;
     std::unique_ptr<VideoTrack> m_track;
     std::unique_ptr<gl::AssimpModel> m_assimp;
+    std::unique_ptr<gl::AssimpModel> m_assimp2;
     gl::WhiteLightModel m_light;
     gl::SimpleCamera m_camera;
     QTimer m_timer;

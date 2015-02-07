@@ -7,7 +7,7 @@
 #include <mutex>
 #include <vector>
 #include <gst/gst.h>
-#include <Utilities/Memory/SmartPtr/SharedPtr.h>
+#include <GL/gl.h>
 
 namespace multimedia {
 
@@ -28,7 +28,8 @@ private:
     GLenum m_pixelType;
     std::vector<unsigned char> m_backBuffer;
     std::vector<unsigned char> m_frameBuffer;
-
+    GLuint m_texture;
+    
 private:
     void drawImpl();
     bool UpdateFramePosition(const gl::Vertex& lowLeft,const gl::Vertex& topLeft, const gl::Vertex& topRight,const gl::Vertex& lowRight);

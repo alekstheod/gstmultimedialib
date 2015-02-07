@@ -175,7 +175,7 @@ void AssimpModel::loadTextures(const std::string& model)
                           SOIL_CREATE_NEW_ID,
                           SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
                       );
-
+	    
             index++;
         }
     }
@@ -195,6 +195,7 @@ void AssimpModel::drawInternal(const aiNode* nd)
         const aiMesh* mesh = m_scene->mMeshes[nd->mMeshes[n]];
         applyMaterial(m_scene->mMaterials[mesh->mMaterialIndex]);
 
+	glEnable(GL_TEXTURE_2D);
         mesh->mNormals == NULL ? glDisable(GL_LIGHTING) :  glEnable(GL_LIGHTING);
         mesh->mColors[0] != NULL?  glEnable(GL_COLOR_MATERIAL) : glDisable(GL_COLOR_MATERIAL);
         for (unsigned int t = 0; t < mesh->mNumFaces; ++t) {
@@ -222,6 +223,7 @@ void AssimpModel::drawInternal(const aiNode* nd)
             glEnd();
         }
 
+        glDisable(GL_TEXTURE_2D);
     }
 
     // draw all children

@@ -19,7 +19,7 @@ if (GLUT_FOUND)
   include_directories(${GLUT_INCLUDE_DIRS})
 endif (GLUT_FOUND)
 
-file(GLOB_RECURSE GLENGINE_SOURCES GLEngine/Model/AssimpModel.cpp GLEngine/*.cpp GLEngine/Model/Model.cpp)
+file(GLOB_RECURSE GLENGINE_SOURCES GLEngine/Model/AssimpModel.cpp GLEngine/*.cpp)
 set( BOOST_COMPONENTS_NEEDED filesystem system)
 set(BOOST_MIN_VERSION "1.46.0")
 find_package(Boost ${BOOST_MIN_VERSION} COMPONENTS ${BOOST_COMPONENTS_NEEDED} REQUIRED)

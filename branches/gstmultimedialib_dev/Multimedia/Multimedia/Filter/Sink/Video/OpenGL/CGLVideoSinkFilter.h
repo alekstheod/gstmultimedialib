@@ -5,6 +5,7 @@
 #include <Multimedia/Filter/Sink/Video/ABaseVideoCallbackSinkFilter.h>
 #include <Multimedia/Filter/Sink/Video/OpenGL/VideoFrameModel.h>
 #include <memory>
+#include <mutex>
 
 namespace multimedia
 {
@@ -19,8 +20,7 @@ private:
   gint _frameHeight;
   GLenum _glColor;
   GLenum _pixelType;
-
-  utils::Mutex _lockObject;
+  std::mutex _lockObject;
 
   gl::Scene& m_glDevice;
   multimedia::VideoFrameModel m_videoFrameGLModel;
