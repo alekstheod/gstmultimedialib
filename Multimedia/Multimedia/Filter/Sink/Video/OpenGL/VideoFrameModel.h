@@ -32,7 +32,10 @@ private:
     
 private:
     void drawImpl();
-    bool UpdateFramePosition(const gl::Vertex& lowLeft,const gl::Vertex& topLeft, const gl::Vertex& topRight,const gl::Vertex& lowRight);
+    bool UpdateFramePosition(const gl::Vertex& lowLeft,
+			     const gl::Vertex& topLeft, 
+			     const gl::Vertex& topRight,
+			     const gl::Vertex& lowRight);
     
 public:
     VideoFrameModel(const gl::Vertex& lowLeft, const gl::Vertex& topLeft,

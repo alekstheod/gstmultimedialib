@@ -124,10 +124,8 @@ void AssimpModel::applyMaterial(const aiMaterial *mtl)
 
     float shininess, strength;
     unsigned int max = 1;
-    int ret1 = aiGetMaterialFloatArray(mtl, AI_MATKEY_SHININESS, &shininess, &max);
-    max = 1;
-    int ret2 = aiGetMaterialFloatArray(mtl, AI_MATKEY_SHININESS_STRENGTH, &strength, &max);
-    if((ret1 == AI_SUCCESS) && (ret2 == AI_SUCCESS))
+    if( aiGetMaterialFloatArray(mtl, AI_MATKEY_SHININESS, &shininess, &max) == AI_SUCCESS && 
+        aiGetMaterialFloatArray(mtl, AI_MATKEY_SHININESS_STRENGTH, &strength, &max) == AI_SUCCESS)
         glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shininess * strength);
     else {
         glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 0.0f);
@@ -163,7 +161,6 @@ void AssimpModel::loadTextures(const std::string& model)
         unsigned int index = 0;
         while(AI_SUCCESS == m_scene->mMaterials[material]->GetTexture(aiTextureType_DIFFUSE, index, &path)) {
             GLuint& texture = m_textures[path.data];
-            glGenTextures(1, &texture );
             boost::filesystem::path modelPath(model);
             std::string basepath =  modelPath.remove_leaf().string();
             std::string fileloc = basepath + "/" + path.C_Str();

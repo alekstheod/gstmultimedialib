@@ -16,11 +16,11 @@ class CGLVideoSinkCallbackFilter : public ABaseVideoCallbackSinkFilter
 {
 private:
   gint _frameRate;
-  gint _frameWidth;
-  gint _frameHeight;
-  GLenum _glColor;
-  GLenum _pixelType;
-  std::mutex _lockObject;
+  gint m_width;
+  gint m_height;
+  GLenum m_glColor;
+  GLenum m_pixelType;
+  std::mutex m_lock;
 
   gl::Scene& m_glDevice;
   multimedia::VideoFrameModel m_videoFrameGLModel;

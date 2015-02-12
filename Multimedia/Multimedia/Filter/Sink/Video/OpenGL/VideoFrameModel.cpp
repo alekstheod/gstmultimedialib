@@ -49,6 +49,15 @@ void applyMaterial()
     glEnable(GL_CULL_FACE);
 }
 
+// ----------------------------------------------------------------------------
+void set_float4(float f[4], float a, float b, float c, float d)
+{
+    f[0] = a;
+    f[1] = b;
+    f[2] = c;
+    f[3] = d;
+}
+
 void VideoFrameModel::drawImpl(void) {
     std::lock_guard<std::mutex> lock(m_mutex);
     if( !m_frameBuffer.empty() )
@@ -58,31 +67,40 @@ void VideoFrameModel::drawImpl(void) {
             glGenTextures ( 1, &m_texture );
         }
 
+        glBindTexture(GL_TEXTURE_2D, m_texture);
+        float diffuse[] = {0.8f, 0.8f, 0.8f, 1.0f};
+        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diffuse);
+
+	float specular[] = {0.0f, 0.0f, 0.0f, 1.0f};
+        glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specular);
+
+	float ambient[] = {0.2f, 0.2f, 0.2f, 1.0f};
+        glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, ambient);
+
+	float emmision[] = {1.0f, 1.0f, 1.0f, 1.0f};
+        glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, emmision);
+
+        glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 1.f);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_COLOR_MATERIAL);
+	glEnable(GL_LIGHTING);
         glEnable(GL_TEXTURE_2D);
-        glBindTexture ( GL_TEXTURE_2D, m_texture );
         glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
         glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
         glTexImage2D ( GL_TEXTURE_2D, 0, m_glColor, m_width, m_height, 0, m_glColor, m_pixelType, m_frameBuffer.data() );
-
-        glMatrixMode(GL_MODELVIEW);     // Operate on model-view matrix
-
-	glColor3f(1.f, 1.f, 1.f);
+	
         glBegin(GL_QUADS);
         glTexCoord2f(0.0f, 1.0f);
         glVertex3f(m_lowLeft.x, m_lowLeft.y, m_lowLeft.z);
-
         glTexCoord2f(1.0f, 1.0f);
-        glVertex3f(m_lowRight.x, m_lowRight.y,
-                   m_lowRight.z);
-
+        glVertex3f(m_lowRight.x, m_lowRight.y,m_lowRight.z);
         glTexCoord2f(1.0f, 0.0f);
-        glVertex3f(m_topRight.x, m_topRight.y,
-                   m_topRight.z);
-
+        glVertex3f(m_topRight.x, m_topRight.y, m_topRight.z);
         glTexCoord2f(0.0f, 0.0f);
         glVertex3f(m_topLeft.x, m_topLeft.y, m_topLeft.z);
         glEnd();
-	glDisable(GL_TEXTURE_2D);
     }
 }
 
@@ -118,4 +136,5 @@ bool VideoFrameModel::UpdateFramePosition(const gl::Vertex& lowLeft,
 }
 
 }
+
 

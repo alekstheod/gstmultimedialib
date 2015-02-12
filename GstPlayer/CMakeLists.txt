@@ -50,7 +50,6 @@ target_link_libraries(GstPlayer
 			${OPENGL_LIBRARIES}
 			${QT_LIBRARIES}
 			${GLIB2_LIBRARIES}
-			${PKG_GLIB_LIBRARIES}  
 			${GSTREAMER_VIDEO_LIBRARY}
 			${GSTREAMER_LIBRARIES}
 )
