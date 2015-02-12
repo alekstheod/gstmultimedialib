@@ -35,63 +35,52 @@ bool CGLVideoSinkCallbackFilter::onSetCaps ( GstPad * pad, GstCaps * caps )
 {
     try
     {
-        std::lock_guard<std::mutex> lock( _lockObject );
+        std::lock_guard<std::mutex> lock( m_lock );
         GstStructure* gstStructure = gst_caps_get_structure ( caps, 0 );
         if ( gstStructure == NULL ||
-                !gst_structure_get_int ( gstStructure, "width", &_frameWidth ) ||
-                !gst_structure_get_int ( gstStructure, "height", &_frameHeight )
-           )
-        {
+                !gst_structure_get_int ( gstStructure, "width", &m_width ) ||
+                !gst_structure_get_int ( gstStructure, "height", &m_height )
+           ){
             return false;
         }
 
         const GValue* pixelFormat = gst_structure_get_value ( gstStructure,
                                     "pixel-aspect-ratio" );
-        if ( pixelFormat == NULL )
-        {
+        if ( pixelFormat == NULL ){
             return false;
         }
 
-        if ( strcmp ( gst_structure_get_name ( gstStructure ), "video/x-raw-rgb" )
-                == 0 )
-        {
+        if ( strcmp ( gst_structure_get_name ( gstStructure ), "video/x-raw-rgb" ) == 0 ){
             gint red_color = 0;
             gst_structure_get_int ( gstStructure, "red_mask", &red_color );
             if ( red_color == gint ( 0xff000000 ) )
             {
-                _glColor = GL_RGBA;
-                _pixelType = GL_UNSIGNED_BYTE;
+                m_glColor = GL_RGBA;
+                m_pixelType = GL_UNSIGNED_BYTE;
             }
             else
             {
-                _glColor = GL_BGRA;
-                _pixelType = GL_UNSIGNED_BYTE;
+                m_glColor = GL_BGRA;
+                m_pixelType = GL_UNSIGNED_BYTE;
             }
 
-        }
-        else if ( strcmp ( gst_structure_get_name ( gstStructure ),
-                           "video/x-raw-yuv" ) == 0 )
-        {
-            _glColor = GL_YCBCR_MESA;
+        }else if ( strcmp ( gst_structure_get_name ( gstStructure ), "video/x-raw-yuv" ) == 0 ){
+            m_glColor = GL_YCBCR_MESA;
             unsigned int fourcc;
             gst_structure_get_fourcc ( gstStructure, "format", &fourcc );
             if ( fourcc == GST_MAKE_FOURCC ( 'Y', 'U', 'Y', '2' ) )
             {
-                _pixelType = GL_UNSIGNED_SHORT_8_8_REV_MESA;
+                m_pixelType = GL_UNSIGNED_SHORT_8_8_REV_MESA;
             }
             else
             {
-                _pixelType = GL_UNSIGNED_SHORT_8_8_MESA;
+                m_pixelType = GL_UNSIGNED_SHORT_8_8_MESA;
             }
-        }
-        else
-        {
+        }else{
             return false;
         }
 
-    }
-    catch ( const std::exception& )
-    {
+    }catch ( const std::exception& ){
         return false;
     }
 
@@ -101,15 +90,12 @@ bool CGLVideoSinkCallbackFilter::onSetCaps ( GstPad * pad, GstCaps * caps )
 bool CGLVideoSinkCallbackFilter::onRecieveBuffer ( GstBaseSink* sink,
         GstBuffer* gstBuffer )
 {
-    try
-    {
-        std::lock_guard<std::mutex> lock( _lockObject );
-        m_videoFrameGLModel.UpdateFrame ( _frameWidth, _frameHeight, _glColor,
-                                          _pixelType, gstBuffer );
+    try{
+        std::lock_guard<std::mutex> lock( m_lock );
+        m_videoFrameGLModel.UpdateFrame ( m_width, m_height, m_glColor,
+                                          m_pixelType, gstBuffer );
 
-    }
-    catch ( const std::exception& )
-    {
+    }catch ( const std::exception& ){
         return false;
     }
 
