@@ -5,6 +5,7 @@
 #include <Multimedia/Filter/Sink/Video/ABaseVideoCallbackSinkFilter.h>
 #include <Multimedia/Filter/Sink/Video/OpenGL/VideoFrameModel.h>
 #include <memory>
+#include <mutex>
 
 namespace multimedia
 {
@@ -15,12 +16,11 @@ class CGLVideoSinkCallbackFilter : public ABaseVideoCallbackSinkFilter
 {
 private:
   gint _frameRate;
-  gint _frameWidth;
-  gint _frameHeight;
-  GLenum _glColor;
-  GLenum _pixelType;
-
-  utils::Mutex _lockObject;
+  gint m_width;
+  gint m_height;
+  GLenum m_glColor;
+  GLenum m_pixelType;
+  std::mutex m_lock;
 
   gl::Scene& m_glDevice;
   multimedia::VideoFrameModel m_videoFrameGLModel;

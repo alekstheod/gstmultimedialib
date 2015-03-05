@@ -25,7 +25,7 @@ public:
 	SimpleCamera();
 	void setPosition(const Vertex& position);
 	void lookAt(const Vertex& position);
-	void applyCamera();
+	void apply();
 	virtual ~SimpleCamera();
 };
 

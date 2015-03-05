@@ -16,14 +16,13 @@ namespace gl
 class Texture
 {
 private:
-    friend class Scene;
     GLuint m_texture;
 
 private:
     virtual bool applyImpl ( GLenum target);
     
 public:
-    Texture ( GLuint texture );
+    Texture ();
     bool apply( GLenum target );
     virtual ~Texture();
 };

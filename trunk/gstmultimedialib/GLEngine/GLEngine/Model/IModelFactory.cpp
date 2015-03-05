@@ -21,7 +21,7 @@ IModelFactory::~IModelFactory()
     // TODO Auto-generated destructor stub
 }
 
-utils::SharedPtr<IModel> IModelFactory::createModel ( std::istream& modelData )
+utils::SharedPtr<Model> IModelFactory::createModel ( std::istream& modelData )
 {
   return createModelImpl(modelData);
 }

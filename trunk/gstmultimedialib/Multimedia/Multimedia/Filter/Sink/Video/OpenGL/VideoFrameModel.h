@@ -1,17 +1,17 @@
 #pragma once
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include <GLEngine/Model/IModel.h>
+#include <GLEngine/Model/Model.h>
 #include <GLEngine/GLException.h>
 #include <GLEngine/Model/Vertex.h>
 #include <mutex>
 #include <vector>
 #include <gst/gst.h>
-#include <Utilities/Memory/SmartPtr/SharedPtr.h>
+#include <GL/gl.h>
 
 namespace multimedia {
 
-class VideoFrameModel: public gl::IModel {
+class VideoFrameModel: public gl::Model {
 public:
     static const unsigned int CONST_FRAME_LOCK_TIMEOUT;
 
@@ -28,10 +28,14 @@ private:
     GLenum m_pixelType;
     std::vector<unsigned char> m_backBuffer;
     std::vector<unsigned char> m_frameBuffer;
-
+    GLuint m_texture;
+    
 private:
     void drawImpl();
-    bool UpdateFramePosition(const gl::Vertex& lowLeft,const gl::Vertex& topLeft, const gl::Vertex& topRight,const gl::Vertex& lowRight);
+    bool UpdateFramePosition(const gl::Vertex& lowLeft,
+			     const gl::Vertex& topLeft, 
+			     const gl::Vertex& topRight,
+			     const gl::Vertex& lowRight);
     
 public:
     VideoFrameModel(const gl::Vertex& lowLeft, const gl::Vertex& topLeft,
