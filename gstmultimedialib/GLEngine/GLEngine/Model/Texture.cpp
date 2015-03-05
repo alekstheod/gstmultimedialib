@@ -10,7 +10,7 @@
 namespace gl
 {
 
-Texture::Texture ( GLuint texture ) : m_texture(texture)
+Texture::Texture () : m_texture(0)
 {
     glGenTextures ( 1, &m_texture );
 }
@@ -26,7 +26,6 @@ bool Texture::applyImpl ( GLenum target){
 
 bool Texture::apply ( GLenum target )
 {
-  glEnable ( target );
   glBindTexture ( target, m_texture );
   glTexParameteri ( target, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
   glTexParameteri ( target, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
